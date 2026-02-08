@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+    minWidth="-Infinity" prefHeight="361.0" prefWidth="409.0" spacing="15.0"
+    xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="controller.EditOderController">
+
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+
+    <children>
+        <Label text="CHỈNH SỬA ĐƠN HÀNG">
+            <font>
+                <Font name="System Bold" size="20.0" />
+            </font>
+            <VBox.margin>
+                <Insets bottom="10.0" />
+            </VBox.margin>
+        </Label>
+
+        <VBox alignment="CENTER_LEFT" prefWidth="100.0" spacing="5.0">
+            <children>
+                <Label text="Tên Khách Hàng:">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="txtTenKhach" promptText="Nhập tên khách hàng" />
+            </children>
+        </VBox>
+
+        <VBox alignment="CENTER_LEFT" layoutX="30.0" layoutY="80.0" prefWidth="100.0" spacing="5.0">
+            <children>
+                <Label text="Tổng Tiền:">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="txtTongTien" promptText="Nhập số tiền" />
+            </children>
+        </VBox>
+
+        <VBox alignment="CENTER_LEFT" layoutX="30.0" layoutY="142.0" prefWidth="100.0" spacing="5.0">
+            <children>
+                <Label text="Trạng Thái:">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="txtTrangThai" promptText="Ví dụ: Đã thanh toán, Chờ xử lý..." />
+            </children>
+        </VBox>
+
+        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="20.0">
+            <children>
+
+                <Button fx:id="btnHuy" mnemonicParsing="false" onAction="#buttonCancel"
+                    prefHeight="30.0" prefWidth="80.0"
+                    style="-fx-background-color: #f44336; -fx-text-fill: white;" text="Hủy" />
+                <Button fx:id="btnLuu" mnemonicParsing="false" onAction="#buttonSave"
+                    prefHeight="30.0" prefWidth="80.0"
+                    style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Lưu" />
+            </children>
+            <VBox.margin>
+                <Insets top="10.0" />
+            </VBox.margin>
+        </HBox>
+    </children>
+</VBox>

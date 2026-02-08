@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane fx:id="mainBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+    minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0"
+    stylesheets="@../resources/css/Style.css" xmlns="http://javafx.com/javafx/25"
+    xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+    <left>
+        <VBox prefWidth="250.0" styleClass="sidebar" BorderPane.alignment="CENTER">
+            <children>
+                <VBox alignment="CENTER" prefHeight="180.0">
+                    <children>
+                        <ImageView fitHeight="119.0" fitWidth="172.0" pickOnBounds="true"
+                            preserveRatio="true">
+                            <image>
+                                <Image url="@../resources/logo/iconlogo.png" />
+                            </image>
+                        </ImageView>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Hệ Thống Quản Lý Giày"
+                            textAlignment="CENTER" wrappingWidth="215.99998474121094">
+                            <font>
+                                <Font name="Arial Bold Italic" size="18.0" />
+                            </font>
+                            <VBox.margin>
+                                <Insets top="10.0" />
+                            </VBox.margin>
+                        </Text>
+                    </children>
+                </VBox>
+
+                <VBox spacing="5.0" VBox.vgrow="ALWAYS">
+                    <children>
+                        <HBox alignment="CENTER_LEFT" onMouseClicked="#hienThiTrangChu"
+                            prefHeight="50.0" spacing="15.0" style="-fx-cursor: hand;"
+                            styleClass="sidebar-btn">
+                            <padding>
+                                <Insets left="30.0" />
+                            </padding>
+                            <children>
+                                <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true"
+                                    preserveRatio="true">
+                                    <image>
+                                        <Image url="@../resources/img/home.png" />
+                                    </image>
+                                </ImageView>
+                                <Text styleClass="menu-text" text="Trang Chủ">
+                                    <font>
+                                        <Font name="Arial Bold" size="15.0" />
+                                    </font>
+                                    <HBox.margin>
+                                        <Insets top="10.0" />
+                                    </HBox.margin>
+                                </Text>
+                            </children>
+                        </HBox>
+
+                        <HBox alignment="CENTER_LEFT" onMouseClicked="#hienThiSanPham"
+                            prefHeight="50.0" spacing="15.0" style="-fx-cursor: hand;"
+                            styleClass="sidebar-btn">
+                            <padding>
+                                <Insets left="30.0" />
+                            </padding>
+                            <children>
+                                <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true"
+                                    preserveRatio="true">
+                                    <image>
+                                        <Image url="@../resources/img/product.png" />
+                                    </image>
+                                </ImageView>
+                                <Text styleClass="menu-text" text="Sản Phẩm">
+                                    <font>
+                                        <Font name="Arial Bold" size="15.0" />
+                                    </font>
+                                    <HBox.margin>
+                                        <Insets top="5.0" />
+                                    </HBox.margin>
+                                </Text>
+                            </children>
+                        </HBox>
+
+                        <HBox alignment="CENTER_LEFT" onMouseClicked="#hienThiKhachHang"
+                            prefHeight="50.0" spacing="15.0" style="-fx-cursor: hand;"
+                            styleClass="sidebar-btn">
+                            <padding>
+                                <Insets left="30.0" />
+                            </padding>
+                            <children>
+                                <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true"
+                                    preserveRatio="true">
+                                    <image>
+                                        <Image url="@../resources/img/customer.png" />
+                                    </image>
+                                </ImageView>
+                                <Text styleClass="menu-text" text="Khách hàng">
+                                    <font>
+                                        <Font name="Arial Bold" size="15.0" />
+                                    </font>
+                                    <HBox.margin>
+                                        <Insets top="2.0" />
+                                    </HBox.margin>
+                                </Text>
+                            </children>
+                        </HBox>
+
+                        <HBox alignment="CENTER_LEFT" onMouseClicked="#hienThiDonHang"
+                            prefHeight="50.0" spacing="15.0" style="-fx-cursor: hand;"
+                            styleClass="sidebar-btn">
+                            <padding>
+                                <Insets left="30.0" />
+                            </padding>
+                            <children>
+                                <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true"
+                                    preserveRatio="true">
+                                    <image>
+                                        <Image url="@../resources/img/report.png" />
+                                    </image>
+                                </ImageView>
+                                <Text styleClass="menu-text" text="Đơn Hàng">
+                                    <font>
+                                        <Font name="Arial Bold" size="15.0" />
+                                    </font>
+                                    <HBox.margin>
+                                        <Insets top="6.0" />
+                                    </HBox.margin>
+                                </Text>
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+
+                <Region VBox.vgrow="ALWAYS" />
+
+                <HBox alignment="CENTER_LEFT" onMouseClicked="#xuLyDangXuat" prefHeight="60.0"
+                    spacing="15.0"
+                    style="-fx-border-color: #E5E7EB; -fx-border-width: 1 0 0 0; -fx-cursor: hand;">
+                    <padding>
+                        <Insets left="30.0" />
+                    </padding>
+                    <children>
+                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true"
+                            preserveRatio="true">
+                            <image>
+                                <Image url="@../resources/img/logOut.png" />
+                            </image>
+                        </ImageView>
+                        <Text fx:id="handlDangXuat" text="Đăng Xuất">
+                            <font>
+                                <Font name="Arial Bold" size="15.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Text>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </left>
+    <center>
+        <BorderPane fx:id="contentArea" style="-fx-background-color: #F5F5F5;"
+            BorderPane.alignment="CENTER" />
+    </center>
+</BorderPane>
