@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import database.DBConnection;
 
-public class CategoryDAO {
+public class    CategoryDAO {
     // Hàm lấy danh sách tên danh mục
     public List<String> getAllCategoryNames() {
         List<String> list = new ArrayList<>();

@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddProductController">
+    <children>
+        <VBox layoutX="100.0" layoutY="50.0" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="600.0" style="-fx-background-color: white; -fx-background-radius: 8; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 0);" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="50.0">
+            <children>
+
+                <HBox alignment="CENTER_LEFT" prefHeight="60.0" style="-fx-border-color: #E5E7EB; -fx-border-width: 0 0 1 0;">
+                    <padding>
+                        <Insets left="20.0" right="20.0" />
+                    </padding>
+                    <children>
+                        <Label text="Thêm sản phẩm mới" textFill="#111827">
+                            <font>
+                                <Font name="System Bold" size="20.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </HBox>
+
+                <GridPane hgap="20.0" vgap="15.0" VBox.vgrow="ALWAYS">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints />
+                        <RowConstraints vgrow="NEVER" />
+                        <RowConstraints vgrow="NEVER" />
+                        <RowConstraints vgrow="NEVER" />
+                        <RowConstraints vgrow="NEVER" />
+                  <RowConstraints vgrow="ALWAYS" />
+                    </rowConstraints>
+                    <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                    </padding>
+                    <children>
+
+                        <VBox spacing="5.0" GridPane.rowIndex="1">
+                            <children>
+                                <Label text="Tên sản phẩm" textFill="#374151">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                </Label>
+                                <TextField fx:id="txtTenSanPham" promptText="Nhập tên giày..." style="-fx-background-color: #F9FAFB; -fx-border-color: #D1D5DB; -fx-border-radius: 4;" />
+                            </children>
+                        </VBox>
+
+                        <VBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                            <children>
+                                <Label text="Mã sản phẩm (ID)" textFill="#374151">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                </Label>
+                                <TextField fx:id="txtId" promptText="Ví dụ: #SH-1234" style="-fx-background-color: #F9FAFB; -fx-border-color: #D1D5DB; -fx-border-radius: 4;" />
+                            </children>
+                        </VBox>
+
+                        <VBox spacing="5.0" GridPane.rowIndex="2">
+                            <children>
+                                <Label text="Danh mục" textFill="#374151">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                </Label>
+                                <ComboBox fx:id="cbDanhMuc" maxWidth="1.7976931348623157E308" promptText="Chọn danh mục" style="-fx-background-color: #F9FAFB; -fx-border-color: #D1D5DB; -fx-border-radius: 4;">
+                                    <cursor>
+                                        <Cursor fx:constant="HAND" />
+                                    </cursor>
+                                </ComboBox>
+                            </children>
+                        </VBox>
+
+                        <VBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                            <children>
+                                <Label text="Giá bán (VNĐ)" textFill="#374151">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                </Label>
+                                <TextField fx:id="txtGia" promptText="0" style="-fx-background-color: #F9FAFB; -fx-border-color: #D1D5DB; -fx-border-radius: 4;" />
+                            </children>
+                        </VBox>
+
+                        <VBox spacing="5.0" GridPane.rowIndex="3">
+                            <children>
+                                <Label text="Size (Kích cỡ)" textFill="#374151">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                </Label>
+                                <TextField fx:id="txtSize" promptText="Ví dụ: 39, 40, 41" style="-fx-background-color: #F9FAFB; -fx-border-color: #D1D5DB; -fx-border-radius: 4;" />
+                            </children>
+                        </VBox>
+
+                        <VBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                            <children>
+                                <Label text="Số lượng tồn kho" textFill="#374151">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                </Label>
+                                <TextField fx:id="txtTonKho" promptText="0" style="-fx-background-color: #F9FAFB; -fx-border-color: #D1D5DB; -fx-border-radius: 4;" />
+                            </children>
+                        </VBox>
+
+                        <VBox spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="5">
+                            <children>
+                                <Label text="Hình ảnh sản phẩm" textFill="#374151">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                </Label>
+                                <HBox alignment="CENTER_LEFT" spacing="20.0" style="-fx-border-color: #D1D5DB; -fx-border-style: dashed; -fx-border-radius: 4; -fx-background-color: #F9FAFB;">
+                                    <padding>
+                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                    </padding>
+                                    <children>
+                                        <StackPane style="-fx-background-color: #E5E7EB; -fx-background-radius: 4;">
+                                            <children>
+                                                <ImageView fx:id="imageViewSanPham" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
+                                                <Label text="No Image" textFill="#9ca3af" />
+                                            </children>
+                                        </StackPane>
+                                        <VBox alignment="CENTER_LEFT" spacing="5.0">
+                                            <children>
+                                                <Button fx:id="buttonChonAnh" mnemonicParsing="false" onAction="#handleChonAnh" style="-fx-background-color: white; -fx-border-color: #D1D5DB; -fx-border-radius: 4; -fx-cursor: hand;" text="📂 Tải ảnh lên" textFill="#374151">
+                                                    <cursor>
+                                                        <Cursor fx:constant="HAND" />
+                                                    </cursor>
+                                                </Button>
+                                                <Label text="Hỗ trợ: JPG, PNG. Tối đa 5MB" textFill="#9ca3af">
+                                                    <font>
+                                                        <Font size="11.0" />
+                                                    </font>
+                                                </Label>
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+                  <Text fx:id="thongBao" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" />
+
+                    </children>
+                </GridPane>
+
+                <HBox alignment="CENTER_RIGHT" prefHeight="60.0" spacing="10.0" style="-fx-border-color: #E5E7EB; -fx-border-width: 1 0 0 0;">
+                    <padding>
+                        <Insets right="20.0" />
+                    </padding>
+                    <children>
+                        <Button mnemonicParsing="false" onAction="#buttonCancel" style="-fx-background-color: white; -fx-border-color: #D1D5DB; -fx-border-radius: 4; -fx-cursor: hand;" text="Hủy bỏ" textFill="#374151">
+                            <padding>
+                                <Insets bottom="8.0" left="15.0" right="15.0" top="8.0" />
+                            </padding>
+                            <font>
+                                <Font name="System Bold" size="12.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#buttonSave" style="-fx-background-color: #2563eb; -fx-background-radius: 4; -fx-cursor: hand;" text="Lưu sản phẩm" textFill="WHITE">
+                            <padding>
+                                <Insets bottom="8.0" left="15.0" right="15.0" top="8.0" />
+                            </padding>
+                            <font>
+                                <Font name="System Bold" size="12.0" />
+                            </font>
+                        </Button>
+                    </children>
+                </HBox>
+
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

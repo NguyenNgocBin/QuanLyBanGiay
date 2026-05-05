@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+    prefHeight="400.0" prefWidth="600.0" stylesheets="@../resources/css/Style.css"
+    xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="controller.CreateAccountController">
+    <left>
+        <AnchorPane prefHeight="400.0" prefWidth="212.0" BorderPane.alignment="CENTER">
+            <children>
+                <ImageView fitHeight="400.0" fitWidth="309.0" pickOnBounds="true"
+                    preserveRatio="true">
+                    <image>
+                        <Image url="@../resources/img/createTK.jpg" />
+                    </image>
+                </ImageView>
+            </children>
+        </AnchorPane>
+    </left>
+    <right>
+        <AnchorPane prefHeight="400.0" prefWidth="398.0" BorderPane.alignment="CENTER">
+            <children>
+                <Text layoutX="93.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                    text="Tạo Tài Khoản">
+                    <font>
+                        <Font name="Arial Bold" size="30.0" />
+                    </font>
+                </Text>
+                <TextField fx:id="txtUserName" layoutX="85.0" layoutY="142.0" prefHeight="26.0"
+                    prefWidth="216.0" promptText="Username" />
+                <PasswordField fx:id="txtPassWord" layoutX="85.0" layoutY="191.0" prefHeight="26.0"
+                    prefWidth="216.0" promptText="Password" />
+
+                <Button fx:id="btnRegister" layoutX="148.8" layoutY="305.0" mnemonicParsing="false"
+                    onAction="#handleRegister" prefHeight="30.0" prefWidth="92.0"
+                    styleClass="buttonLogin" text="Đăng Ký" textFill="WHITE"
+                    AnchorPane.bottomAnchor="65.39999999999998" AnchorPane.leftAnchor="148.8"
+                    AnchorPane.rightAnchor="133.6" AnchorPane.topAnchor="305.0">
+                    <font>
+                        <Font name="Arial Bold" size="12.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Button>
+
+                <TextField fx:id="txtName" layoutX="85.0" layoutY="93.0" prefHeight="26.0"
+                    prefWidth="216.0" promptText="Name" />
+                <Text fill="#4e4b4b" layoutX="84.0" layoutY="138.0" strokeType="OUTSIDE"
+                    strokeWidth="0.0" text="Tài Khoản">
+                    <font>
+                        <Font name="Arial Bold" size="13.0" />
+                    </font>
+                </Text>
+                <Text fill="#4e4b4b" layoutX="85.0" layoutY="187.0" strokeType="OUTSIDE"
+                    strokeWidth="0.0" text="Mật Khẩu">
+                    <font>
+                        <Font name="Arial Bold" size="13.0" />
+                    </font>
+                </Text>
+                <Text fill="#4e4b4b" layoutX="85.0" layoutY="90.0" strokeType="OUTSIDE"
+                    strokeWidth="0.0" text="Tên">
+                    <font>
+                        <Font name="Arial Bold" size="13.0" />
+                    </font>
+                </Text>
+                <Text fx:id="baoloi" fill="RED" layoutX="82.0" layoutY="282.0" strokeType="OUTSIDE"
+                    strokeWidth="0.0" wrappingWidth="227.39997100830078" />
+                <Text fill="#8c7d7d" layoutX="137.0" layoutY="356.0" strokeType="OUTSIDE"
+                    strokeWidth="0.0" text="Đã có tài khoản?">
+                    <font>
+                        <Font name="Arial Bold" size="12.0" />
+                    </font>
+                </Text>
+                <Text fill="#598ce4" layoutX="237.0" layoutY="356.0"
+                    onMouseClicked="#chuyenSangDangNhap" strokeType="OUTSIDE" strokeWidth="0.0"
+                    styleClass="login-title" text="Đăng nhập">
+                    <font>
+                        <Font name="Arial Bold" size="12.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Text>
+                <Text fill="#4e4b4b" layoutX="86.0" layoutY="234.0" strokeType="OUTSIDE"
+                    strokeWidth="0.0" text="Nhập Lại Mật Khẩu">
+                    <font>
+                        <Font name="Arial Bold" size="13.0" />
+                    </font>
+                </Text>
+                <PasswordField fx:id="txtConfirmPass" layoutX="85.0" layoutY="239.0"
+                    prefHeight="26.0" prefWidth="216.0" promptText="Password" />
+            </children>
+        </AnchorPane>
+    </right>
+</BorderPane>

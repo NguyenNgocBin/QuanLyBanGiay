@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import DAO.UserDAO;
 import javafx.event.ActionEvent;
@@ -58,9 +60,12 @@ public class LoginController {
             return;
         }
 
+        String hashedPass = hashPassword(pass);
+
+
         // 1. Gọi hàm login từ DAO
         UserDAO userDAO = new UserDAO();
-        User userDangNhap = userDAO.login(user, pass);
+        User userDangNhap = userDAO.login(user, hashedPass);
 
         // 2. Kiểm tra kết quả
         if (userDangNhap != null) {
@@ -76,6 +81,25 @@ public class LoginController {
             }
         } else {
             thongbaoloi.setText("Tên đăng nhập hoặc mật khẩu không đúng!");
+        }
+    }
+
+    private String hashPassword(String password) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] encodedhash = digest.digest(password.getBytes());
+
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : encodedhash) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1)
+                    hexString.append('0');
+                hexString.append(hex);
+            }
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return password;
         }
     }
 
