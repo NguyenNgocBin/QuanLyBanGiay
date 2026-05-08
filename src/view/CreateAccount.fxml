@@ -1,106 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-    prefHeight="400.0" prefWidth="600.0" stylesheets="@../resources/css/Style.css"
-    xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
-    fx:controller="controller.CreateAccountController">
-    <left>
-        <AnchorPane prefHeight="400.0" prefWidth="212.0" BorderPane.alignment="CENTER">
-            <children>
-                <ImageView fitHeight="400.0" fitWidth="309.0" pickOnBounds="true"
-                    preserveRatio="true">
-                    <image>
-                        <Image url="@../resources/img/createTK.jpg" />
-                    </image>
-                </ImageView>
-            </children>
-        </AnchorPane>
-    </left>
-    <right>
-        <AnchorPane prefHeight="400.0" prefWidth="398.0" BorderPane.alignment="CENTER">
-            <children>
-                <Text layoutX="93.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0"
-                    text="Tạo Tài Khoản">
-                    <font>
-                        <Font name="Arial Bold" size="30.0" />
-                    </font>
-                </Text>
-                <TextField fx:id="txtUserName" layoutX="85.0" layoutY="142.0" prefHeight="26.0"
-                    prefWidth="216.0" promptText="Username" />
-                <PasswordField fx:id="txtPassWord" layoutX="85.0" layoutY="191.0" prefHeight="26.0"
-                    prefWidth="216.0" promptText="Password" />
+<StackPane prefHeight="700.0" prefWidth="1000.0" style="-fx-background-image: url('/resources/img/unnamed.png'); -fx-background-size: cover; -fx-background-position: center;" stylesheets="@../resources/css/Style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CreateAccountController">
 
-                <Button fx:id="btnRegister" layoutX="148.8" layoutY="305.0" mnemonicParsing="false"
-                    onAction="#handleRegister" prefHeight="30.0" prefWidth="92.0"
-                    styleClass="buttonLogin" text="Đăng Ký" textFill="WHITE"
-                    AnchorPane.bottomAnchor="65.39999999999998" AnchorPane.leftAnchor="148.8"
-                    AnchorPane.rightAnchor="133.6" AnchorPane.topAnchor="305.0">
-                    <font>
-                        <Font name="Arial Bold" size="12.0" />
-                    </font>
-                    <cursor>
-                        <Cursor fx:constant="HAND" />
-                    </cursor>
-                </Button>
+    <!-- Center Card -->
+    <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="450" spacing="20" style="-fx-background-color: rgba(255, 255, 255, 0.93); -fx-background-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 20, 0, 0, 5);">
+        <padding>
+            <Insets bottom="40.0" left="50.0" right="50.0" top="40.0" />
+        </padding>
 
-                <TextField fx:id="txtName" layoutX="85.0" layoutY="93.0" prefHeight="26.0"
-                    prefWidth="216.0" promptText="Name" />
-                <Text fill="#4e4b4b" layoutX="84.0" layoutY="138.0" strokeType="OUTSIDE"
-                    strokeWidth="0.0" text="Tài Khoản">
-                    <font>
-                        <Font name="Arial Bold" size="13.0" />
-                    </font>
-                </Text>
-                <Text fill="#4e4b4b" layoutX="85.0" layoutY="187.0" strokeType="OUTSIDE"
-                    strokeWidth="0.0" text="Mật Khẩu">
-                    <font>
-                        <Font name="Arial Bold" size="13.0" />
-                    </font>
-                </Text>
-                <Text fill="#4e4b4b" layoutX="85.0" layoutY="90.0" strokeType="OUTSIDE"
-                    strokeWidth="0.0" text="Tên">
-                    <font>
-                        <Font name="Arial Bold" size="13.0" />
-                    </font>
-                </Text>
-                <Text fx:id="baoloi" fill="RED" layoutX="82.0" layoutY="282.0" strokeType="OUTSIDE"
-                    strokeWidth="0.0" wrappingWidth="227.39997100830078" />
-                <Text fill="#8c7d7d" layoutX="137.0" layoutY="356.0" strokeType="OUTSIDE"
-                    strokeWidth="0.0" text="Đã có tài khoản?">
-                    <font>
-                        <Font name="Arial Bold" size="12.0" />
-                    </font>
-                </Text>
-                <Text fill="#598ce4" layoutX="237.0" layoutY="356.0"
-                    onMouseClicked="#chuyenSangDangNhap" strokeType="OUTSIDE" strokeWidth="0.0"
-                    styleClass="login-title" text="Đăng nhập">
-                    <font>
-                        <Font name="Arial Bold" size="12.0" />
-                    </font>
-                    <cursor>
-                        <Cursor fx:constant="HAND" />
-                    </cursor>
-                </Text>
-                <Text fill="#4e4b4b" layoutX="86.0" layoutY="234.0" strokeType="OUTSIDE"
-                    strokeWidth="0.0" text="Nhập Lại Mật Khẩu">
-                    <font>
-                        <Font name="Arial Bold" size="13.0" />
-                    </font>
-                </Text>
-                <PasswordField fx:id="txtConfirmPass" layoutX="85.0" layoutY="239.0"
-                    prefHeight="26.0" prefWidth="216.0" promptText="Password" />
-            </children>
-        </AnchorPane>
-    </right>
-</BorderPane>
+        <!-- Header -->
+        <VBox alignment="CENTER" spacing="5">
+            <Label style="-fx-font-size: 28px; -fx-font-weight: 900; -fx-text-fill: #111;" text="TẠO TÀI KHOẢN" />
+            <Label style="-fx-text-fill: #666; -fx-font-size: 14px;" text="Bắt đầu hành trình chinh phục cùng chúng tôi." />
+        </VBox>
+        
+        <!-- Form Fields -->
+        <VBox spacing="15">
+            <padding>
+                <Insets top="10.0" />
+            </padding>
+            
+            <!-- Username -->
+            <VBox spacing="5">
+                <Label style="-fx-font-weight: bold; -fx-text-fill: #555; -fx-font-size: 11px;" text="TÊN ĐĂNG NHẬP" />
+                <TextField fx:id="txtUserName" promptText="Tên đăng nhập của bạn" style="-fx-pref-height: 45; -fx-background-radius: 5; -fx-border-color: #ddd; -fx-border-radius: 5; -fx-background-color: white; -fx-font-size: 14px;" />
+            </VBox>
+            
+            <!-- Email -->
+            <VBox spacing="5">
+                <Label style="-fx-font-weight: bold; -fx-text-fill: #555; -fx-font-size: 11px;" text="EMAIL" />
+                <TextField fx:id="txtEmail" promptText="Địa chỉ email (VD: abc@gmail.com)" style="-fx-pref-height: 45; -fx-background-radius: 5; -fx-border-color: #ddd; -fx-border-radius: 5; -fx-background-color: white; -fx-font-size: 14px;" />
+            </VBox>
+            
+            <!-- Password -->
+            <VBox spacing="5">
+                <Label style="-fx-font-weight: bold; -fx-text-fill: #555; -fx-font-size: 11px;" text="MẬT KHẨU" />
+                <PasswordField fx:id="txtPassWord" promptText="••••••" style="-fx-pref-height: 45; -fx-background-radius: 5; -fx-border-color: #ddd; -fx-border-radius: 5; -fx-background-color: white; -fx-font-size: 14px;" />
+            </VBox>
+
+            <!-- Confirm Password -->
+            <VBox spacing="5">
+                <Label style="-fx-font-weight: bold; -fx-text-fill: #555; -fx-font-size: 11px;" text="NHẬP LẠI MẬT KHẨU" />
+                <PasswordField fx:id="txtConfirmPass" promptText="••••••" style="-fx-pref-height: 45; -fx-background-radius: 5; -fx-border-color: #ddd; -fx-border-radius: 5; -fx-background-color: white; -fx-font-size: 14px;" />
+            </VBox>
+        </VBox>
+
+        <Text fx:id="baoloi" fill="RED" />
+
+        <!-- Register Button -->
+        <Button fx:id="btnRegister" maxWidth="Infinity" mnemonicParsing="false" onAction="#handleRegister" style="-fx-background-color: #ff4500; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 15px; -fx-pref-height: 45; -fx-background-radius: 5; -fx-cursor: hand;" text="ĐĂNG KÝ" />
+
+        <!-- Login Link -->
+        <HBox alignment="CENTER" spacing="5">
+            <padding>
+                <Insets top="5.0" />
+            </padding>
+            <Label style="-fx-text-fill: #666; -fx-font-size: 13px;" text="Đã có tài khoản?" />
+            <Label onMouseClicked="#chuyenSangDangNhap" style="-fx-text-fill: #ff4500; -fx-font-weight: bold; -fx-font-size: 13px; -fx-cursor: hand;" text="Đăng nhập" />
+        </HBox>
+    </VBox>
+
+</StackPane>

@@ -28,11 +28,17 @@ public class LoginController {
     private PasswordField passWord;
 
     @FXML
-    private TextField userName;
+    private TextField txtEmail;
 
     @FXML
     private Text thongbaoloi;
 
+    /**
+     * Hàm xử lý sự kiện khi người dùng bấm vào nút/văn bản "Đăng ký ngay".
+     * Chức năng: Chuyển đổi giao diện từ màn hình Đăng nhập sang màn hình Đăng ký tài khoản.
+     * 
+     * @param event Sự kiện click chuột từ JavaFX
+     */
     @FXML
     void chuyenSangDangKy(MouseEvent event) {
         try {
@@ -50,13 +56,40 @@ public class LoginController {
     }
 
     @FXML
+    void quenMatKhau(MouseEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/view/ForgotPassword.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Hàm xử lý sự kiện khi người dùng bấm nút "Đăng nhập".
+     * Chức năng: 
+     * 1. Thu thập email và mật khẩu từ form.
+     * 2. Kiểm tra tính hợp lệ (bỏ trống, định dạng email).
+     * 3. Băm mật khẩu và đối chiếu với cơ sở dữ liệu qua UserDAO.
+     * 4. Nếu thành công, chuyển sang màn hình chính (Main.fxml). Nếu thất bại, hiển thị thông báo lỗi.
+     * 
+     * @param event Sự kiện click chuột từ JavaFX
+     */
+    @FXML
     void chuyenSangTrangChu(ActionEvent event) {
         // kiem tra dang nhap
-        String user = userName.getText();
+        String email = txtEmail.getText().trim();
         String pass = passWord.getText();
         // kiem tra null
-        if (user.isEmpty() || pass.isEmpty()) {
+        if (email.isEmpty() || pass.isEmpty()) {
             thongbaoloi.setText("Vui lòng điền đầy đủ thông tin!");
+            return;
+        }
+
+        if (!email.matches("^[a-zA-Z0-9._%+-]+@gmail\\.com$")) {
+            thongbaoloi.setText("Vui lòng nhập đúng định dạng email *****@gmail.com!");
             return;
         }
 
@@ -65,7 +98,7 @@ public class LoginController {
 
         // 1. Gọi hàm login từ DAO
         UserDAO userDAO = new UserDAO();
-        User userDangNhap = userDAO.login(user, hashedPass);
+        User userDangNhap = userDAO.login(email, hashedPass);
 
         // 2. Kiểm tra kết quả
         if (userDangNhap != null) {
@@ -80,10 +113,18 @@ public class LoginController {
                 e.printStackTrace();
             }
         } else {
-            thongbaoloi.setText("Tên đăng nhập hoặc mật khẩu không đúng!");
+            thongbaoloi.setText("Email hoặc mật khẩu không đúng!");
         }
     }
 
+    /**
+     * Hàm hỗ trợ băm (hash) mật khẩu bằng thuật toán SHA-256.
+     * Chức năng: Chuyển đổi mật khẩu dạng văn bản thuần túy thành chuỗi mã hóa
+     * để đối chiếu với mật khẩu đã lưu trong Database.
+     * 
+     * @param password Mật khẩu gốc người dùng nhập
+     * @return Chuỗi mật khẩu đã được mã hóa Hex
+     */
     private String hashPassword(String password) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
