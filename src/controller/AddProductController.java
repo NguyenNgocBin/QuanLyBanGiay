@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import models.Product;
+import models.Category;
 import javafx.scene.Node;
 
 import java.io.File;
@@ -26,7 +27,7 @@ public class AddProductController {
     private Text thongBao;
 
     @FXML
-    private ComboBox<String> cbDanhMuc;
+    private ComboBox<Category> cbDanhMuc;
 
     @FXML
     private ImageView imageViewSanPham;
@@ -50,9 +51,9 @@ public class AddProductController {
 
     @FXML
     public void initialize() {
-        System.out.println("Đang nạp dữ liệu danh mục..."); // test
+        System.out.println("Đang nạp dữ liệu danh mục...");
         try {
-            List<String> listDanhMuc = categoryDao.getAllCategoryNames();
+            List<Category> listDanhMuc = categoryDao.getAllCategories();
             cbDanhMuc.getItems().clear();
             cbDanhMuc.getItems().addAll(listDanhMuc);
             if (!listDanhMuc.isEmpty()) {
@@ -64,51 +65,43 @@ public class AddProductController {
     }
 
     @FXML
-    private File fileAnhDaChon; // Biến toàn cục lưu tệp ảnh đã chọn
+    private File fileAnhDaChon;
 
     @FXML
     void handleChonAnh(ActionEvent event) {
-        // Khởi tạo FileChooser(trình chọn tệp)
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Chọn Ảnh Sản Phẩm");
-        // 2. Thiết lập bộ lọc (chỉ cho phép chọn ảnh)
         fileChooser.getExtensionFilters()
                 .addAll(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
-        // 3. Hiển thị hộp thoại chọn tệp
         Stage stage = (Stage) buttonChonAnh.getScene().getWindow();
         File selectFile = fileChooser.showOpenDialog(stage);
-        // 4. Xử lý tệp được chọn
         if (selectFile != null) {
-            // Hiển thị ảnh lên giao diện
             Image image = new Image(selectFile.toURI().toString());
             imageViewSanPham.setImage(image);
-            // Thiết lập kích thước
             imageViewSanPham.setFitWidth(150);
             imageViewSanPham.setFitHeight(150);
             imageViewSanPham.setPreserveRatio(true);
-            // Lưu file vào biến toàn cục để dùng cho nút "Lưu sản phẩm"
             this.fileAnhDaChon = selectFile;
         }
     }
 
     @FXML
     void buttonSave(ActionEvent event) {
-        String id = txtId.getText();
+        String id = txtId.getText(); // This is productCode now
         String name = txtTenSanPham.getText();
-        String category = cbDanhMuc.getValue();
+        Category category = cbDanhMuc.getValue();
         String size = txtSize.getText();
-        // Kiểm tra dữ liệu
+
         if (id.isEmpty() || name.isEmpty() || category == null) {
             thongBao.setText("Vui lòng điền đầy đủ thông tin!");
             return;
         }
-        // xử lý số liệu giá và tồn kho
-        long price = 0;
+
+        double price = 0;
         int stock = 0;
         try {
-            // Chuyển chuỗi sang số
             if (!txtGia.getText().isEmpty()) {
-                price = Long.parseLong(txtGia.getText());
+                price = Double.parseDouble(txtGia.getText());
             }
             if (!txtTonKho.getText().isEmpty()) {
                 stock = Integer.parseInt(txtTonKho.getText());
@@ -117,9 +110,16 @@ public class AddProductController {
             thongBao.setText("Giá hoặc Tồn kho không hợp lệ!");
             return;
         }
-        Product product = new Product(id, name, category, price, stock, size,
-                fileAnhDaChon != null ? fileAnhDaChon.getAbsolutePath() : "");
-        // Gọi DAO để lưu sản phẩm
+
+        Product product = new Product();
+        product.setProductCode(id);
+        product.setName(name);
+        product.setCategoryId(category.getId());
+        product.setPrice(price);
+        product.setStock(stock);
+        product.setSize(size);
+        product.setImagePath(fileAnhDaChon != null ? fileAnhDaChon.getAbsolutePath() : "");
+
         ProductDAO productDAO = new ProductDAO();
         if (productDAO.addProduct(product)) {
             thongBao.setText("Thêm sản phẩm thành công!");
@@ -137,8 +137,6 @@ public class AddProductController {
 
     @FXML
     void buttonCancel(ActionEvent event) {
-        Node source = (Node) event.getSource();
-        Stage stage = (Stage) source.getScene().getWindow();
-        stage.close();
+        closeWindow(event);
     }
 }

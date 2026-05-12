@@ -2,8 +2,10 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
@@ -11,163 +13,147 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="mainBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-    minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0"
-    stylesheets="@../resources/css/Style.css" xmlns="http://javafx.com/javafx/25"
-    xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+<BorderPane fx:id="mainBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" stylesheets="@../resources/css/Style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
     <left>
-        <VBox prefWidth="250.0" styleClass="sidebar" BorderPane.alignment="CENTER">
+        <VBox prefWidth="250.0" styleClass="sidebar-new" BorderPane.alignment="CENTER">
             <children>
-                <VBox alignment="CENTER" prefHeight="180.0">
+                <VBox alignment="CENTER" prefHeight="150.0">
                     <children>
-                        <ImageView fitHeight="119.0" fitWidth="172.0" pickOnBounds="true"
-                            preserveRatio="true">
+                        <ImageView fitHeight="80.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@../resources/logo/iconlogo.png" />
                             </image>
                         </ImageView>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Hệ Thống Quản Lý Giày"
-                            textAlignment="CENTER" wrappingWidth="215.99998474121094">
+                        <Text fill="#ffffff" strokeType="OUTSIDE" strokeWidth="0.0" text="SoleManager" textAlignment="CENTER">
                             <font>
-                                <Font name="Arial Bold Italic" size="18.0" />
+                                <Font name="System Bold" size="22.0" />
                             </font>
                             <VBox.margin>
                                 <Insets top="10.0" />
                             </VBox.margin>
                         </Text>
+                        <Text fill="#9ca3af" strokeType="OUTSIDE" strokeWidth="0.0" text="Hệ thống quản lý giày" textAlignment="CENTER">
+                            <font>
+                                <Font size="12.0" />
+                            </font>
+                        </Text>
                     </children>
                 </VBox>
-
+                
                 <VBox spacing="5.0" VBox.vgrow="ALWAYS">
                     <children>
-                        <HBox alignment="CENTER_LEFT" onMouseClicked="#hienThiTrangChu"
-                            prefHeight="50.0" spacing="15.0" style="-fx-cursor: hand;"
-                            styleClass="sidebar-btn">
-                            <padding>
-                                <Insets left="30.0" />
-                            </padding>
+                        <HBox alignment="CENTER_LEFT" onMouseClicked="#hienThiTrangChu" prefHeight="50.0" spacing="15.0" styleClass="sidebar-item, sidebar-item-active">
                             <children>
-                                <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true"
-                                    preserveRatio="true">
+                                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
                                         <Image url="@../resources/img/home.png" />
                                     </image>
                                 </ImageView>
-                                <Text styleClass="menu-text" text="Trang Chủ">
-                                    <font>
-                                        <Font name="Arial Bold" size="15.0" />
-                                    </font>
-                                    <HBox.margin>
-                                        <Insets top="10.0" />
-                                    </HBox.margin>
-                                </Text>
+                                <Text styleClass="sidebar-text" text="Dashboard" />
                             </children>
                         </HBox>
-
-                        <HBox alignment="CENTER_LEFT" onMouseClicked="#hienThiSanPham"
-                            prefHeight="50.0" spacing="15.0" style="-fx-cursor: hand;"
-                            styleClass="sidebar-btn">
-                            <padding>
-                                <Insets left="30.0" />
-                            </padding>
+                        
+                        <HBox alignment="CENTER_LEFT" onMouseClicked="#hienThiSanPham" prefHeight="50.0" spacing="15.0" styleClass="sidebar-item">
                             <children>
-                                <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true"
-                                    preserveRatio="true">
+                                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
                                         <Image url="@../resources/img/product.png" />
                                     </image>
                                 </ImageView>
-                                <Text styleClass="menu-text" text="Sản Phẩm">
-                                    <font>
-                                        <Font name="Arial Bold" size="15.0" />
-                                    </font>
-                                    <HBox.margin>
-                                        <Insets top="5.0" />
-                                    </HBox.margin>
-                                </Text>
+                                <Text styleClass="sidebar-text" text="Sản phẩm" />
                             </children>
                         </HBox>
-
-                        <HBox alignment="CENTER_LEFT" onMouseClicked="#hienThiKhachHang"
-                            prefHeight="50.0" spacing="15.0" style="-fx-cursor: hand;"
-                            styleClass="sidebar-btn">
-                            <padding>
-                                <Insets left="30.0" />
-                            </padding>
+                        
+                        <HBox alignment="CENTER_LEFT" onMouseClicked="#hienThiKhachHang" prefHeight="50.0" spacing="15.0" styleClass="sidebar-item">
                             <children>
-                                <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true"
-                                    preserveRatio="true">
+                                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
                                         <Image url="@../resources/img/customer.png" />
                                     </image>
                                 </ImageView>
-                                <Text styleClass="menu-text" text="Khách hàng">
-                                    <font>
-                                        <Font name="Arial Bold" size="15.0" />
-                                    </font>
-                                    <HBox.margin>
-                                        <Insets top="2.0" />
-                                    </HBox.margin>
-                                </Text>
+                                <Text styleClass="sidebar-text" text="Khách hàng" />
                             </children>
                         </HBox>
-
-                        <HBox alignment="CENTER_LEFT" onMouseClicked="#hienThiDonHang"
-                            prefHeight="50.0" spacing="15.0" style="-fx-cursor: hand;"
-                            styleClass="sidebar-btn">
-                            <padding>
-                                <Insets left="30.0" />
-                            </padding>
+                        
+                        <HBox alignment="CENTER_LEFT" onMouseClicked="#hienThiDonHang" prefHeight="50.0" spacing="15.0" styleClass="sidebar-item">
                             <children>
-                                <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true"
-                                    preserveRatio="true">
+                                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
                                         <Image url="@../resources/img/report.png" />
                                     </image>
                                 </ImageView>
-                                <Text styleClass="menu-text" text="Đơn Hàng">
-                                    <font>
-                                        <Font name="Arial Bold" size="15.0" />
-                                    </font>
-                                    <HBox.margin>
-                                        <Insets top="6.0" />
-                                    </HBox.margin>
-                                </Text>
+                                <Text styleClass="sidebar-text" text="Báo cáo" />
                             </children>
                         </HBox>
                     </children>
                 </VBox>
+                
+                <!-- Nút Tạo đơn mới -->
+                <VBox alignment="CENTER">
+                    <padding><Insets top="20.0" bottom="20.0" left="20.0" right="20.0" /></padding>
+                    <Label alignment="CENTER" prefHeight="40.0" prefWidth="200.0" styleClass="btn-create-order" text="+ Tạo đơn mới" onMouseClicked="#hienThiDonHang" />
+                </VBox>
 
                 <Region VBox.vgrow="ALWAYS" />
-
-                <HBox alignment="CENTER_LEFT" onMouseClicked="#xuLyDangXuat" prefHeight="60.0"
-                    spacing="15.0"
-                    style="-fx-border-color: #E5E7EB; -fx-border-width: 1 0 0 0; -fx-cursor: hand;">
-                    <padding>
-                        <Insets left="30.0" />
-                    </padding>
+                
+                <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="15.0" styleClass="sidebar-item">
                     <children>
-                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true"
-                            preserveRatio="true">
+                        <Label text="⚙" style="-fx-text-fill: #9ca3af; -fx-font-size: 18px;" />
+                        <Text styleClass="sidebar-text" text="Cài đặt" />
+                    </children>
+                </HBox>
+
+                <HBox alignment="CENTER_LEFT" onMouseClicked="#xuLyDangXuat" prefHeight="60.0" spacing="15.0" styleClass="sidebar-item" style="-fx-border-color: #1f2937; -fx-border-width: 1 0 0 0;">
+                    <children>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@../resources/img/logOut.png" />
                             </image>
                         </ImageView>
-                        <Text fx:id="handlDangXuat" text="Đăng Xuất">
-                            <font>
-                                <Font name="Arial Bold" size="15.0" />
-                            </font>
-                            <cursor>
-                                <Cursor fx:constant="HAND" />
-                            </cursor>
-                        </Text>
+                        <Text styleClass="sidebar-text" text="Đăng xuất" />
                     </children>
                 </HBox>
             </children>
         </VBox>
     </left>
     <center>
-        <BorderPane fx:id="contentArea" style="-fx-background-color: #F5F5F5;"
-            BorderPane.alignment="CENTER" />
+        <BorderPane fx:id="contentArea" style="-fx-background-color: #f8f9fa;" BorderPane.alignment="CENTER">
+            <top>
+                <HBox alignment="CENTER_LEFT" prefHeight="60.0" styleClass="header-new">
+                    <children>
+                        <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="300.0" spacing="10.0" styleClass="search-bar">
+                            <children>
+                                <Label text="🔍" textFill="#6c757d" />
+                                <Label text="Tìm kiếm hệ thống..." textFill="#6c757d" />
+                            </children>
+                            <padding>
+                                <Insets left="15.0" />
+                            </padding>
+                        </HBox>
+                        <Region HBox.hgrow="ALWAYS" />
+                        <HBox alignment="CENTER_LEFT" spacing="25.0">
+                            <children>
+                                <Label text="🔔" style="-fx-font-size: 18px; -fx-cursor: hand;" />
+                                <Label text="Support" style="-fx-cursor: hand; -fx-text-fill: #495057;" />
+                                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                    <children>
+                                        <VBox alignment="CENTER_RIGHT">
+                                            <children>
+                                                <Label style="-fx-font-weight: bold;" text="Store Manager" />
+                                                <Label style="-fx-font-size: 11px; -fx-text-fill: #6c757d;" text="Admin" />
+                                            </children>
+                                        </VBox>
+                                        <Label text="👤" style="-fx-font-size: 24px;" />
+                                    </children>
+                                </HBox>
+                            </children>
+                        </HBox>
+                    </children>
+                    <padding>
+                        <Insets left="30.0" right="30.0" />
+                    </padding>
+                </HBox>
+            </top>
+        </BorderPane>
     </center>
 </BorderPane>

@@ -236,7 +236,7 @@ public class ForgotPasswordController {
     @FXML
     void backToLogin(MouseEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/login.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
             Stage stage = (Stage) btnSendCode.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();

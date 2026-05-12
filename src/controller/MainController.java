@@ -44,7 +44,7 @@ public class MainController {
 
     @FXML
     private void hienThiDonHang(MouseEvent event) {
-        loadPage("Oder");
+        loadPage("Order");
     }
 
     @FXML

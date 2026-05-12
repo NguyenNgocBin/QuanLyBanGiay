@@ -1,58 +1,39 @@
 package models;
 
 public class Customer {
-    private String MaKH;
-    private String HoTen;
-    private String Sdt;
-    private String Email;
-    private double TongchiTieu;
+    private int id;
+    private String customerCode;
+    private String fullName;
+    private String phone;
+    private String email;
+    private double totalSpent;
 
-    public Customer(String MaKH, String HoTen, String Sdt, String Email, double TongchiTieu) {
-        this.MaKH = MaKH;
-        this.HoTen = HoTen;
-        this.Sdt = Sdt;
-        this.Email = Email;
-        this.TongchiTieu = TongchiTieu;
+    public Customer() {}
+
+    public Customer(int id, String customerCode, String fullName, String phone, String email, double totalSpent) {
+        this.id = id;
+        this.customerCode = customerCode;
+        this.fullName = fullName;
+        this.phone = phone;
+        this.email = email;
+        this.totalSpent = totalSpent;
     }
 
-    public String getMaKH() {
-        return MaKH;
-    }
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
-    public void setMaKH(String MaKH) {
-        this.MaKH = MaKH;
-    }
+    public String getCustomerCode() { return customerCode; }
+    public void setCustomerCode(String customerCode) { this.customerCode = customerCode; }
 
-    public String getHoTen() {
-        return HoTen;
-    }
+    public String getFullName() { return fullName; }
+    public void setFullName(String fullName) { this.fullName = fullName; }
 
-    public void setHoTen(String HoTen) {
-        this.HoTen = HoTen;
-    }
+    public String getPhone() { return phone; }
+    public void setPhone(String phone) { this.phone = phone; }
 
-    public String getSdt() {
-        return Sdt;
-    }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 
-    public void setSdt(String Sdt) {
-        this.Sdt = Sdt;
-    }
-
-    public String getEmail() {
-        return Email;
-    }
-
-    public void setEmail(String Email) {
-        this.Email = Email;
-    }
-
-    public double getTongchiTieu() {
-        return TongchiTieu;
-    }
-
-    public void setTongchiTieu(double TongchiTieu) {
-        this.TongchiTieu = TongchiTieu;
-    }
-
+    public double getTotalSpent() { return totalSpent; }
+    public void setTotalSpent(double totalSpent) { this.totalSpent = totalSpent; }
 }

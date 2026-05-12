@@ -14,15 +14,17 @@ public class CustomerDAO {
     // Hàm lấy mã tiếp theo
     public String getNextMaKH() {
         String nextMa = "KH001";
-        String sql = "SELECT MaKH FROM customer ORDER BY MaKH DESC LIMIT 1";
+        String sql = "SELECT customer_code FROM customers ORDER BY id DESC LIMIT 1";
         try (Connection conn = DBConnection.getConnection();
                 PreparedStatement pst = conn.prepareStatement(sql);
                 ResultSet rs = pst.executeQuery()) {
 
             if (rs.next()) {
-                String lastMa = rs.getString("MaKH");
-                int number = Integer.parseInt(lastMa.substring(2));
-                nextMa = String.format("KH%03d", number + 1);
+                String lastMa = rs.getString("customer_code");
+                if (lastMa != null && lastMa.startsWith("KH")) {
+                    int number = Integer.parseInt(lastMa.substring(2));
+                    nextMa = String.format("KH%03d", number + 1);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -31,14 +33,14 @@ public class CustomerDAO {
     }
 
     // Hàm thêm mới khách hàng
-    public boolean insertCustomer(String maKH, String hoTen, String sdt, String email) {
-        String sql = "INSERT INTO Customer (MaKH, HoTen, Sdt, Email) VALUES (?, ?, ?, ?)";
+    public boolean insertCustomer(String customerCode, String fullName, String phone, String email) {
+        String sql = "INSERT INTO customers (customer_code, full_name, phone, email) VALUES (?, ?, ?, ?)";
         try (Connection conn = DBConnection.getConnection();
                 PreparedStatement pst = conn.prepareStatement(sql)) {
 
-            pst.setString(1, maKH);
-            pst.setString(2, hoTen);
-            pst.setString(3, sdt);
+            pst.setString(1, customerCode);
+            pst.setString(2, fullName);
+            pst.setString(3, phone);
             pst.setString(4, email);
 
             return pst.executeUpdate() > 0;
@@ -51,7 +53,7 @@ public class CustomerDAO {
     // Hàm lấy tất cả khách hàng
     public ObservableList<Customer> getAllCustomers() {
         ObservableList<Customer> list = FXCollections.observableArrayList();
-        String sql = "SELECT * FROM customer"; // Lấy tất cả dữ liệu từ bảng
+        String sql = "SELECT * FROM customers";
 
         try (Connection conn = DBConnection.getConnection();
                 PreparedStatement pst = conn.prepareStatement(sql);
@@ -59,11 +61,12 @@ public class CustomerDAO {
 
             while (rs.next()) {
                 list.add(new Customer(
-                        rs.getString("MaKH"),
-                        rs.getString("HoTen"),
-                        rs.getString("Sdt"),
-                        rs.getString("Email"),
-                        rs.getDouble("TongChiTieu")));
+                        rs.getInt("id"),
+                        rs.getString("customer_code"),
+                        rs.getString("full_name"),
+                        rs.getString("phone"),
+                        rs.getString("email"),
+                        rs.getDouble("total_spent")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -71,13 +74,13 @@ public class CustomerDAO {
         return list;
     }
 
-    public boolean deleteCustomer(String maKH) {
-        String sql = "DELETE FROM customer WHERE MaKH = ?";
+    public boolean deleteCustomer(String customerCode) {
+        String sql = "DELETE FROM customers WHERE customer_code = ?";
         try (Connection conn = DBConnection.getConnection();
                 PreparedStatement pst = conn.prepareStatement(sql)) {
 
-            pst.setString(1, maKH);
-            return pst.executeUpdate() > 0; // Trả về true nếu xóa thành công
+            pst.setString(1, customerCode);
+            return pst.executeUpdate() > 0;
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -86,14 +89,14 @@ public class CustomerDAO {
     }
 
     public boolean updateCustomer(Customer customer) {
-        String sql = "UPDATE customer SET HoTen = ?, Sdt = ?, Email = ? WHERE MaKH = ?";
+        String sql = "UPDATE customers SET full_name = ?, phone = ?, email = ? WHERE customer_code = ?";
         try (Connection conn = DBConnection.getConnection();
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setString(1, customer.getHoTen());
-            pstmt.setString(2, customer.getSdt());
+            pstmt.setString(1, customer.getFullName());
+            pstmt.setString(2, customer.getPhone());
             pstmt.setString(3, customer.getEmail());
-            pstmt.setString(4, customer.getMaKH());
+            pstmt.setString(4, customer.getCustomerCode());
 
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {

@@ -107,7 +107,7 @@ public class CreateAccountController {
     @FXML
     void chuyenSangDangNhap(MouseEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/login.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
@@ -148,7 +148,7 @@ public class CreateAccountController {
     public void quayVeTrangLogin(ActionEvent event) {
         try {
             // Sửa lại đường dẫn tới file Đăng nhập của bạn (hello-view.fxml hoặc login-view.fxml)
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Login.fxml"));
             Parent root = loader.load(); // chay  giao dien
             Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));

@@ -1,80 +1,54 @@
 package models;
 
 public class Product {
-    private String Id;
-    private String Name;
-    private String Category;
-    private long Price;
-    private int Stock;
-    private String Size;
-    private String Image_path;
+    private int id;
+    private String productCode;
+    private String name;
+    private int categoryId;
+    private String categoryName; // Lấy từ bảng categories để hiển thị lên bảng (JOIN)
+    private double price;
+    private int stock;
+    private String size;
+    private String imagePath;
 
-    public Product() {
+    public Product() {}
+
+    public Product(int id, String productCode, String name, int categoryId, String categoryName, double price, int stock, String size, String imagePath) {
+        this.id = id;
+        this.productCode = productCode;
+        this.name = name;
+        this.categoryId = categoryId;
+        this.categoryName = categoryName;
+        this.price = price;
+        this.stock = stock;
+        this.size = size;
+        this.imagePath = imagePath;
     }
 
-    public Product(String Id, String Name, String Category, long Price, int Stock, String Size, String Image_path) {
-        this.Id = Id;
-        this.Name = Name;
-        this.Category = Category;
-        this.Price = Price;
-        this.Stock = Stock;
-        this.Size = Size;
-        this.Image_path = Image_path;
-    }
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
-    public String getId() {
-        return Id;
-    }
+    public String getProductCode() { return productCode; }
+    public void setProductCode(String productCode) { this.productCode = productCode; }
 
-    public void setId(String Id) {
-        this.Id = Id;
-    }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 
-    public String getName() {
-        return Name;
-    }
+    public int getCategoryId() { return categoryId; }
+    public void setCategoryId(int categoryId) { this.categoryId = categoryId; }
 
-    public void setName(String Name) {
-        this.Name = Name;
-    }
+    public String getCategoryName() { return categoryName; }
+    public void setCategoryName(String categoryName) { this.categoryName = categoryName; }
 
-    public String getCategory() {
-        return Category;
-    }
+    public double getPrice() { return price; }
+    public void setPrice(double price) { this.price = price; }
 
-    public void setCategory(String Category) {
-        this.Category = Category;
-    }
+    public int getStock() { return stock; }
+    public void setStock(int stock) { this.stock = stock; }
 
-    public double getPrice() {
-        return Price;
-    }
+    public String getSize() { return size; }
+    public void setSize(String size) { this.size = size; }
 
-    public void setPrice(long Price) {
-        this.Price = Price;
-    }
-
-    public int getStock() {
-        return Stock;
-    }
-
-    public void setStock(int Stock) {
-        this.Stock = Stock;
-    }
-
-    public String getSize() {
-        return Size;
-    }
-
-    public void setSize(String Size) {
-        this.Size = Size;
-    }
-
-    public String getImage_path() {
-        return Image_path;
-    }
-
-    public void setImage_path(String Image_path) {
-        this.Image_path = Image_path;
-    }
+    public String getImagePath() { return imagePath; }
+    public void setImagePath(String imagePath) { this.imagePath = imagePath; }
 }

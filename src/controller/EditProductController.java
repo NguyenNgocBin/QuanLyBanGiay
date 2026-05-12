@@ -6,6 +6,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import models.Product;
+import models.Category;
 import DAO.ProductDAO;
 
 import java.util.List;
@@ -15,7 +16,7 @@ import DAO.CategoryDAO;
 public class EditProductController {
 
     @FXML
-    private ComboBox<String> cbCategory;
+    private ComboBox<Category> cbCategory;
     @FXML
     private TextField txtId;
     @FXML
@@ -37,18 +38,24 @@ public class EditProductController {
     }
 
     private void loadCategories() {
-        List<String> categories = categoryDAO.getAllCategoryNames();
+        List<Category> categories = categoryDAO.getAllCategories();
         cbCategory.getItems().clear();
         cbCategory.getItems().addAll(categories);
     }
 
-    // Nhận dữ liệu từ bảng quyền qua
     public void setProductData(Product product) {
         this.product = product;
         txtName.setText(product.getName());
         txtPrice.setText(String.valueOf(product.getPrice()));
         txtSize.setText(product.getSize());
         txtStock.setText(String.valueOf(product.getStock()));
+        // Optionally select the category in combobox
+        for (Category c : cbCategory.getItems()) {
+            if (c.getId() == product.getCategoryId()) {
+                cbCategory.getSelectionModel().select(c);
+                break;
+            }
+        }
     }
 
     private void closeStage() {
@@ -57,20 +64,15 @@ public class EditProductController {
     }
 
     @FXML
-    void buttonCancel(ActionEvent event) {
-
-    }
-
-    @FXML
     void buttonSave(ActionEvent event) {
         try {
             product.setName(txtName.getText());
             product.setSize(txtSize.getText());
-            // Dùng Double.parseDouble cho giá tiền
-            product.setPrice(Long.parseLong(txtPrice.getText()));
-            // Dùng Integer.parseInt cho số lượng
+            product.setPrice(Double.parseDouble(txtPrice.getText()));
             product.setStock(Integer.parseInt(txtStock.getText()));
-            // Đóng cửa sổ sau khi lưu xong
+            if (cbCategory.getValue() != null) {
+                product.setCategoryId(cbCategory.getValue().getId());
+            }
             if (productDAO.updateProduct(product)) {
                 closeStage();
             }

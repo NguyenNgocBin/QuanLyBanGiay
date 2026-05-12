@@ -16,7 +16,7 @@ public class DashbroardDAO {
     public double getDoanhThuHomNay() {
         double doanhThu = 0;
         // SQL: Tính tổng tiền các đơn có ngày tạo là hôm nay VÀ đã thanh toán
-        String sql = "SELECT SUM(total) FROM oder " +
+        String sql = "SELECT SUM(total_amount) FROM orders " +
                 "WHERE DATE(order_date) = CURRENT_DATE() " +
                 "AND status = N'Đã thanh toán'";
         try (Connection connection = DBConnection.getConnection(); // Gọi hàm kết nối
@@ -33,7 +33,7 @@ public class DashbroardDAO {
 
     public int getSoDonHangHomNay() {
         int soDon = 0;
-        String sql = "SELECT COUNT(*) FROM oder WHERE order_date = CURRENT_DATE() AND status != N'Đã hủy'";
+        String sql = "SELECT COUNT(*) FROM orders WHERE order_date = CURRENT_DATE() AND status != N'Đã hủy'";
         try (Connection conn = DBConnection.getConnection();
                 PreparedStatement pstmt = conn.prepareStatement(sql);
                 ResultSet rs = pstmt.executeQuery()) {
@@ -50,8 +50,8 @@ public class DashbroardDAO {
     public double[] getDoanhThuTheoThang() {
         double[] data = new double[12];
 
-        String sql = "SELECT MONTH(order_date) as thang, SUM(total) as tong_tien " +
-                "FROM oder " +
+        String sql = "SELECT MONTH(order_date) as thang, SUM(total_amount) as tong_tien " +
+                "FROM orders " +
                 "WHERE YEAR(order_date) = YEAR(CURRENT_DATE()) " +
                 "AND status = N'Đã thanh toán' " +
                 "GROUP BY MONTH(order_date)";

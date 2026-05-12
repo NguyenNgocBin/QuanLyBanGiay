@@ -22,8 +22,8 @@ public class EditCustomerController {
     // Nhận dự liệu Từ bảng truyền qua
     public void setCustomerData(Customer customer) {
         this.customer = customer;
-        txtHoTen.setText(customer.getHoTen());
-        txtSDT.setText(customer.getSdt());
+        txtHoTen.setText(customer.getFullName());
+        txtSDT.setText(customer.getPhone());
         txtEmail.setText(customer.getEmail());
     }
 
@@ -34,8 +34,8 @@ public class EditCustomerController {
 
     @FXML
     private void buttonSave() {
-        customer.setHoTen(txtHoTen.getText());
-        customer.setSdt(txtSDT.getText());
+        customer.setFullName(txtHoTen.getText());
+        customer.setPhone(txtSDT.getText());
         customer.setEmail(txtEmail.getText());
 
         if (customerDAO.updateCustomer(customer)) {

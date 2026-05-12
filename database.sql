@@ -91,7 +91,27 @@ CREATE TABLE `oder` (
 
 LOCK TABLES `oder` WRITE;
 /*!40000 ALTER TABLE `oder` DISABLE KEYS */;
-INSERT INTO `oder` VALUES (1,'Nguyễn Văn A - Giày đi tiệc',2500000,'2026-01-05','Đã thanh toán'),(2,'Trần Thị B - Sỉ giày Sneaker',8500000,'2026-01-12','Đã thanh toán'),(3,'Lê Hoàng - Giày da nam',4200000,'2026-01-25','Đang giao hàng'),(4,'Phạm Thu - Quà Valentine',1800000,'2026-02-10','Đã thanh toán'),(5,'Cửa hàng X - Nhập bù hàng',5500000,'2026-02-18','Đã thanh toán'),(6,'Khách lẻ vãng lai',2100000,'2026-02-26','Đã thanh toán'),(7,'Vũ Minh - Bộ sưu tập Xuân',6800000,'2026-03-05','Đã thanh toán'),(8,'Ngô Quyền - Giày chạy bộ',3200000,'2026-03-15','Đã thanh toán'),(9,'Đặng Thùy - Sandal đi học',2500000,'2026-03-28','Đang giao hàng'),(10,'Đại lý Y - Lô dép du lịch',9500000,'2026-04-10','Đã thanh toán'),(11,'Nhóm phượt - Giày leo núi',4800000,'2026-04-20','Đã thanh toán'),(12,'Khách lẻ online',1900000,'2026-04-25','Đang giao hàng'),(13,'Lô giày trẻ em hè',7200000,'2026-05-08','Đã thanh toán'),(14,'Trần Hà - Sneaker trắng',3500000,'2026-05-15','Đã thanh toán'),(15,'Nguyễn Tùng - Giày lười',3800000,'2026-05-28','Chờ xử lý'),(16,'Resort Z - Dép đồng phục',12000000,'2026-06-05','Đã thanh toán'),(17,'Khách lẻ - Mua sắm hè',4500000,'2026-06-18','Đã thanh toán'),(18,'Hoàng Nam - Giày thể thao',1800000,'2026-06-25','Đã thanh toán'),(19,'Đơn sỉ nhỏ - Ủng đi mưa',5500000,'2026-07-10','Đang giao hàng'),(20,'Lê Lợi - Giày da chống nước',3200000,'2026-07-20','Đã thanh toán'),(21,'Phạm Hương - Boot cổ thấp',2800000,'2026-07-28','Đã thanh toán'),(22,'Trường Quốc Tế - Giày đồng phục',15500000,'2026-08-10','Đã thanh toán'),(23,'Hội phụ huynh - Mua chung',6800000,'2026-08-20','Đã thanh toán'),(24,'Sinh viên - Giày bata',1900000,'2026-08-28','Đã thanh toán'),(25,'Công sở A - Giày tây',7500000,'2026-09-08','Đã thanh toán'),(26,'Nguyễn Trãi - Giày thời trang',3500000,'2026-09-18','Đã thanh toán'),(27,'Khách vãng lai',2200000,'2026-09-25','Đã hủy'),(28,'Shop B - Nhập hàng Thu Đông',8200000,'2026-10-12','Đã thanh toán'),(29,'Trần Dần - Boot da',2800000,'2026-10-22','Đã thanh toán'),(30,'Khách lẻ',1500000,'2026-10-30','Đang giao hàng'),(31,'Săn Sale 11/11 - Đơn lớn',12500000,'2026-11-11','Đã thanh toán'),(32,'Black Friday - Sỉ',10500000,'2026-11-25','Đã thanh toán'),(33,'Khách lẻ săn sale',5200000,'2026-11-28','Đã thanh toán'),(37,'Nguyễn Văn A - Giày Sneaker',2500000,'2026-01-05','Đã thanh toán'),(38,'Nguyễn Văn KAKA - Giày Sneaker',2500000,'2026-01-05','Đã thanh toán'),(39,'Nguyễn Văn KAKA - Giày Sneaker',2500000,'2026-02-10','Đã thanh toán'),(40,'Nguyễn Ngọc Bin - Giày Tây',2500000,'2026-02-10','Đã thanh toán'),(41,'Nguyễn Ngọc Bin - Giày Lười',1500000,'2026-02-10','Đã thanh toán'),(42,'Nguyễn Ngọc Bin - Giày Bata',1500000,'2026-02-10','Chưa Thanh Toán');
+INSERT INTO `oder` VALUES (1,'Nguyễn Văn A - Giày đi tiệc',2500000,'2026-01-05','Đã thanh toán'),
+(2,'Trần Thị B - Sỉ giày Sneaker',8500000,'2026-01-12','Đã thanh toán'),
+(3,'Lê Hoàng - Giày da nam',4200000,'2026-01-25','Đang giao hàng'),
+(4,'Phạm Thu - Quà Valentine',1800000,'2026-02-10','Đã thanh toán'),
+(5,'Cửa hàng X - Nhập bù hàng',5500000,'2026-02-18','Đã thanh toán'),
+(6,'Khách lẻ vãng lai',2100000,'2026-02-26','Đã thanh toán'),
+(7,'Vũ Minh - Bộ sưu tập Xuân',6800000,'2026-03-05','Đã thanh toán'),
+(8,'Ngô Quyền - Giày chạy bộ',3200000,'2026-03-15','Đã thanh toán'),
+(9,'Đặng Thùy - Sandal đi học',2500000,'2026-03-28','Đang giao hàng'),
+(10,'Đại lý Y - Lô dép du lịch',9500000,'2026-04-10','Đã thanh toán'),
+(11,'Nhóm phượt - Giày leo núi',4800000,'2026-04-20','Đã thanh toán'),
+(12,'Khách lẻ online',1900000,'2026-04-25','Đang giao hàng'),
+(13,'Lô giày trẻ em hè',7200000,'2026-05-08','Đã thanh toán'),
+(14,'Trần Hà - Sneaker trắng',3500000,'2026-05-15','Đã thanh toán'),
+(15,'Nguyễn Tùng - Giày lười',3800000,'2026-05-28','Chờ xử lý'),
+(16,'Resort Z - Dép đồng phục',12000000,'2026-06-05','Đã thanh toán'),
+(17,'Khách lẻ - Mua sắm hè',4500000,'2026-06-18','Đã thanh toán'),
+(18,'Hoàng Nam - Giày thể thao',1800000,'2026-06-25','Đã thanh toán'),
+(19,'Đơn sỉ nhỏ - Ủng đi mưa',5500000,'2026-07-10','Đang giao hàng'),
+(20,'Lê Lợi - Giày da chống nước',3200000,'2026-07-20','Đã thanh toán'),
+(40,'Nguyễn Ngọc Bin - Giày Tây',2500000,'2026-02-10','Đã thanh toán');
 /*!40000 ALTER TABLE `oder` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -158,7 +178,140 @@ UNLOCK TABLES;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40101 SET COLLATION_COcustomernameNNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2026-03-25 21:38:52
+
+use testlogin;
+select * from users;
+
+
+
+
+
+/*=====THÊM CỘT EMAIL VÀO BẢNG USER ========*/
+ALTER TABLE users ADD COLUMN email VARCHAR(100) UNIQUE AFTER username;
+
+
+
+CREATE DATABASE IF NOT EXISTS `testlogin` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+USE `testlogin`;
+
+-- Tắt kiểm tra khóa ngoại tạm thời để dễ dàng xóa bảng
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- =====================================================================
+-- 1. BẢNG CATEGORIES (Danh mục sản phẩm - Đổi từ danhmuc)
+-- =====================================================================
+DROP TABLE IF EXISTS `categories`;
+CREATE TABLE `categories` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `name` VARCHAR(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- =====================================================================
+-- 2. BẢNG PRODUCTS (Sản phẩm - Chuẩn hóa lại, thêm khóa ngoại)
+-- =====================================================================
+DROP TABLE IF EXISTS `products`;
+CREATE TABLE `products` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `product_code` VARCHAR(50) NOT NULL UNIQUE,  -- Ví dụ: #SH-1102
+  `name` VARCHAR(255) NOT NULL,
+  `category_id` INT,                           -- Khóa ngoại trỏ đến bảng categories
+  `price` DOUBLE DEFAULT 0,
+  `stock` INT DEFAULT 0,
+  `size` VARCHAR(50),
+  `image_path` VARCHAR(500),
+  FOREIGN KEY (`category_id`) REFERENCES `categories`(`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- =====================================================================
+-- 3. BẢNG CUSTOMERS (Khách hàng - Chuẩn hóa tên cột)
+-- =====================================================================
+DROP TABLE IF EXISTS `customers`;
+CREATE TABLE `customers` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `customer_code` VARCHAR(20) NOT NULL UNIQUE, -- Ví dụ: KH003
+  `full_name` VARCHAR(100) NOT NULL,
+  `phone` VARCHAR(20),
+  `email` VARCHAR(100) NOT NULL,
+  `total_spent` DOUBLE DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- =====================================================================
+-- 4. BẢNG ORDERS (Hóa đơn - Sửa lỗi Typo "oder", liên kết Khách hàng)
+-- =====================================================================
+DROP TABLE IF EXISTS `orders`;
+CREATE TABLE `orders` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `customer_id` INT,                           -- Khóa ngoại trỏ đến khách hàng
+  `total_amount` DOUBLE NOT NULL DEFAULT 0,
+  `order_date` DATE DEFAULT (CURRENT_DATE),
+  `status` VARCHAR(50) DEFAULT 'Chờ xử lý',
+  FOREIGN KEY (`customer_id`) REFERENCES `customers`(`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- =====================================================================
+-- 5. BẢNG ORDER_DETAILS (Chi tiết Hóa Đơn - THÊM MỚI QUAN TRỌNG)
+-- =====================================================================
+DROP TABLE IF EXISTS `order_details`;
+CREATE TABLE `order_details` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `order_id` INT NOT NULL,
+  `product_id` INT NOT NULL,
+  `quantity` INT NOT NULL DEFAULT 1,
+  `unit_price` DOUBLE NOT NULL,                -- Giá tại thời điểm mua
+  FOREIGN KEY (`order_id`) REFERENCES `orders`(`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- =====================================================================
+-- 6. BẢNG USERS (Tài khoản nhân viên/quản lý)
+-- =====================================================================
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `name` VARCHAR(50) NOT NULL,
+  `username` VARCHAR(50) NOT NULL UNIQUE,
+  `email` VARCHAR(100) UNIQUE,
+  `password` VARCHAR(255) NOT NULL,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Bật lại kiểm tra khóa ngoại
+SET FOREIGN_KEY_CHECKS = 1;
+
+-- =====================================================================
+-- INSERT DỮ LIỆU MẪU ĐỂ TEST
+-- =====================================================================
+
+INSERT INTO `categories` (`name`) VALUES 
+('Giày Thể Thao'), ('Giày Tây'), ('Giày Sandal'), ('Phụ Kiện'), ('Giày Trẻ Em');
+
+INSERT INTO `products` (`product_code`, `name`, `category_id`, `price`, `stock`, `size`) VALUES 
+('#SH-1102', 'Puma RS-X', 1, 2500000, 5, '38-42'),
+('#SH-2201', 'Oxford Classic Brown', 2, 4500000, 0, '41-43'),
+('#SH-5541', 'Adidas Ultraboost 22', 1, 4200000, 15, '36-44'),
+('#SH-8291', 'Nike Air Max 270', 1, 3800000, 45, '39-44');
+
+INSERT INTO `customers` (`customer_code`, `full_name`, `phone`, `email`, `total_spent`) VALUES 
+('KH003', 'Trần Hoàng Hải', '03839483943', 'hai@gmail.com', 2500000),
+('KH004', 'Alest san đơ', '08472639288', 'alest@gmail.com', 4500000),
+('KH005', 'Nguyễn Ngọc Bin', '0123456789', 'nguyenngocbin@gmail.com', 0);
+
+-- Insert User (Giữ lại vài user mẫu có sẵn)
+INSERT INTO `users` (`name`, `username`, `email`, `password`) VALUES 
+('Admin User', 'admin', 'admin@example.com', 'adminpassword'),
+('Phương Xinh', 'PhuongXinh', 'phuong@example.com', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92');
+
+-- Hóa đơn mẫu
+INSERT INTO `orders` (`customer_id`, `total_amount`, `order_date`, `status`) VALUES 
+(1, 2500000, '2026-05-01', 'Đã thanh toán'),
+(2, 4500000, '2026-05-10', 'Đã thanh toán');
+
+-- Chi tiết hóa đơn (Link Order 1 với Product 1, Order 2 với Product 2)
+INSERT INTO `order_details` (`order_id`, `product_id`, `quantity`, `unit_price`) VALUES 
+(1, 1, 1, 2500000),
+(2, 2, 1, 4500000);
+

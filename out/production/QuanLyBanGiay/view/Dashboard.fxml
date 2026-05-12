@@ -1,114 +1,173 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.chart.AreaChart?>
+<?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="731.0" prefWidth="837.0" style="-fx-background-color: #f2f4f8;"
-    xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
-    fx:controller="controller.DashboardController">
-    <children>
-        <VBox spacing="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0"
-            AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
-            <children>
-
-                <HBox alignment="CENTER_RIGHT" spacing="15.0">
-                    <children>
-                        <Label text="Xin chào, Admin" textFill="#555555">
-                            <font>
-                                <Font name="System Bold" size="14.0" />
-                            </font>
-                        </Label>
-                    </children>
-                    <padding>
-                        <Insets bottom="10.0" />
-                    </padding>
-                </HBox>
-
-                <HBox spacing="20.0">
-                    <children>
-                        <VBox
-                            style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);"
-                            HBox.hgrow="ALWAYS">
-                            <padding>
-                                <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
-                            </padding>
-                            <children>
-                                <Label text="Doanh thu hôm nay" textFill="#757575">
-                                    <font>
-                                        <Font size="14.0" />
-                                    </font>
-                                </Label>
-                                <Label fx:id="lblDoanhThu" text="5.600.000 VNĐ">
-                                    <font>
-                                        <Font name="System Bold" size="32.0" />
-                                    </font>
-                                    <VBox.margin>
-                                        <Insets top="10.0" />
-                                    </VBox.margin>
-                                </Label>
-                            </children>
+<AnchorPane prefHeight="800.0" prefWidth="1100.0" style="-fx-background-color: #f8f9fa;" stylesheets="@../resources/css/Style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DashboardController">
+   <children>
+      <VBox spacing="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+         <children>
+            <!-- Header -->
+            <VBox spacing="5.0">
+               <children>
+                  <Label text="Tổng quan hệ thống" textFill="#212529">
+                     <font>
+                        <Font name="Arial Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label text="Cập nhật lúc: 14:30, 24 Tháng 5, 2024" textFill="#6c757d">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            
+            <!-- Metrics Cards -->
+            <HBox spacing="15.0">
+               <children>
+                  <!-- Card 1: Doanh Thu -->
+                  <VBox styleClass="card, metric-card" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label styleClass="metric-title" text="TỔNG DOANH THU" />
+                        <Label fx:id="lblDoanhThu" styleClass="metric-value" text="₫1.240M" />
+                        <Label styleClass="metric-sub" text="+12.5%" />
+                     </children>
+                  </VBox>
+                  <!-- Card 2: Đơn Hàng -->
+                  <VBox styleClass="card, metric-card" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label styleClass="metric-title" text="TỔNG ĐƠN HÀNG" />
+                        <Label fx:id="lblSoDonHang" styleClass="metric-value" text="854" />
+                        <Label styleClass="metric-sub" text="+8.2%" />
+                     </children>
+                  </VBox>
+                  <!-- Card 3: Khách Hàng Mới -->
+                  <VBox styleClass="card, metric-card" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label styleClass="metric-title" text="KHÁCH HÀNG MỚI" />
+                        <Label styleClass="metric-value" text="126" />
+                        <Label styleClass="metric-sub" text="+5.1%" />
+                     </children>
+                  </VBox>
+                  <!-- Card 4: Sắp Hết Hàng -->
+                  <VBox styleClass="card, metric-card" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label styleClass="metric-title" text="SẮP HẾT HÀNG" />
+                        <Label style="-fx-text-fill: #dc3545;" styleClass="metric-value" text="12" />
+                        <Label styleClass="metric-sub-negative" text="CẦN NHẬP HÀNG" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            
+            <!-- Middle Row: Chart & Best Sellers -->
+            <HBox spacing="15.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <!-- Chart -->
+                  <VBox styleClass="card, chart-card" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label styleClass="chart-title" text="Phân tích doanh thu" />
+                        <BarChart fx:id="revenueChart" legendVisible="false">
+                          <xAxis>
+                            <CategoryAxis side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis side="LEFT" />
+                          </yAxis>
+                        </BarChart>
+                     </children>
+                  </VBox>
+                  
+                  <!-- Best Sellers -->
+                  <VBox prefWidth="350.0" styleClass="card">
+                     <children>
+                        <Label styleClass="chart-title" text="Sản phẩm bán chạy nhất" />
+                        <VBox spacing="10.0" VBox.vgrow="ALWAYS">
+                           <children>
+                              <!-- Item 1 -->
+                              <HBox alignment="CENTER_LEFT" spacing="10.0" styleClass="list-item">
+                                 <children>
+                                    <Label style="-fx-font-weight: bold; -fx-text-fill: #0d6efd;" text="1" />
+                                    <VBox HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Label style="-fx-font-weight: bold;" text="Air Max Premium Red" />
+                                          <Label style="-fx-text-fill: #6c757d; -fx-font-size: 11px;" text="245 Sold" />
+                                       </children>
+                                    </VBox>
+                                    <Label style="-fx-font-weight: bold;" text="₫3.450.000" />
+                                 </children>
+                              </HBox>
+                              <!-- Item 2 -->
+                              <HBox alignment="CENTER_LEFT" spacing="10.0" styleClass="list-item">
+                                 <children>
+                                    <Label style="-fx-font-weight: bold; -fx-text-fill: #0d6efd;" text="2" />
+                                    <VBox HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Label style="-fx-font-weight: bold;" text="Jordan Retro High OG" />
+                                          <Label style="-fx-text-fill: #6c757d; -fx-font-size: 11px;" text="182 Sold" />
+                                       </children>
+                                    </VBox>
+                                    <Label style="-fx-font-weight: bold;" text="₫4.200.000" />
+                                 </children>
+                              </HBox>
+                              <!-- Item 3 -->
+                              <HBox alignment="CENTER_LEFT" spacing="10.0" styleClass="list-item">
+                                 <children>
+                                    <Label style="-fx-font-weight: bold; -fx-text-fill: #0d6efd;" text="3" />
+                                    <VBox HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Label style="-fx-font-weight: bold;" text="Ultraboost 5.0 Neon" />
+                                          <Label style="-fx-text-fill: #6c757d; -fx-font-size: 11px;" text="156 Sold" />
+                                       </children>
+                                    </VBox>
+                                    <Label style="-fx-font-weight: bold;" text="₫3.900.000" />
+                                 </children>
+                              </HBox>
+                           </children>
+                           <padding>
+                              <Insets top="10.0" />
+                           </padding>
                         </VBox>
-
-                        <VBox
-                            style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);"
-                            HBox.hgrow="ALWAYS">
-                            <padding>
-                                <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
-                            </padding>
-                            <children>
-                                <Label text="Đơn đã bán hôm nay" textFill="#757575">
-                                    <font>
-                                        <Font size="14.0" />
-                                    </font>
-                                </Label>
-                                <Label fx:id="lblSoDonHang" text="24 đơn">
-                                    <font>
-                                        <Font name="System Bold" size="32.0" />
-                                    </font>
-                                    <VBox.margin>
-                                        <Insets top="10.0" />
-                                    </VBox.margin>
-                                </Label>
-                            </children>
-                        </VBox>
-                    </children>
-                </HBox>
-
-                <VBox
-                    style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);"
-                    VBox.vgrow="ALWAYS">
-                    <children>
-                        <Label text="Doanh thu theo tháng">
-                            <font>
-                                <Font name="System Bold" size="16.0" />
-                            </font>
-                            <VBox.margin>
-                                <Insets bottom="10.0" left="20.0" top="20.0" />
-                            </VBox.margin>
-                        </Label>
-                        <AreaChart fx:id="revenueChart" styleClass="bieuDoDoanhThu"
-                            stylesheets="@../resources/css/Style.css">
-                            <xAxis>
-                                <CategoryAxis side="BOTTOM" />
-                            </xAxis>
-                            <yAxis>
-                                <NumberAxis side="LEFT" />
-                            </yAxis>
-                        </AreaChart>
-                    </children>
-                    <padding>
-                        <Insets bottom="10.0" right="10.0" top="10.0" />
-                    </padding>
-                </VBox>
-
-            </children>
-        </VBox>
-    </children>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            
+            <!-- Bottom Row: Recent Orders -->
+            <VBox spacing="10.0" styleClass="card" VBox.vgrow="ALWAYS">
+               <children>
+                  <HBox alignment="CENTER_LEFT">
+                     <children>
+                        <Label styleClass="chart-title" text="Đơn hàng gần đây" />
+                        <AnchorPane HBox.hgrow="ALWAYS" />
+                        <Label style="-fx-text-fill: #0d6efd; -fx-cursor: hand;" text="Xem tất cả" />
+                     </children>
+                  </HBox>
+                  <TableView fx:id="tblRecentOrders" prefHeight="200.0" VBox.vgrow="ALWAYS">
+                    <columns>
+                      <TableColumn prefWidth="100.0" text="MÃ ĐƠN" />
+                      <TableColumn prefWidth="150.0" text="KHÁCH HÀNG" />
+                      <TableColumn prefWidth="200.0" text="SẢN PHẨM" />
+                      <TableColumn prefWidth="120.0" text="TỔNG TIỀN" />
+                      <TableColumn prefWidth="120.0" text="TRẠNG THÁI" />
+                    </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
 </AnchorPane>

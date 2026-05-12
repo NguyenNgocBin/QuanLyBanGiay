@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
 
-import DAO.OderDAO;
+import DAO.OrderDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -23,48 +23,45 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import models.Oder;
+import models.Order;
 import javafx.scene.control.TableCell;
 import javafx.geometry.Pos;
 
-public class OderController {
+public class OrderController {
 
     @FXML
-    private TableView<Oder> tableOrders;
+    private TableView<Order> tableOrders;
 
     @FXML
-    private TableColumn<Oder, Integer> colId;
+    private TableColumn<Order, Integer> colId;
 
     @FXML
-    private TableColumn<Oder, String> colCustomer;
+    private TableColumn<Order, String> colCustomer;
 
     @FXML
-    private TableColumn<Oder, Long> colTotal;
+    private TableColumn<Order, Double> colTotal; // Changed to Double
 
     @FXML
-    private TableColumn<Oder, Date> colDate;
+    private TableColumn<Order, Date> colDate;
 
     @FXML
-    private TableColumn<Oder, String> colStatus;
+    private TableColumn<Order, String> colStatus;
 
     @FXML
     private TextField txtSearch;
 
-    // Tính đóng gói-bảo vệ dữ liệu
-    // 2. Khai báo DAO và List chứa dữ liệu
-    private OderDAO oderDAO = new OderDAO();
-    private ObservableList<Oder> oderList = FXCollections.observableArrayList();
+    private OrderDAO orderDAO = new OrderDAO();
+    private ObservableList<Order> orderList = FXCollections.observableArrayList();
 
-    // Tính trừu tượng
     @FXML
     public void initialize() {
-        // 1. Cấu hình cột cơ bản
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colCustomer.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         colDate.setCellValueFactory(new PropertyValueFactory<>("orderDate"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
-        colTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
-        colStatus.setCellFactory(column -> new TableCell<Oder, String>() {
+        colTotal.setCellValueFactory(new PropertyValueFactory<>("totalAmount")); // changed from total
+        
+        colStatus.setCellFactory(column -> new TableCell<Order, String>() {
             @Override
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
@@ -74,8 +71,7 @@ public class OderController {
                     setStyle("");
                 } else {
                     setText(item);
-                    setAlignment(Pos.CENTER); // Căn giữa
-                    // Xóa class cũ để tránh bị chồng màu
+                    setAlignment(Pos.CENTER);
                     getStyleClass().removeAll("status-success", "status-warning", "status-danger");
                     switch (item) {
                         case "Đã thanh toán":
@@ -102,13 +98,10 @@ public class OderController {
 
     private void loadData() {
         try {
-            // Lấy dữ liệu từ Database
-            List<Oder> dataFromDB = oderDAO.getAllOder();
-            oderList.clear();
-            oderList.addAll(dataFromDB);
-
-            // Đổ dữ liệu vào bảng
-            tableOrders.setItems(oderList);
+            List<Order> dataFromDB = orderDAO.getAllOrders(); // renamed method
+            orderList.clear();
+            orderList.addAll(dataFromDB);
+            tableOrders.setItems(orderList);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Lỗi khi load dữ liệu lên bảng.");
@@ -116,15 +109,13 @@ public class OderController {
     }
 
     private void setUpContextMenu() {
-        // Tao cac item cho menu
         ContextMenu contextMenu = new ContextMenu();
         MenuItem editItem = new MenuItem("Chỉnh Sửa");
         MenuItem deleteItem = new MenuItem("Xóa");
 
-        // Hiện thị xoá, sửa
         contextMenu.getItems().addAll(editItem, deleteItem);
         tableOrders.setRowFactory(tv -> {
-            TableRow<Oder> row = new TableRow<>();
+            TableRow<Order> row = new TableRow<>();
             row.emptyProperty().addListener((obs, wasEmpty, isEmpty) -> {
                 if (isEmpty) {
                     row.setContextMenu(null);
@@ -135,39 +126,35 @@ public class OderController {
             return row;
         });
 
-        // Xử lý sự kiện cho item "Chỉnh Sửa"
         editItem.setOnAction(event -> {
-            Oder selected = tableOrders.getSelectionModel().getSelectedItem();
+            Order selected = tableOrders.getSelectionModel().getSelectedItem();
             if (selected != null) {
-                handleEditOder(selected);
+                handleEditOrder(selected);
             }
         });
-        // Xử lý sự kiệN cho item "Xoá"
+
         deleteItem.setOnAction(event -> {
-            Oder selected = tableOrders.getSelectionModel().getSelectedItem();
+            Order selected = tableOrders.getSelectionModel().getSelectedItem();
             if (selected != null) {
-                handleDeleteOder(selected);
+                handleDeleteOrder(selected);
             }
         });
     }
 
-    private void handleEditOder(Oder oder) {
+    private void handleEditOrder(Order order) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/EditOder.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/EditOrder.fxml")); // renamed FXML
             Parent root = loader.load();
 
-            // Lấy controller và truyền dữ liệu
-            EditOderController controller = loader.getController();
-            controller.setOderDate(oder);
+            EditOrderController controller = loader.getController();
+            controller.setOrder(order); // renamed method
 
-            // Hiển thị cửa sổ
             Stage stage = new Stage();
-            stage.setTitle("Chỉnh sửa khách hàng");
+            stage.setTitle("Chỉnh sửa đơn hàng");
             stage.setScene(new Scene(root));
             stage.showAndWait();
 
-            // Cập nhật lại bảng sau khi đóng cửa sổ
-            tableOrders.refresh();
+            loadData(); // reload from DB
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -177,19 +164,17 @@ public class OderController {
         }
     }
 
-    private void handleDeleteOder(Oder oder) {
+    private void handleDeleteOrder(Order order) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Xác nhận xóa");
-        alert.setHeaderText("Bạn có chắc chắn muốn xóa khách hàng: " + oder.getCustomerName() + "?");
+        alert.setHeaderText("Bạn có chắc chắn muốn xóa đơn hàng của khách: " + order.getCustomerName() + "?");
         alert.setContentText("Hành động này không thể hoàn tác.");
 
         if (alert.showAndWait().get() == ButtonType.OK) {
-            // Bước 1: Gọi DAO để xóa trong Cơ sở dữ liệu
-            boolean success = new OderDAO().deleteOder(oder.getId());
+            boolean success = orderDAO.deleteOrder(order.getId());
 
             if (success) {
-                oderList.remove(oder);
-
+                orderList.remove(order);
                 Alert info = new Alert(Alert.AlertType.INFORMATION);
                 info.setTitle("Thông báo");
                 info.setHeaderText(null);
@@ -199,42 +184,29 @@ public class OderController {
         }
     }
 
-    // Chức năng tìm kiếm
     private void setupSearch() {
-        // 1. Tạo bộ lọc bao quanh danh sách gốc (oderList)
-        FilteredList<Oder> filteredData = new FilteredList<>(oderList, p -> true);
+        FilteredList<Order> filteredData = new FilteredList<>(orderList, p -> true);
 
         txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredData.setPredicate(oder -> {
-                // Nếu ô tìm kiếm trống thì Hiện tất cả
+            filteredData.setPredicate(order -> {
                 if (newValue == null || newValue.isEmpty()) {
                     return true;
                 }
-                // không phân biệt hoa/thường
                 String lowerCaseFilter = newValue.toLowerCase();
 
-                // 1. Tìm theo Tên Khách Hàng
-                if (oder.getCustomerName() != null && oder.getCustomerName().toLowerCase().contains(lowerCaseFilter)) {
+                if (order.getCustomerName() != null && order.getCustomerName().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (order.getStatus() != null && order.getStatus().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (String.valueOf(order.getId()).contains(lowerCaseFilter)) {
                     return true;
                 }
-                // 2. Tìm theo Trạng Thái
-                else if (oder.getStatus() != null && oder.getStatus().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                }
-                // 3. Tìm theo ID
-                else if (String.valueOf(oder.getId()).contains(lowerCaseFilter)) {
-                    return true;
-                }
-                // Nếu không trùng cái nào ở trên -> Ẩn dòng đó đi
                 return false;
             });
         });
 
-        // 3. Bọc trong SortedList để giữ chức năng sắp xếp của bảng
-        SortedList<Oder> sortedData = new SortedList<>(filteredData);
-        // Kết nối việc sắp xếp của SortedList với TableView
+        SortedList<Order> sortedData = new SortedList<>(filteredData);
         sortedData.comparatorProperty().bind(tableOrders.comparatorProperty());
-        // 4. Đổ dữ liệu đã lọc vào bảng
         tableOrders.setItems(sortedData);
     }
 }

@@ -31,7 +31,7 @@
                     </children>
                 </VBox>
                 <Region HBox.hgrow="ALWAYS" />
-                <Button mnemonicParsing="false" onAction="#themMoiCustomer" styleClass="buttonAdd"
+                <Button mnemonicParsing="false" onAction="#themMoiCustomer" styleClass="button-primary"
                     text="+ Thêm mới" textFill="WHITE">
 
                 </Button>

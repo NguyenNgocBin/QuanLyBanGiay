@@ -2,6 +2,7 @@ package DAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,16 +12,16 @@ import models.Product;
 
 public class ProductDAO {
 
-    public boolean insertProduct(String id, String name, String category, long price, int stock, String size,
+    public boolean insertProduct(String productCode, String name, int categoryId, double price, int stock, String size,
             String imagePath) {
-        String sql = "INSERT INTO products (id, name, category, price, stock, size, image_path) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO products (product_code, name, category_id, price, stock, size, image_path) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = DBConnection.getConnection();
                 PreparedStatement pst = connection.prepareStatement(sql)) {
 
-            pst.setString(1, id);
+            pst.setString(1, productCode);
             pst.setString(2, name);
-            pst.setString(3, category);
+            pst.setInt(3, categoryId);
             pst.setDouble(4, price);
             pst.setInt(5, stock);
             pst.setString(6, size);
@@ -37,22 +38,23 @@ public class ProductDAO {
 
     public List<Product> getAll() {
         List<Product> list = new ArrayList<>();
-        String sql = "SELECT * FROM products";
+        String sql = "SELECT p.*, c.name as category_name FROM products p LEFT JOIN categories c ON p.category_id = c.id";
 
         try (Connection connection = DBConnection.getConnection();
                 PreparedStatement pst = connection.prepareStatement(sql);
-                java.sql.ResultSet rs = pst.executeQuery()) {
+                ResultSet rs = pst.executeQuery()) {
 
             while (rs.next()) {
                 Product p = new Product();
-
-                p.setId(rs.getString("Id"));
-                p.setName(rs.getString("Name"));
-                p.setCategory(rs.getString("Category"));
-                p.setPrice(rs.getLong("Price"));
-                p.setStock(rs.getInt("Stock"));
-                p.setSize(rs.getString("Size"));
-                p.setImage_path(rs.getString("Image_path"));
+                p.setId(rs.getInt("id"));
+                p.setProductCode(rs.getString("product_code"));
+                p.setName(rs.getString("name"));
+                p.setCategoryId(rs.getInt("category_id"));
+                p.setCategoryName(rs.getString("category_name"));
+                p.setPrice(rs.getDouble("price"));
+                p.setStock(rs.getInt("stock"));
+                p.setSize(rs.getString("size"));
+                p.setImagePath(rs.getString("image_path"));
 
                 list.add(p);
             }
@@ -63,16 +65,17 @@ public class ProductDAO {
     }
 
     public boolean addProduct(Product product) {
-        String sql = "INSERT INTO products (Id, Name, Category, Price, Stock, Size, Image_path) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO products (product_code, name, category_id, price, stock, size, image_path) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (Connection connection = DBConnection.getConnection();
                 PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setString(1, product.getId());
+                
+            pstmt.setString(1, product.getProductCode());
             pstmt.setString(2, product.getName());
-            pstmt.setString(3, product.getCategory());
+            pstmt.setInt(3, product.getCategoryId());
             pstmt.setDouble(4, product.getPrice());
             pstmt.setInt(5, product.getStock());
             pstmt.setString(6, product.getSize());
-            pstmt.setString(7, product.getImage_path());
+            pstmt.setString(7, product.getImagePath());
 
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -81,24 +84,25 @@ public class ProductDAO {
         }
     }
 
-    // Hàm tìm kiếm sản phẩm theo tên
     public List<Product> searchByName(String keyword) {
         List<Product> list = new ArrayList<>();
-        String sql = "SELECT * FROM products WHERE Name LIKE ?";
+        String sql = "SELECT p.*, c.name as category_name FROM products p LEFT JOIN categories c ON p.category_id = c.id WHERE p.name LIKE ?";
         try (Connection connection = DBConnection.getConnection();
                 PreparedStatement pst = connection.prepareStatement(sql)) {
             pst.setString(1, "%" + keyword + "%");
 
-            try (java.sql.ResultSet rs = pst.executeQuery()) {
+            try (ResultSet rs = pst.executeQuery()) {
                 while (rs.next()) {
                     Product p = new Product();
-                    p.setId(rs.getString("Id"));
-                    p.setName(rs.getString("Name"));
-                    p.setCategory(rs.getString("Category"));
-                    p.setPrice(rs.getLong("Price"));
-                    p.setStock(rs.getInt("Stock"));
-                    p.setSize(rs.getString("Size"));
-                    p.setImage_path(rs.getString("Image_path"));
+                    p.setId(rs.getInt("id"));
+                    p.setProductCode(rs.getString("product_code"));
+                    p.setName(rs.getString("name"));
+                    p.setCategoryId(rs.getInt("category_id"));
+                    p.setCategoryName(rs.getString("category_name"));
+                    p.setPrice(rs.getDouble("price"));
+                    p.setStock(rs.getInt("stock"));
+                    p.setSize(rs.getString("size"));
+                    p.setImagePath(rs.getString("image_path"));
 
                     list.add(p);
                 }
@@ -109,13 +113,13 @@ public class ProductDAO {
         return list;
     }
 
-    public boolean deleteProduct(String Id) {
-        String sql = "DELETE FROM products WHERE Id = ?";
+    public boolean deleteProduct(String productCode) {
+        String sql = "DELETE FROM products WHERE product_code = ?";
         try (Connection conn = DBConnection.getConnection();
                 PreparedStatement pst = conn.prepareStatement(sql)) {
 
-            pst.setString(1, Id);
-            return pst.executeUpdate() > 0; // Trả về true nếu xóa thành công
+            pst.setString(1, productCode);
+            return pst.executeUpdate() > 0;
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -124,7 +128,7 @@ public class ProductDAO {
     }
 
     public boolean updateProduct(Product product) {
-        String sql = "UPDATE products SET Name = ?, Price = ?, Size = ?, Stock = ?, Category = ? WHERE Id = ?";
+        String sql = "UPDATE products SET name = ?, price = ?, size = ?, stock = ?, category_id = ? WHERE product_code = ?";
 
         try (Connection conn = DBConnection.getConnection();
                 PreparedStatement pst = conn.prepareStatement(sql)) {
@@ -133,8 +137,8 @@ public class ProductDAO {
             pst.setDouble(2, product.getPrice());
             pst.setString(3, product.getSize());
             pst.setInt(4, product.getStock());
-            pst.setString(5, product.getCategory());
-            pst.setString(5, product.getId());
+            pst.setInt(5, product.getCategoryId());
+            pst.setString(6, product.getProductCode());
 
             return pst.executeUpdate() > 0;
         } catch (SQLException e) {

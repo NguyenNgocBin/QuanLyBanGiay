@@ -1,168 +1,265 @@
-.sidebar {
-    -fx-background-color: #ffffff;
-    -fx-border-color:#ffffff;
-    -FX-border-width: 0 1 0 0;
+/* =========================================================================
+   SOLE MANAGER THEME - DỰA TRÊN THIẾT KẾ MẪU
+   ========================================================================= */
+
+.root {
+    -fx-font-family: "Segoe UI", "Arial", sans-serif;
+    -fx-font-size: 14px;
+    -fx-background-color: #f4f7f6; /* Nền xám nhạt */
 }
+
+/* =========================================================================
+   1. SIDEBAR (THANH ĐIỀU HƯỚNG BÊN TRÁI) - Màu xanh navy rất tối (như ảnh)
+   ========================================================================= */
+.sidebar {
+    -fx-background-color: #111827; /* Màu đen/xanh navy rất tối */
+    -fx-border-width: 0;
+}
+
 .sidebar-btn {
     -fx-background-color: transparent;
-    -fx-pading: 10 20 10 20;
-    -fx-background-radius: 30;
+    -fx-padding: 12px 20px;
     -fx-alignment: CENTER_LEFT;
-    -fx-spacing: 15;
-    -fx-margin: 0 10 0 10;
+    -fx-spacing: 15px;
+    -fx-cursor: hand;
 }
+
 .menu-text {
-    -fx-fill:#333333;
-    -fx-font-family: "Arial";
-    -fx-font-weight: bold;
+    -fx-fill: #9ca3af; /* Chữ xám nhạt */
+    -fx-font-weight: normal;
     -fx-font-size: 15px;
 }
-.sidebar-btn:hover, .sidebar-btn.active {
-    -fx-background-color: linear-gradient(to bottom right, #E3F2FD, #BBDEFB);
-    -fx-effect: dropshadow(three-pass-box, rgba(144, 202, 249, 0.4), 8, 0, 0, 2);
+
+/* Khi di chuột vào nút menu */
+.sidebar-btn:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.05);
 }
 .sidebar-btn:hover .menu-text {
-    -fx-fill: #1565C0; 
-}
-/* Hiệu ứng khi nhấn giữ chuột */
-.sidebar-btn:pressed {
-    -fx-background-color: linear-gradient(to bottom right, #E3F2FD, #BBDEFB);
-    -fx-scale-x: 0.98;
-    -fx-scale-y: 0.98;
-    -fx-effect: dropshadow(three-pass-box,rgba(144, 202, 249, 0.4), 20, 0.6, 0, 0);
+    -fx-fill: #ffffff; 
 }
 
-/* ---  Biểu Đồ --- */
-
-.bieuDoDoanhThu .chart-series-line {
-    -fx-stroke: #1565C0;
-    -fx-stroke-width: 2.5px;
+/* Khi nút menu đang được chọn (Active) */
+.sidebar-btn.active, .sidebar-btn:pressed {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-border-color: #ffffff;
+    -fx-border-width: 0 0 0 4px; /* Vạch trắng bên trái giống thiết kế */
 }
-
-.bieuDoDoanhThu .chart-series-area-fill {
-    -fx-fill: linear-gradient(to bottom, #e7ffce, transparent);
-}
-
-.bieuDoDoanhThu .chart-line-symbol, 
-.bieuDoDoanhThu .chart-area-symbol {
-    -fx-background-color: #E3F2FD, #1565C0; /* Viền nhạt, nhân đậm */
-    -fx-background-radius: 5px;
-    -fx-background-insets: 0, 2; /* Độ dày viền */
-    -fx-padding: 4px; /* Kích thước chấm */
-}
-/*  Xóa nền và lưới dọc cho sạch */
-.bieuDoDoanhThu .chart-plot-background {
-    -fx-background-color: transparent;
-}
-.bieuDoDoanhThu .chart-vertical-grid-lines {
-    -fx-stroke: transparent;
-}
-.bieuDoDoanhThu .chart-horizontal-grid-lines {
-    -fx-stroke: #eeeeee; /* Lưới ngang mờ mờ */
-    -fx-stroke-dash-array: 4 4; /* Nét đứt */
-}
-
-.bieuDoDoanhThu .axis {
-    -fx-tick-label-fill: #757575; 
-    -fx-tick-label-font-size: 11px;
-}
-/* . (Mới thêm) Ẩn chú thích (Legend) nếu thấy vướng */
-.bieuDoDoanhThu .chart-legend {
-    -fx-background-color: transparent;
-    -fx-padding: 10px;
-}
-
-                    /*  PRODUCT */
-.buttonAdd {
-    -fx-background-color: linear-gradient(to bottom right, #E3F2FD, #BBDEFB); 
-    -fx-text-fill: rgb(0, 0, 0);
+.sidebar-btn.active .menu-text, .sidebar-btn:pressed .menu-text {
+    -fx-fill: #ffffff;
     -fx-font-weight: bold;
-    -fx-font-size: 14px;
-    -fx-background-radius: 30px;
+}
+
+/* Nút "Tạo đơn mới" trong sidebar */
+.btn-create-order {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #111827;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6px;
+    -fx-padding: 12px 20px;
+    -fx-cursor: hand;
+    -fx-alignment: center;
+}
+.btn-create-order:hover {
+    -fx-background-color: #e5e7eb;
+}
+
+/* =========================================================================
+   2. HEADER & TÌM KIẾM
+   ========================================================================= */
+.search-field {
+    -fx-background-color: #f3f4f6;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-border-width: 0;
+    -fx-padding: 10px 15px 10px 35px; /* Để trống bên trái cho icon kính lúp */
+    -fx-text-fill: #111827;
+}
+.search-field:focused {
+    -fx-border-color: #d1d5db;
+    -fx-border-width: 1px;
+}
+
+/* =========================================================================
+   3. BẢNG DỮ LIỆU (TABLE VIEW) - Giống trang Quản lý đơn hàng/Kho hàng
+   ========================================================================= */
+.table-view {
+    -fx-background-color: #ffffff;
+    -fx-padding: 0;
+    -fx-border-color: transparent;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 8px 8px 0 0;
+    -fx-border-width: 0 0 1px 0;
+    -fx-border-color: #e5e7eb;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-padding: 15px 10px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #6b7280; /* Chữ xám */
+    -fx-font-size: 12px;
+}
+
+.table-row-cell {
+    -fx-background-color: #ffffff;
+    -fx-border-width: 0 0 1px 0;
+    -fx-border-color: #f3f4f6;
+    -fx-cell-size: 55px; /* Chiều cao dòng lớn cho rộng rãi */
+    -fx-text-fill: #111827;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: #f9fafb;
+    -fx-cursor: hand;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #eff6ff;
+    -fx-border-color: #bfdbfe;
+    -fx-border-width: 0 0 1px 0;
+}
+
+/* =========================================================================
+   4. THẺ TRẠNG THÁI (STATUS TAGS)
+   ========================================================================= */
+.status-success {
+    -fx-background-color: #dcfce7;
+    -fx-text-fill: #15803d;
+    -fx-font-weight: bold;
+    -fx-padding: 5px 12px;
+    -fx-background-radius: 20px;
+    -fx-font-size: 11px;
+}
+.status-danger {
+    -fx-background-color: #fee2e2;
+    -fx-text-fill: #b91c1c;
+    -fx-font-weight: bold;
+    -fx-padding: 5px 12px;
+    -fx-background-radius: 20px;
+    -fx-font-size: 11px;
+}
+.status-warning {
+    -fx-background-color: #fef3c7;
+    -fx-text-fill: #b45309;
+    -fx-font-weight: bold;
+    -fx-padding: 5px 12px;
+    -fx-background-radius: 20px;
+    -fx-font-size: 11px;
+}
+
+/* =========================================================================
+   5. NÚT BẤM (BUTTONS)
+   ========================================================================= */
+.button-primary {
+    -fx-background-color: #111827;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6px;
     -fx-padding: 10px 20px;
     -fx-cursor: hand;
 }
-.buttonAdd:hover {
-    -fx-background-color: linear-gradient(to bottom right, #E3F2FD, #BBDEFB); 
-    -fx-scale-x: 1.1; /* Phóng to chiều ngang 10% */
-    -fx-scale-y: 1.1; /* Phóng to chiều dọc 10% */
-    /* Tạo hiệu ứng phát sáng */
-    -fx-effect: dropshadow(three-pass-box,rgba(144, 202, 249, 0.4), 20, 0.6, 0, 0);
-}
-.buttonAdd:pressed {  /* nhấn chuột  */
-    -fx-background-color: linear-gradient(to bottom right, #E3F2FD, #BBDEFB);
-    -fx-scale-x: 1.0; /* Thu nhỏ lại khi ấn */
-    -fx-scale-y: 1.0;
-    -fx-effect: dropshadow(three-pass-box,rgba(144, 202, 249, 0.4), 20, 0.6, 0, 0);
+.button-primary:hover {
+    -fx-background-color: #374151;
 }
 
-            /* Login */     
-.buttonLogin {
-    -fx-background-color: linear-gradient(to bottom right, #FF416C, #FF4B2B);
-    -fx-text-fill: white;
-    -fx-background-radius: 2px;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 2);
-    -fx-alignment: center;
-    -fx-cursor:hand
-}
-.buttonLogin:hover{
-    -fx-background-color: linear-gradient(to bottom right, derive(#FF416C, 20%), derive(#FF4B2B, 20%));
-}
-.buttonLogin.buttonAdd:pressed {
-    -fx-background-color: linear-gradient(to bottom right, derive(#FF416C, -20%), derive(#FF4B2B, -20%));
-}
-.login-title:hover {
-    -fx-text-fill: linear-gradient(to right, #00c6ff, #5c9ce9);
-    -fx-effect: dropshadow(gaussian, #86d2e8,  5, 0, 0, 2);
-}
-
-            /* Style Menu Chuột Phải chỉnh sửa - xoá */
-/* 1. Cái hộp chứa menu */
-.context-menu {
-    -fx-background-color: #ffffff;
-    -fx-background-radius: 8px;
-    -fx-border-radius: 8px;
-    -fx-border-color: #e0e0e0;
-    -fx-border-width: 1px;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 4); 
-    -fx-padding: 5px;
-}
-
-/* 2. Từng dòng (Chỉnh sửa/Xóa) bên trong menu */
-.context-menu .menu-item {
+.button-outline {
     -fx-background-color: transparent;
-    -fx-padding: 8 15 8 15;  /* Kích thước vừa vặn, không bị to đùng */
-    -fx-background-radius: 5px;
+    -fx-border-color: #d1d5db;
+    -fx-border-radius: 6px;
+    -fx-text-fill: #374151;
+    -fx-font-weight: bold;
+    -fx-padding: 9px 19px;
+    -fx-cursor: hand;
+}
+.button-outline:hover {
+    -fx-background-color: #f3f4f6;
 }
 
-/* 3. Hiệu ứng khi di chuột vào dòng menu */
-.context-menu .menu-item:focused {
-    -fx-background-color: #E3F2FD; /* Màu xanh nhạt */
+/* =========================================================================
+   6. CARDS (HỘP THÔNG TIN)
+   ========================================================================= */
+.card-container {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 12px;
+    -fx-border-radius: 12px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.04), 10, 0, 0, 4);
+}
+
+.card-title {
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-text-fill: #111827;
+}
+
+/* =========================================================================
+   7. SIDEBAR (THANH ĐIỀU HƯỚNG)
+   ========================================================================= */
+.sidebar-new {
+    -fx-background-color: #0b1120; /* Màu nền siêu tối */
+    -fx-border-width: 0;
+}
+
+.sidebar-item {
+    -fx-background-color: transparent;
+    -fx-padding: 12px 20px;
+    -fx-alignment: CENTER_LEFT;
+    -fx-spacing: 15px;
     -fx-cursor: hand;
 }
 
-/* 4. Màu chữ trong menu */
-.context-menu .menu-item .label {
-    -fx-text-fill: #333333;
-    -fx-font-size: 13px;
+.sidebar-text {
+    -fx-fill: #9ca3af; /* Chữ xám nhạt */
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
 }
 
-/* --- TRẠNG THÁI ĐƠN HÀNG --- */
+/* Khi di chuột vào nút menu */
+.sidebar-item:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.05);
+}
+.sidebar-item:hover .sidebar-text {
+    -fx-fill: #ffffff; 
+}
 
-/* thành công */
-.status-success {
-    -fx-text-fill: #28a745; 
+/* Khi nút menu đang được chọn (Active) */
+.sidebar-item-active, .sidebar-item:pressed {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-border-color: #ffffff;
+    -fx-border-width: 0 0 0 4px; /* Vạch trắng bên trái giống thiết kế */
+}
+.sidebar-item-active .sidebar-text, .sidebar-item:pressed .sidebar-text {
+    -fx-fill: #ffffff;
     -fx-font-weight: bold;
 }
 
-/*chờ xử lý */
-.status-danger {
-    -fx-text-fill: #dc3545;
+/* Nút "Tạo đơn mới" trong sidebar */
+.btn-create-order {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #111827;
     -fx-font-weight: bold;
+    -fx-background-radius: 6px;
+    -fx-padding: 12px 20px;
+    -fx-cursor: hand;
+    -fx-alignment: center;
+}
+.btn-create-order:hover {
+    -fx-background-color: #e5e7eb;
 }
 
-/* đang giao hàng */
-.status-warning {
-    -fx-text-fill: #ffc107;
-    -fx-font-weight: bold;
+/* Header Styles */
+.header-new {
+    -fx-background-color: white;
+    -fx-padding: 15px 30px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.03), 0, 1, 0, 0);
+}
+
+.search-bar {
+    -fx-background-color: #f1f3f5;
+    -fx-background-radius: 20px;
+    -fx-padding: 8px 15px;
 }

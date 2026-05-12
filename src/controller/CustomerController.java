@@ -71,12 +71,12 @@ public class CustomerController {
     @FXML
     public void initialize() {
 
-        colMaKH.setCellValueFactory(new PropertyValueFactory<>("MaKH"));
-        colHoTen.setCellValueFactory(new PropertyValueFactory<>("HoTen"));
-        colSdt.setCellValueFactory(new PropertyValueFactory<>("Sdt"));
-        colEmail.setCellValueFactory(new PropertyValueFactory<>("Email"));
+        colMaKH.setCellValueFactory(new PropertyValueFactory<>("customerCode"));
+        colHoTen.setCellValueFactory(new PropertyValueFactory<>("fullName"));
+        colSdt.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
 
-        colTongChiTieu.setCellValueFactory(new PropertyValueFactory<>("TongchiTieu"));
+        colTongChiTieu.setCellValueFactory(new PropertyValueFactory<>("totalSpent"));
 
         loadData();
         setupSearch();
@@ -101,11 +101,11 @@ public class CustomerController {
 
                 String lowerCaseFilter = newValue.toLowerCase();
 
-                if (customer.getMaKH().toLowerCase().contains(lowerCaseFilter)) {
+                if (customer.getCustomerCode().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
-                } else if (customer.getHoTen().toLowerCase().contains(lowerCaseFilter)) {
+                } else if (customer.getFullName().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
-                } else if (customer.getSdt().contains(lowerCaseFilter)) {
+                } else if (customer.getPhone().contains(lowerCaseFilter)) {
                     return true;
                 }
 
@@ -161,12 +161,12 @@ public class CustomerController {
     private void handleDeleteCustomer(Customer customer) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Xác nhận xóa");
-        alert.setHeaderText("Bạn có chắc chắn muốn xóa khách hàng: " + customer.getHoTen() + "?");
+        alert.setHeaderText("Bạn có chắc chắn muốn xóa khách hàng: " + customer.getFullName() + "?");
         alert.setContentText("Hành động này không thể hoàn tác.");
 
         if (alert.showAndWait().get() == ButtonType.OK) {
             // Bước 1: Gọi DAO để xóa trong Cơ sở dữ liệu
-            boolean success = customerDAO.deleteCustomer(customer.getMaKH());
+            boolean success = customerDAO.deleteCustomer(customer.getCustomerCode());
 
             if (success) {
                 masterData.remove(customer);
