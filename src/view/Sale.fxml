@@ -4,167 +4,113 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="900.0" prefWidth="1200.0" style="-fx-background-color: #f4f7f6;" stylesheets="@../resources/css/Style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SaleController">
-   <children>
-      <HBox spacing="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+<BorderPane minHeight="560.0" minWidth="760.0" styleClass="sale-page" stylesheets="@../resources/css/SoleManager.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SaleController">
+   <center>
+      <VBox spacing="12.0" styleClass="sale-product-area" BorderPane.alignment="CENTER">
          <children>
-            <!-- Left Side: Product Grid -->
-            <VBox spacing="20.0" style="-fx-background-color: #f8fafc;" HBox.hgrow="ALWAYS">
-               <padding>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </padding>
+            <HBox alignment="CENTER_LEFT" spacing="8.0">
                <children>
-                  <!-- Header & Search -->
-                  <HBox alignment="CENTER_LEFT" spacing="15.0">
-                     <children>
-                        <TextField fx:id="txtSearch" prefHeight="40.0" prefWidth="400.0" promptText="🔍 Tìm kiếm sản phẩm, mã SKU hoặc tên giày..." style="-fx-background-color: #f1f5f9; -fx-background-radius: 8px; -fx-border-color: transparent;" />
-                        <Region HBox.hgrow="ALWAYS" />
-                        <Button mnemonicParsing="false" onAction="#themMoiProduct" style="-fx-background-color: #2563eb; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6px; -fx-padding: 8 16; -fx-cursor: hand;" text="+ Thêm SP" />
-                        <Label style="-fx-font-size: 18px;" text="🔔" />
-                        <VBox alignment="CENTER_RIGHT">
-                           <children>
-                              <Label style="-fx-font-weight: bold; -fx-text-fill: #111827;" text="Nguyễn Văn A" />
-                              <Label style="-fx-font-size: 11px; -fx-text-fill: #6b7280;" text="Nhân viên bán hàng" />
-                           </children>
-                        </VBox>
-                        <Label style="-fx-font-size: 24px;" text="👤" />
-                     </children>
-                  </HBox>
-                  
-                  <!-- Filter Chips -->
-                  <HBox alignment="CENTER_LEFT" spacing="10.0">
-                     <children>
-                        <Button mnemonicParsing="false" styleClass="filter-chip, active-chip" text="Tất cả" />
-                        <Button mnemonicParsing="false" styleClass="filter-chip" text="Sneakers" />
-                        <Button mnemonicParsing="false" styleClass="filter-chip" text="Chạy bộ" />
-                        <Button mnemonicParsing="false" styleClass="filter-chip" text="Bóng rổ" />
-                        <Region HBox.hgrow="ALWAYS" />
-                        <Label style="-fx-text-fill: #6b7280; -fx-font-size: 12px;" text="Hiển thị 24 sản phẩm" />
-                     </children>
-                  </HBox>
-                  
-                  <!-- Product Grid -->
-                  <ScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: transparent; -fx-background: transparent;" VBox.vgrow="ALWAYS">
-                     <content>
-                        <FlowPane fx:id="flowPaneProducts" hgap="20.0" vgap="20.0">
-                           <padding>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                           </padding>
-                           <!-- Product Cards will be injected here dynamically -->
-                        </FlowPane>
-                     </content>
-                  </ScrollPane>
+                  <Button fx:id="btnAll" mnemonicParsing="false" onAction="#filterCategory" styleClass="sale-chip, sale-chip-active" text="Tất cả" />
+                  <Button fx:id="btnRunning" mnemonicParsing="false" onAction="#filterCategory" styleClass="sale-chip" text="Chạy bộ" />
+                  <Button fx:id="btnBasketball" mnemonicParsing="false" onAction="#filterCategory" styleClass="sale-chip" text="Bóng rổ" />
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Label fx:id="lblProductCount" styleClass="sale-count" text="Hiển thị 24 sản phẩm" />
                </children>
-            </VBox>
-            
-            <!-- Right Side: Cart -->
-            <VBox prefWidth="450.0" style="-fx-background-color: white; -fx-border-color: #e5e7eb; -fx-border-width: 0 0 0 1px;">
+            </HBox>
+
+            <TableView fx:id="tblProducts" styleClass="sale-table" VBox.vgrow="ALWAYS">
+               <columns>
+                  <TableColumn fx:id="colImage" minWidth="68.0" prefWidth="78.0" text="Hình ảnh" />
+                  <TableColumn fx:id="colProduct" minWidth="170.0" prefWidth="205.0" text="Sản phẩm" />
+                  <TableColumn fx:id="colSku" minWidth="86.0" prefWidth="96.0" text="SKU" />
+                  <TableColumn fx:id="colBrand" minWidth="94.0" prefWidth="104.0" text="Thương hiệu" />
+                  <TableColumn fx:id="colSize" minWidth="82.0" prefWidth="92.0" text="Size" />
+                  <TableColumn fx:id="colColor" minWidth="92.0" prefWidth="104.0" text="Màu sắc" />
+                  <TableColumn fx:id="colStock" minWidth="70.0" prefWidth="78.0" text="Tồn kho" />
+                  <TableColumn fx:id="colPrice" minWidth="110.0" prefWidth="124.0" text="Giá bán" />
+                  <TableColumn fx:id="colAction" minWidth="58.0" prefWidth="66.0" text="" />
+               </columns>
+            </TableView>
+         </children>
+         <padding>
+            <Insets bottom="0.0" left="0.0" right="14.0" top="0.0" />
+         </padding>
+      </VBox>
+   </center>
+
+   <right>
+      <VBox prefWidth="300.0" spacing="0.0" styleClass="cart-panel" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER_LEFT" spacing="8.0" styleClass="cart-header">
                <children>
-                  <!-- Cart Header -->
-                  <HBox alignment="CENTER_LEFT" style="-fx-border-color: #e5e7eb; -fx-border-width: 0 0 1px 0; -fx-padding: 20px;">
+                  <Label styleClass="cart-title-icon" text="□" />
+                  <Label styleClass="cart-title" text="ĐƠN HÀNG HIỆN TẠI" />
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Button mnemonicParsing="false" onAction="#clearCart" styleClass="clear-cart" text="Xóa hết" />
+               </children>
+            </HBox>
+
+            <ScrollPane fitToWidth="true" hbarPolicy="NEVER" styleClass="cart-scroll" VBox.vgrow="ALWAYS">
+               <content>
+                  <VBox fx:id="cartItemsBox" spacing="12.0" styleClass="cart-items-box" />
+               </content>
+            </ScrollPane>
+
+            <VBox spacing="10.0" styleClass="cart-summary">
+               <children>
+                  <HBox alignment="CENTER_LEFT">
                      <children>
-                        <Label style="-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: #111827;" text="🛒 ĐƠN HÀNG HIỆN TẠI" />
+                        <Label styleClass="summary-label" text="Tạm tính" />
                         <Region HBox.hgrow="ALWAYS" />
-                        <Button mnemonicParsing="false" onAction="#xoaHetCart" style="-fx-background-color: transparent; -fx-text-fill: #ef4444; -fx-cursor: hand;" text="🗑 Xóa hết" />
+                        <Label fx:id="lblSubtotal" styleClass="summary-value" text="0đ" />
                      </children>
                   </HBox>
-                  
-                  <!-- Cart Items -->
-                  <ScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: transparent; -fx-background: transparent;" VBox.vgrow="ALWAYS">
-                     <content>
-                        <VBox fx:id="vboxCartItems" spacing="15.0">
-                           <padding>
-                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                           </padding>
-                           <!-- Cart items will be injected here dynamically -->
-                        </VBox>
-                     </content>
-                  </ScrollPane>
-                  
-                  <!-- Payment Section -->
-                  <VBox spacing="15.0" style="-fx-background-color: white; -fx-padding: 20px; -fx-border-color: #e5e7eb; -fx-border-width: 1px 0 0 0;">
+                  <HBox alignment="CENTER_LEFT">
                      <children>
-                        <!-- Totals -->
-                        <HBox>
-                           <children>
-                              <Label style="-fx-text-fill: #6b7280;" text="Tạm tính" />
-                              <Region HBox.hgrow="ALWAYS" />
-                              <Label fx:id="lblTamTinh" style="-fx-font-weight: bold; -fx-text-fill: #6b7280;" text="0đ" />
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" spacing="10.0">
-                           <children>
-                              <Label style="-fx-text-fill: #6b7280;" text="Chiết khấu (%)" />
-                              <Region HBox.hgrow="ALWAYS" />
-                              <TextField fx:id="txtDiscount" alignment="CENTER" prefWidth="60.0" style="-fx-background-color: white; -fx-border-color: #e5e7eb; -fx-border-radius: 4px;" text="10" />
-                              <Label fx:id="lblGiamGia" style="-fx-font-weight: bold; -fx-text-fill: #ef4444;" text="-0đ" />
-                           </children>
-                        </HBox>
-                        <HBox style="-fx-border-color: #e5e7eb; -fx-border-width: 1px 0 0 0; -fx-padding: 15px 0 0 0;">
-                           <children>
-                              <Label style="-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: #111827;" text="TỔNG CỘNG" />
-                              <Region HBox.hgrow="ALWAYS" />
-                              <Label fx:id="lblTotal" style="-fx-font-weight: bold; -fx-font-size: 24px; -fx-text-fill: #111827;" text="0đ" />
-                           </children>
-                        </HBox>
-                        
-                        <!-- Payment Methods -->
-                        <Label style="-fx-text-fill: #6b7280; -fx-font-size: 11px; -fx-font-weight: bold;" text="PHƯƠNG THỨC THANH TOÁN">
-                           <VBox.margin>
-                              <Insets top="10.0" />
-                           </VBox.margin>
-                        </Label>
-                        <HBox spacing="10.0">
-                           <children>
-                              <VBox fx:id="vboxCash" onMouseClicked="#selectPaymentCash" alignment="CENTER" styleClass="payment-method, payment-method-selected" HBox.hgrow="ALWAYS">
-                                 <children>
-                                    <Label text="💵" />
-                                    <Label style="-fx-font-size: 11px; -fx-font-weight: bold;" text="Tiền mặt" />
-                                 </children>
-                                 <padding>
-                                    <Insets bottom="15.0" top="15.0" />
-                                 </padding>
-                              </VBox>
-                              <VBox fx:id="vboxTransfer" onMouseClicked="#selectPaymentTransfer" alignment="CENTER" styleClass="payment-method" HBox.hgrow="ALWAYS">
-                                 <children>
-                                    <Label text="🏦" />
-                                    <Label style="-fx-font-size: 11px;" text="Chuyển khoản" />
-                                 </children>
-                                 <padding>
-                                    <Insets bottom="15.0" top="15.0" />
-                                 </padding>
-                              </VBox>
-                              <VBox fx:id="vboxCard" onMouseClicked="#selectPaymentCard" alignment="CENTER" styleClass="payment-method" HBox.hgrow="ALWAYS">
-                                 <children>
-                                    <Label text="💳" />
-                                    <Label style="-fx-font-size: 11px;" text="Thẻ (Visa/MC)" />
-                                 </children>
-                                 <padding>
-                                    <Insets bottom="15.0" top="15.0" />
-                                 </padding>
-                              </VBox>
-                           </children>
-                        </HBox>
-                        
-                        <!-- Action -->
-                        <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#xuLyThanhToan" style="-fx-background-color: #0b1120; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-padding: 15px; -fx-background-radius: 8px; -fx-cursor: hand;" text="⎙ THANH TOÁN &amp; IN HÓA ĐƠN">
-                           <VBox.margin>
-                              <Insets top="10.0" />
-                           </VBox.margin>
-                        </Button>
+                        <Label styleClass="summary-label" text="Chiết khấu (5%)" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Label fx:id="lblDiscount" styleClass="summary-discount" text="0đ" />
                      </children>
-                  </VBox>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" styleClass="summary-total-row">
+                     <children>
+                        <Label styleClass="total-label" text="TỔNG CỘNG" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Label fx:id="lblTotal" styleClass="total-value" text="0đ" />
+                     </children>
+                  </HBox>
+
+                  <Label styleClass="payment-title" text="PHƯƠNG THỨC THANH TOÁN" />
+                  <HBox spacing="8.0">
+                     <children>
+                        <Button fx:id="btnCash" mnemonicParsing="false" onAction="#selectPayment" styleClass="payment-card, payment-card-active" text="▣&#10;Tiền mặt" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="btnBank" mnemonicParsing="false" onAction="#selectPayment" styleClass="payment-card" text="⌂&#10;Chuyển khoản" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="btnCard" mnemonicParsing="false" onAction="#selectPayment" styleClass="payment-card" text="▤&#10;Thẻ Visa/MC" HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
+
+                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#checkout" styleClass="checkout-button" text="▣  THANH TOÁN &amp; IN HÓA ĐƠN" />
                </children>
             </VBox>
          </children>
+      </VBox>
+   </right>
+
+   <bottom>
+      <HBox alignment="CENTER_RIGHT" mouseTransparent="true" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" styleClass="floating-action" text="☷" />
+         </children>
+         <padding>
+            <Insets bottom="8.0" right="16.0" />
+         </padding>
       </HBox>
-   </children>
-</AnchorPane>
+   </bottom>
+</BorderPane>

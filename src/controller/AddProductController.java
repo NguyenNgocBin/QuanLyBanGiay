@@ -2,141 +2,95 @@ package controller;
 
 import DAO.CategoryDAO;
 import DAO.ProductDAO;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import models.Product;
 import models.Category;
-import javafx.scene.Node;
+import models.Product;
 
 import java.io.File;
-import java.util.List;
-import javafx.scene.text.Text;
 
 public class AddProductController {
-    @FXML
-    private Button buttonChonAnh;
 
-    @FXML
-    private Text thongBao;
+    @FXML private TextField txtName;
+    @FXML private TextField txtProductCode;
+    @FXML private ComboBox<Category> cbCategory;
+    @FXML private TextField txtPrice;
+    @FXML private TextField txtSize;
+    @FXML private TextField txtStock;
+    @FXML private ImageView imgPreview;
+    @FXML private Label lblMessage;
 
-    @FXML
-    private ComboBox<Category> cbDanhMuc;
-
-    @FXML
-    private ImageView imageViewSanPham;
-
-    @FXML
-    private TextField txtGia;
-
-    @FXML
-    private TextField txtId;
-
-    @FXML
-    private TextField txtSize;
-
-    @FXML
-    private TextField txtTenSanPham;
-
-    @FXML
-    private TextField txtTonKho;
-
-    private CategoryDAO categoryDao = new CategoryDAO();
+    private final ProductDAO productDAO = new ProductDAO();
+    private final CategoryDAO categoryDAO = new CategoryDAO();
+    private File selectedImage;
 
     @FXML
     public void initialize() {
-        System.out.println("Đang nạp dữ liệu danh mục...");
-        try {
-            List<Category> listDanhMuc = categoryDao.getAllCategories();
-            cbDanhMuc.getItems().clear();
-            cbDanhMuc.getItems().addAll(listDanhMuc);
-            if (!listDanhMuc.isEmpty()) {
-                cbDanhMuc.getSelectionModel().selectFirst();
-            }
-        } catch (Exception e) {
-            System.out.println("Lỗi nạp danh mục: " + e.getMessage());
+        cbCategory.getItems().setAll(categoryDAO.getAllCategories());
+        if (!cbCategory.getItems().isEmpty()) {
+            cbCategory.getSelectionModel().selectFirst();
         }
     }
 
     @FXML
-    private File fileAnhDaChon;
-
-    @FXML
-    void handleChonAnh(ActionEvent event) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Chọn Ảnh Sản Phẩm");
-        fileChooser.getExtensionFilters()
-                .addAll(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
-        Stage stage = (Stage) buttonChonAnh.getScene().getWindow();
-        File selectFile = fileChooser.showOpenDialog(stage);
-        if (selectFile != null) {
-            Image image = new Image(selectFile.toURI().toString());
-            imageViewSanPham.setImage(image);
-            imageViewSanPham.setFitWidth(150);
-            imageViewSanPham.setFitHeight(150);
-            imageViewSanPham.setPreserveRatio(true);
-            this.fileAnhDaChon = selectFile;
+    private void chooseImage() {
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Chọn ảnh sản phẩm");
+        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
+        File file = chooser.showOpenDialog(currentStage());
+        if (file != null) {
+            selectedImage = file;
+            imgPreview.setImage(new Image(file.toURI().toString()));
         }
     }
 
     @FXML
-    void buttonSave(ActionEvent event) {
-        String id = txtId.getText(); // This is productCode now
-        String name = txtTenSanPham.getText();
-        Category category = cbDanhMuc.getValue();
-        String size = txtSize.getText();
-
-        if (id.isEmpty() || name.isEmpty() || category == null) {
-            thongBao.setText("Vui lòng điền đầy đủ thông tin!");
+    private void save() {
+        Product product = readProductFromForm();
+        if (product == null) {
             return;
         }
 
-        double price = 0;
-        int stock = 0;
-        try {
-            if (!txtGia.getText().isEmpty()) {
-                price = Double.parseDouble(txtGia.getText());
-            }
-            if (!txtTonKho.getText().isEmpty()) {
-                stock = Integer.parseInt(txtTonKho.getText());
-            }
-        } catch (Exception e) {
-            thongBao.setText("Giá hoặc Tồn kho không hợp lệ!");
-            return;
-        }
-
-        Product product = new Product();
-        product.setProductCode(id);
-        product.setName(name);
-        product.setCategoryId(category.getId());
-        product.setPrice(price);
-        product.setStock(stock);
-        product.setSize(size);
-        product.setImagePath(fileAnhDaChon != null ? fileAnhDaChon.getAbsolutePath() : "");
-
-        ProductDAO productDAO = new ProductDAO();
         if (productDAO.addProduct(product)) {
-            thongBao.setText("Thêm sản phẩm thành công!");
-            closeWindow(event);
+            currentStage().close();
         } else {
-            thongBao.setText("Thêm sản phẩm thất bại!");
+            lblMessage.setText("Không thể thêm sản phẩm. Kiểm tra mã SKU có bị trùng không.");
         }
     }
 
-    private void closeWindow(ActionEvent event) {
-        Node source = (Node) event.getSource();
-        Stage stage = (Stage) source.getScene().getWindow();
-        stage.close();
+    @FXML
+    private void cancel() {
+        currentStage().close();
     }
 
-    @FXML
-    void buttonCancel(ActionEvent event) {
-        closeWindow(event);
+    private Product readProductFromForm() {
+        String name = txtName.getText().trim();
+        String code = txtProductCode.getText().trim();
+        Category category = cbCategory.getValue();
+
+        if (name.isBlank() || code.isBlank() || category == null) {
+            lblMessage.setText("Vui lòng nhập tên, mã SKU và danh mục.");
+            return null;
+        }
+
+        try {
+            double price = Double.parseDouble(txtPrice.getText().trim());
+            int stock = Integer.parseInt(txtStock.getText().trim());
+            String imagePath = selectedImage == null ? "" : selectedImage.getAbsolutePath();
+            return new Product(0, code, name, category.getId(), category.getName(), price, stock, txtSize.getText().trim(), imagePath);
+        } catch (NumberFormatException e) {
+            lblMessage.setText("Giá bán và tồn kho phải là số hợp lệ.");
+            return null;
+        }
+    }
+
+    private Stage currentStage() {
+        return (Stage) txtName.getScene().getWindow();
     }
 }

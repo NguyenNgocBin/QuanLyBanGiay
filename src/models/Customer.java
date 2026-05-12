@@ -8,8 +8,6 @@ public class Customer {
     private String email;
     private double totalSpent;
 
-    public Customer() {}
-
     public Customer(int id, String customerCode, String fullName, String phone, String email, double totalSpent) {
         this.id = id;
         this.customerCode = customerCode;
@@ -19,21 +17,51 @@ public class Customer {
         this.totalSpent = totalSpent;
     }
 
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public int getId() {
+        return id;
+    }
 
-    public String getCustomerCode() { return customerCode; }
-    public void setCustomerCode(String customerCode) { this.customerCode = customerCode; }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    public String getFullName() { return fullName; }
-    public void setFullName(String fullName) { this.fullName = fullName; }
+    public String getCustomerCode() {
+        return customerCode;
+    }
 
-    public String getPhone() { return phone; }
-    public void setPhone(String phone) { this.phone = phone; }
+    public void setCustomerCode(String customerCode) {
+        this.customerCode = customerCode;
+    }
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    public String getFullName() {
+        return fullName;
+    }
 
-    public double getTotalSpent() { return totalSpent; }
-    public void setTotalSpent(double totalSpent) { this.totalSpent = totalSpent; }
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public double getTotalSpent() {
+        return totalSpent;
+    }
+
+    public void setTotalSpent(double totalSpent) {
+        this.totalSpent = totalSpent;
+    }
 }

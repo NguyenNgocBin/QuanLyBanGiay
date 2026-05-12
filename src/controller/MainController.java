@@ -1,91 +1,71 @@
 package controller;
 
-import javafx.scene.Node;
+import java.io.IOException;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
-
-import java.io.IOException;
-import java.util.Optional;
+import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
 
 public class MainController {
 
     @FXML
-    private BorderPane contentArea;
+    private Button btnDashboard;
+
+    @FXML
+    private Button btnOrders;
+
+    @FXML
+    private Button btnProducts;
+
+    @FXML
+    private Button btnReports;
+
+    @FXML
+    private Button btnSales;
+
+    @FXML
+    private StackPane contentPane;
 
     @FXML
     public void initialize() {
-        loadPage("Dashboard");
+        // Load Dashboard by default
+        loadPane("/view/Dashboard.fxml");
     }
 
     @FXML
-    private void hienThiTrangChu(MouseEvent event) {
-        loadPage("Dashboard");
-    }
+    void switchTab(ActionEvent event) {
+        Button clickedButton = (Button) event.getSource();
+        
+        btnDashboard.getStyleClass().remove("nav-button-active");
+        btnProducts.getStyleClass().remove("nav-button-active");
+        btnSales.getStyleClass().remove("nav-button-active");
+        btnOrders.getStyleClass().remove("nav-button-active");
+        btnReports.getStyleClass().remove("nav-button-active");
 
-    @FXML
-    private void hienThiSanPham(MouseEvent event) {
-        loadPage("Product");
-    }
+        clickedButton.getStyleClass().add("nav-button-active");
 
-    @FXML
-    private void hienThiKhachHang(MouseEvent event) {
-        loadPage("Customer");
-    }
-
-    @FXML
-    private void hienThiBanHang(MouseEvent event) {
-        loadPage("Sale");
-    }
-
-    @FXML
-    private void hienThiDonHang(MouseEvent event) {
-        loadPage("Order");
-    }
-
-    @FXML
-    private void xuLyDangXuat(MouseEvent event) {
-        try {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Đăng xuất");
-            alert.setHeaderText(null);
-            alert.setContentText("Bạn có chắc chắn muốn đăng xuất khỏi hệ thống?");
-            // Chờ người dùng bấm nút
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.isPresent() && result.get() == ButtonType.OK) {
-                Node source = (Node) event.getSource();
-                Stage currentStage = (Stage) source.getScene().getWindow();
-                currentStage.close();
-
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Login.fxml"));
-                Parent root = loader.load();
-                // Tạo Stage mới cho trang Login
-                Stage loginStage = new Stage();
-                loginStage.setTitle("Đăng nhập hệ thống");
-                loginStage.setScene(new Scene(root));
-                loginStage.show();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            // Nếu lỗi, hiện thông báo lỗi đường dẫn file
-            System.err.println("Lỗi: Không tìm thấy file Login.fxml hoặc lỗi load file.");
+        if (clickedButton == btnDashboard) {
+            loadPane("/view/Dashboard.fxml");
+        } else if (clickedButton == btnProducts) {
+            loadPane("/view/Product.fxml");
+        } else if (clickedButton == btnSales) {
+            loadPane("/view/Sale.fxml");
+        } else {
+            // Placeholder for other tabs
+            System.out.println("Tab not implemented yet: " + clickedButton.getText());
         }
     }
 
-    @FXML
-    private void loadPage(String page) {
+    private void loadPane(String fxmlPath) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/" + page + ".fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent root = loader.load();
-            contentArea.setCenter(root);
+            contentPane.getChildren().setAll(root);
         } catch (IOException e) {
             e.printStackTrace();
+            System.err.println("Không thể load file FXML: " + fxmlPath);
         }
     }
 }

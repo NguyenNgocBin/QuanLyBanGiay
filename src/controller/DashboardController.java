@@ -1,12 +1,10 @@
 package controller;
 
-import DAO.DashbroardDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.chart.BarChart;
+import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -14,93 +12,79 @@ import javafx.scene.control.cell.PropertyValueFactory;
 public class DashboardController {
 
     @FXML
-    private Label lblDoanhThu;
+    private AreaChart<String, Number> revenueChart;
 
     @FXML
-    private Label lblSoDonHang;
-
+    private TableView<Transaction> transactionTable;
+    
     @FXML
-    private BarChart<String, Number> revenueChart;
-
+    private TableColumn<Transaction, String> colId;
     @FXML
-    private TableView<OrderMock> tblRecentOrders;
-
-    private DashbroardDAO dashbroardDAO = new DashbroardDAO();
+    private TableColumn<Transaction, String> colCustomer;
+    @FXML
+    private TableColumn<Transaction, String> colProduct;
+    @FXML
+    private TableColumn<Transaction, String> colTotal;
+    @FXML
+    private TableColumn<Transaction, String> colStatus;
 
     @FXML
     public void initialize() {
-        loadThongKeHomNay();
-        loadBieuDoDoanhThu();
-        setupRecentOrdersTable();
+        setupChart();
+        setupTable();
     }
 
-    private void loadThongKeHomNay() {
-        double tongTien = dashbroardDAO.getDoanhThuHomNay();
-        lblDoanhThu.setText(String.format("%,.0f VNĐ", tongTien));
-
-        int soDon = dashbroardDAO.getSoDonHangHomNay();
-        lblSoDonHang.setText(soDon + " Đơn");
-    }
-
-    private void loadBieuDoDoanhThu() {
-        revenueChart.getData().clear();
-        double[] doanhThu12Thang = dashbroardDAO.getDoanhThuTheoThang();
-
+    private void setupChart() {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
-        series.setName("Năm " + java.time.Year.now().getValue());
-
-        for (int i = 0; i < 12; i++) {
-            String thang = "T" + (i + 1); // Rút gọn nhãn thành T1, T2... để vừa biểu đồ cột
-            double doanhThu = doanhThu12Thang[i];
-            series.getData().add(new XYChart.Data<>(thang, doanhThu));
-        }
+        series.setName("Doanh thu thực tế");
+        
+        series.getData().add(new XYChart.Data<>("T2", 15000000));
+        series.getData().add(new XYChart.Data<>("T3", 20000000));
+        series.getData().add(new XYChart.Data<>("T4", 18000000));
+        series.getData().add(new XYChart.Data<>("T5", 25000000));
+        series.getData().add(new XYChart.Data<>("T6", 22000000));
+        series.getData().add(new XYChart.Data<>("T7", 30000000));
+        series.getData().add(new XYChart.Data<>("CN", 35000000));
+        
         revenueChart.getData().add(series);
     }
 
-    private void setupRecentOrdersTable() {
-        // Lấy các cột từ TableView (đã định nghĩa trong FXML)
-        ObservableList<TableColumn<OrderMock, ?>> columns = tblRecentOrders.getColumns();
-        
-        if (columns.size() >= 5) {
-            columns.get(0).setCellValueFactory(new PropertyValueFactory<>("maDon"));
-            columns.get(1).setCellValueFactory(new PropertyValueFactory<>("khachHang"));
-            columns.get(2).setCellValueFactory(new PropertyValueFactory<>("sanPham"));
-            columns.get(3).setCellValueFactory(new PropertyValueFactory<>("tongTien"));
-            columns.get(4).setCellValueFactory(new PropertyValueFactory<>("trangThai"));
-        }
+    private void setupTable() {
+        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colCustomer.setCellValueFactory(new PropertyValueFactory<>("customer"));
+        colProduct.setCellValueFactory(new PropertyValueFactory<>("product"));
+        colTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
+        colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
 
-        // Thêm dữ liệu giả lập
-        ObservableList<OrderMock> data = FXCollections.observableArrayList(
-            new OrderMock("#ORD-9402", "Nguyễn Văn A", "Air Max Premium x1", "3.450.000 đ", "Đang xử lý"),
-            new OrderMock("#ORD-9401", "Trần Thị B", "Jordan Retro x1, Socks x2", "4.550.000 đ", "Đã giao"),
-            new OrderMock("#ORD-9400", "Lê Văn C", "Ultraboost x1", "3.900.000 đ", "Đang xử lý"),
-            new OrderMock("#ORD-9399", "Phạm Thị D", "Nike Air Force 1 x1", "2.500.000 đ", "Đã hủy"),
-            new OrderMock("#ORD-9398", "Hoàng Văn E", "Vans Old Skool x2", "1.800.000 đ", "Đã giao")
+        ObservableList<Transaction> data = FXCollections.observableArrayList(
+            new Transaction("#DH-8492", "Nguyễn Văn Hùng", "Nike Air Force 1 (Trắng)", "2.850.000đ", "Đã giao"),
+            new Transaction("#DH-8493", "Lê Thị Mai", "Adidas Superstar", "2.100.000đ", "Chờ xử lý"),
+            new Transaction("#DH-8494", "Hoàng Văn Nam", "Puma RS-X", "2.500.000đ", "Đã hủy")
         );
 
-        tblRecentOrders.setItems(data);
+        transactionTable.setItems(data);
     }
 
-    // Class tĩnh hỗ trợ hiển thị dữ liệu giả lập
-    public static class OrderMock {
-        private String maDon;
-        private String khachHang;
-        private String sanPham;
-        private String tongTien;
-        private String trangThai;
+    // Inner class cho dữ liệu bảng
+    public static class Transaction {
+        private final String id;
+        private final String customer;
+        private final String product;
+        private final String total;
+        private final String status;
 
-        public OrderMock(String maDon, String khachHang, String sanPham, String tongTien, String trangThai) {
-            this.maDon = maDon;
-            this.khachHang = khachHang;
-            this.sanPham = sanPham;
-            this.tongTien = tongTien;
-            this.trangThai = trangThai;
+        public Transaction(String id, String customer, String product, String total, String status) {
+            this.id = id;
+            this.customer = customer;
+            this.product = product;
+            this.total = total;
+            this.status = status;
         }
 
-        public String getMaDon() { return maDon; }
-        public String getKhachHang() { return khachHang; }
-        public String getSanPham() { return sanPham; }
-        public String getTongTien() { return tongTien; }
-        public String getTrangThai() { return trangThai; }
+        public String getId() { return id; }
+        public String getCustomer() { return customer; }
+        public String getProduct() { return product; }
+        public String getTotal() { return total; }
+        public String getStatus() { return status; }
     }
 }

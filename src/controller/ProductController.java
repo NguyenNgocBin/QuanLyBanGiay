@@ -1,11 +1,12 @@
 package controller;
 
 import DAO.ProductDAO;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -13,332 +14,367 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.TableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import models.Product;
 
+import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 public class ProductController {
 
-    @FXML
-    private TableView<Product> tableProducts;
+    @FXML private TextField txtSearch;
+    @FXML private ComboBox<String> cbStatus;
+    @FXML private Label lblTotalProducts;
+    @FXML private Label lblLowStock;
+    @FXML private Label lblInventoryValue;
+    @FXML private Label lblBrandCount;
+    @FXML private Label lblShowing;
+    @FXML private TableView<Product> productTable;
+    @FXML private TableColumn<Product, Product> colImage;
+    @FXML private TableColumn<Product, Product> colName;
+    @FXML private TableColumn<Product, String> colBrand;
+    @FXML private TableColumn<Product, String> colSize;
+    @FXML private TableColumn<Product, String> colColor;
+    @FXML private TableColumn<Product, String> colPrice;
+    @FXML private TableColumn<Product, Integer> colStock;
+    @FXML private TableColumn<Product, String> colStatus;
+    @FXML private TableColumn<Product, Product> colAction;
 
-    @FXML
-    private TableColumn<Product, String> colId;
-
-    @FXML
-    private TableColumn<Product, String> colName;
-
-    @FXML
-    private TableColumn<Product, String> colCategory;
-
-    @FXML
-    private TableColumn<Product, String> colSize;
-
-    @FXML
-    private TableColumn<Product, Double> colPrice;
-
-    @FXML
-    private TableColumn<Product, Integer> colStock;
-
-    @FXML
-    private TableColumn<Product, Void> colAction;
-
-    @FXML
-    private TextField txtSearch;
-
-    @FXML
-    private VBox vboxCartItems;
-
-    @FXML
-    private Label lblTotal;
-
-    private ProductDAO productDAO = new ProductDAO();
-    private List<Product> productList = new ArrayList<>();
-    private List<CartItem> cartList = new ArrayList<>();
+    private final ProductDAO productDAO = new ProductDAO();
+    private final ObservableList<Product> allProducts = FXCollections.observableArrayList();
+    private final ObservableList<Product> filteredProducts = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
-        setupTableColumns();
-        loadData();
-        setupSearch();
+        setupFilters();
+        setupTable();
+        loadProducts();
     }
 
-    private void setupTableColumns() {
-        colId.setCellValueFactory(new PropertyValueFactory<>("productCode"));
-        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        colCategory.setCellValueFactory(new PropertyValueFactory<>("categoryName"));
-        colSize.setCellValueFactory(new PropertyValueFactory<>("size"));
-        colPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
-        colStock.setCellValueFactory(new PropertyValueFactory<>("stock"));
+    private void setupFilters() {
+        cbStatus.setItems(FXCollections.observableArrayList("Tất cả", "Còn hàng", "Sắp hết", "Hết hàng"));
+        cbStatus.setValue("Tất cả");
+        cbStatus.valueProperty().addListener((obs, oldValue, newValue) -> applyFilter());
+        txtSearch.textProperty().addListener((obs, oldValue, newValue) -> applyFilter());
+    }
 
-        // Cột Thao tác
-        colAction.setCellFactory(param -> new TableCell<Product, Void>() {
-            private final Button btn = new Button("Thêm");
+    private void setupTable() {
+        productTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        productTable.setFixedCellSize(74);
+
+        colImage.setCellValueFactory(data -> new SimpleObjectProperty<>(data.getValue()));
+        colImage.setCellFactory(column -> new TableCell<>() {
+            private final ImageView imageView = new ImageView();
+            private final Label fallback = new Label("▰");
+
             {
-                btn.getStyleClass().add("btn-add");
-                btn.setStyle("-fx-padding: 5px 10px; -fx-font-size: 12px;");
-                btn.setOnAction(event -> {
-                    Product p = getTableView().getItems().get(getIndex());
-                    addToCart(p);
-                });
+                imageView.setFitWidth(52);
+                imageView.setFitHeight(44);
+                imageView.setPreserveRatio(true);
+                imageView.setSmooth(true);
+                fallback.getStyleClass().addAll("shoe-thumb", "thumb-light");
             }
+
             @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
+            protected void updateItem(Product product, boolean empty) {
+                super.updateItem(product, empty);
+                if (empty || product == null) {
                     setGraphic(null);
+                    return;
+                }
+
+                Image image = loadImage(product.getImagePath());
+                if (image != null) {
+                    imageView.setImage(image);
+                    setGraphic(imageView);
                 } else {
-                    Product p = getTableView().getItems().get(getIndex());
-                    if (p != null && p.getStock() <= 0) {
-                        btn.setDisable(true);
-                        btn.setText("Hết hàng");
-                    } else {
-                        btn.setDisable(false);
-                        btn.setText("Thêm");
-                    }
-                    setGraphic(btn);
+                    fallback.getStyleClass().setAll("shoe-thumb", thumbClass(product));
+                    setGraphic(fallback);
                 }
+                setAlignment(Pos.CENTER_LEFT);
+            }
+        });
+
+        colName.setCellValueFactory(data -> new SimpleObjectProperty<>(data.getValue()));
+        colName.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(Product product, boolean empty) {
+                super.updateItem(product, empty);
+                if (empty || product == null) {
+                    setGraphic(null);
+                    return;
+                }
+
+                Label name = new Label(product.getName());
+                name.getStyleClass().add("product-name");
+                Label sku = new Label("SKU: " + safe(product.getProductCode()));
+                sku.getStyleClass().add("product-sku");
+                setGraphic(new VBox(3, name, sku));
+            }
+        });
+
+        colBrand.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(safe(data.getValue().getCategoryName())));
+        colBrand.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(String category, boolean empty) {
+                super.updateItem(category, empty);
+                if (empty || category == null || category.isBlank()) {
+                    setGraphic(null);
+                    return;
+                }
+                Label tag = new Label(category);
+                tag.getStyleClass().add("brand-tag");
+                setGraphic(tag);
+            }
+        });
+
+        colSize.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(safe(data.getValue().getSize())));
+        colColor.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(colorForProduct(data.getValue())));
+        colColor.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(String colors, boolean empty) {
+                super.updateItem(colors, empty);
+                if (empty || colors == null) {
+                    setGraphic(null);
+                    return;
+                }
+
+                HBox colorBox = new HBox(5);
+                colorBox.setAlignment(Pos.CENTER_LEFT);
+                for (String color : colors.split(",")) {
+                    Circle dot = new Circle(6);
+                    dot.setStyle("-fx-fill: " + color + "; -fx-stroke: #cbd5e1; -fx-stroke-width: 1;");
+                    colorBox.getChildren().add(dot);
+                }
+                setGraphic(colorBox);
+            }
+        });
+
+        colPrice.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(formatCurrency(data.getValue().getPrice())));
+        colStock.setCellValueFactory(data -> new javafx.beans.property.SimpleIntegerProperty(data.getValue().getStock()).asObject());
+        colStock.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(Integer stock, boolean empty) {
+                super.updateItem(stock, empty);
+                setText(empty || stock == null ? null : stock.toString());
+                getStyleClass().remove("low-stock-text");
+                if (!empty && stock != null && stock > 0 && stock <= 10) {
+                    getStyleClass().add("low-stock-text");
+                }
+            }
+        });
+
+        colStatus.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(statusOf(data.getValue())));
+        colStatus.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(String status, boolean empty) {
+                super.updateItem(status, empty);
+                if (empty || status == null) {
+                    setGraphic(null);
+                    return;
+                }
+                Label tag = new Label(status);
+                tag.getStyleClass().addAll("status-pill", statusClass(status));
+                setGraphic(tag);
+            }
+        });
+
+        colAction.setCellValueFactory(data -> new SimpleObjectProperty<>(data.getValue()));
+        colAction.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(Product product, boolean empty) {
+                super.updateItem(product, empty);
+                if (empty || product == null) {
+                    setGraphic(null);
+                    return;
+                }
+
+                Button edit = new Button("✎");
+                Button delete = new Button("⌫");
+                edit.getStyleClass().add("icon-action");
+                delete.getStyleClass().add("icon-action");
+                edit.setOnAction(event -> openEditProductForm(product));
+                delete.setOnAction(event -> deleteProduct(product));
+                HBox actions = new HBox(8, edit, delete);
+                actions.setAlignment(Pos.CENTER_LEFT);
+                setGraphic(actions);
             }
         });
     }
 
-    private void loadData() {
-        try {
-            productList = productDAO.getAll();
-            tableProducts.setItems(FXCollections.observableArrayList(productList));
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Lỗi khi tải dữ liệu sản phẩm.");
-        }
+    private void loadProducts() {
+        allProducts.setAll(productDAO.getAll());
+        applyFilter();
+        updateMetrics();
     }
 
-    private void setupSearch() {
-        txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
-            String keyword = newValue != null ? newValue.toLowerCase() : "";
-            List<Product> filtered = productList.stream()
-                    .filter(p -> p.getName().toLowerCase().contains(keyword) || 
-                                 p.getProductCode().toLowerCase().contains(keyword) ||
-                                 p.getCategoryName().toLowerCase().contains(keyword))
-                    .collect(Collectors.toList());
-            tableProducts.setItems(FXCollections.observableArrayList(filtered));
-        });
+    private void applyFilter() {
+        String keyword = txtSearch.getText() == null ? "" : txtSearch.getText().trim().toLowerCase(Locale.ROOT);
+        String selectedStatus = cbStatus.getValue() == null ? "Tất cả" : cbStatus.getValue();
+
+        filteredProducts.setAll(allProducts.filtered(product -> {
+            boolean matchesKeyword = keyword.isBlank()
+                    || safe(product.getName()).toLowerCase(Locale.ROOT).contains(keyword)
+                    || safe(product.getProductCode()).toLowerCase(Locale.ROOT).contains(keyword)
+                    || safe(product.getCategoryName()).toLowerCase(Locale.ROOT).contains(keyword);
+            boolean matchesStatus = "Tất cả".equals(selectedStatus) || statusOf(product).equals(selectedStatus);
+            return matchesKeyword && matchesStatus;
+        }));
+
+        productTable.setItems(filteredProducts);
+        int end = Math.min(filteredProducts.size(), 10);
+        lblShowing.setText("Hiển thị " + (filteredProducts.isEmpty() ? 0 : 1) + " - " + end + " trong " + allProducts.size() + " sản phẩm");
     }
 
-    private void addToCart(Product product) {
-        if (product == null) return;
+    private void updateMetrics() {
+        long lowStock = allProducts.stream().filter(product -> product.getStock() > 0 && product.getStock() <= 10).count();
+        double inventoryValue = allProducts.stream().mapToDouble(product -> product.getPrice() * product.getStock()).sum();
+        long categoryCount = allProducts.stream()
+                .map(Product::getCategoryName)
+                .filter(category -> category != null && !category.isBlank())
+                .distinct()
+                .count();
 
-        // Validation tồn kho (trước mọi hành động)
-        if (product.getStock() <= 0) {
-            showWarning("Cảnh báo", "Sản phẩm đã hết hàng!");
-            return;
-        }
-
-        // Gộp dòng theo (ID biến thể + Size)
-        CartItem existing = findCartItem(product);
-        if (existing != null) {
-            int nextQty = existing.getQuantity() + 1;
-            if (nextQty > product.getStock()) {
-                showWarning("Cảnh báo",
-                        "Không thể thêm! Số lượng trong giỏ đã đạt giới hạn tồn kho (" + product.getStock() + ").");
-                return;
-            }
-            existing.setQuantity(nextQty);
-            updateCartView();
-            return;
-        }
-
-        cartList.add(new CartItem(product, 1));
-        updateCartView();
-    }
-
-    private CartItem findCartItem(Product product) {
-        for (CartItem item : cartList) {
-            if (item.matchesVariant(product)) return item;
-        }
-        return null;
-    }
-
-    private void showWarning(String title, String content) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(content);
-        alert.showAndWait();
-    }
-
-    private void updateCartView() {
-        if (vboxCartItems == null) return;
-        
-        vboxCartItems.getChildren().clear();
-        double total = 0;
-        
-        for (CartItem item : cartList) {
-            Product p = item.getProduct();
-            HBox itemBox = new HBox();
-            itemBox.getStyleClass().add("cart-item");
-            itemBox.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
-            itemBox.setSpacing(10);
-            
-            VBox details = new VBox();
-            Label nameLabel = new Label(p.getName());
-            nameLabel.setStyle("-fx-font-weight: bold;");
-            Label sizeLabel = new Label("Size: " + p.getSize());
-            sizeLabel.setStyle("-fx-text-fill: #6c757d; -fx-font-size: 11px;");
-            details.getChildren().addAll(nameLabel, sizeLabel);
-            
-            // Qty controls
-            HBox qtyBox = new HBox();
-            qtyBox.setAlignment(javafx.geometry.Pos.CENTER);
-            qtyBox.setSpacing(6);
-
-            Button btnMinus = new Button("-");
-            btnMinus.getStyleClass().add("qty-btn");
-            Label qtyLabel = new Label(String.valueOf(item.getQuantity()));
-            qtyLabel.setStyle("-fx-font-weight: bold; -fx-min-width: 24px; -fx-alignment: center;");
-            Button btnPlus = new Button("+");
-            btnPlus.getStyleClass().add("qty-btn");
-
-            Button btnRemove = new Button("x");
-            btnRemove.getStyleClass().add("btn-remove");
-
-            qtyBox.getChildren().addAll(btnMinus, qtyLabel, btnPlus, btnRemove);
-
-            Region spacer = new Region();
-            HBox.setHgrow(spacer, javafx.scene.layout.Priority.ALWAYS);
-            
-            double totalItemPrice = p.getPrice() * item.getQuantity();
-            total += totalItemPrice;
-            Label priceLabel = new Label(String.format("%,.0fđ", totalItemPrice));
-            priceLabel.setStyle("-fx-font-weight: bold;");
-
-            // Actions
-            btnPlus.setOnAction(e -> {
-                int nextQty = item.getQuantity() + 1;
-                if (nextQty > p.getStock()) {
-                    showWarning("Cảnh báo",
-                            "Không thể tăng! Tồn kho tối đa cho biến thể này là " + p.getStock() + ".");
-                    return;
-                }
-                item.setQuantity(nextQty);
-                updateCartView();
-            });
-
-            btnMinus.setOnAction(e -> {
-                int nextQty = item.getQuantity() - 1;
-                if (nextQty <= 0) {
-                    cartList.remove(item);
-                    updateCartView();
-                    return;
-                }
-                item.setQuantity(nextQty);
-                updateCartView();
-            });
-
-            btnRemove.setOnAction(e -> {
-                cartList.remove(item);
-                updateCartView();
-            });
-            
-            itemBox.getChildren().addAll(details, qtyBox, spacer, priceLabel);
-            vboxCartItems.getChildren().add(itemBox);
-        }
-        
-        lblTotal.setText(String.format("%,.0fđ", total));
+        lblTotalProducts.setText(String.format("%,d", allProducts.size()));
+        lblLowStock.setText(String.valueOf(lowStock));
+        lblInventoryValue.setText(formatCompactCurrency(inventoryValue));
+        lblBrandCount.setText(String.valueOf(categoryCount));
     }
 
     @FXML
-    void xuLyThanhToan(ActionEvent event) {
-        if (cartList.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Thông báo");
-            alert.setHeaderText(null);
-            alert.setContentText("Giỏ hàng đang trống!");
-            alert.showAndWait();
-            return;
-        }
-
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Thanh toán");
-        alert.setHeaderText("Chọn phương thức thanh toán");
-        alert.setContentText("Vui lòng chọn phương thức thanh toán:");
-
-        ButtonType btnTienMat = new ButtonType("Tiền mặt");
-        ButtonType btnUngDung = new ButtonType("Ứng dụng / Chuyển khoản");
-        ButtonType btnHuy = new ButtonType("Hủy", javafx.scene.control.ButtonBar.ButtonData.CANCEL_CLOSE);
-
-        alert.getButtonTypes().setAll(btnTienMat, btnUngDung, btnHuy);
-
-        alert.showAndWait().ifPresent(type -> {
-            if (type == btnTienMat || type == btnUngDung) {
-                Alert success = new Alert(Alert.AlertType.INFORMATION);
-                success.setTitle("Thành công");
-                success.setHeaderText(null);
-                success.setContentText("Thanh toán thành công bằng " + type.getText() + "!\nĐang in hóa đơn...");
-                success.showAndWait();
-                
-                cartList.clear();
-                updateCartView();
-            }
-        });
+    private void handleAddProduct() {
+        openAddProductForm();
     }
 
-    @FXML
-    void themMoiProduct(ActionEvent event) {
+    private void openAddProductForm() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/AddProduct.fxml"));
-            Parent root = loader.load();
-            Stage stage = new Stage();
-            stage.setTitle("Thêm sản phẩm mới");
-            stage.setScene(new Scene(root));
+            Parent root = FXMLLoader.load(getClass().getResource("/view/AddProduct.fxml"));
+            Stage stage = createDialogStage("Thêm sản phẩm mới", root);
             stage.showAndWait();
-            loadData();
+            loadProducts();
         } catch (IOException e) {
+            showError("Không thể mở form thêm sản phẩm.");
             e.printStackTrace();
         }
     }
 
+    private void openEditProductForm(Product product) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/EditProduct.fxml"));
+            Parent root = loader.load();
+            EditProductController controller = loader.getController();
+            controller.setProductData(product);
+            Stage stage = createDialogStage("Sửa sản phẩm - " + product.getProductCode(), root);
+            stage.showAndWait();
+            loadProducts();
+        } catch (IOException e) {
+            showError("Không thể mở form sửa sản phẩm.");
+            e.printStackTrace();
+        }
+    }
 
+    private Stage createDialogStage(String title, Parent root) {
+        Stage stage = new Stage();
+        stage.setTitle(title);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(new Scene(root));
+        return stage;
+    }
 
-    // Class hỗ trợ giỏ hàng
-    public static class CartItem {
-        private Product product;
-        private int quantity;
+    private void deleteProduct(Product product) {
+        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+        confirm.setTitle("Xóa sản phẩm");
+        confirm.setHeaderText(null);
+        confirm.setContentText("Bạn có chắc muốn xóa sản phẩm \"" + product.getName() + "\"?");
 
-        public CartItem(Product product, int quantity) {
-            this.product = product;
-            this.quantity = quantity;
+        confirm.showAndWait().ifPresent(result -> {
+            if (result == ButtonType.OK) {
+                if (productDAO.deleteProduct(product.getProductCode())) {
+                    loadProducts();
+                } else {
+                    showError("Không thể xóa sản phẩm. Sản phẩm có thể đang được tham chiếu trong đơn hàng.");
+                }
+            }
+        });
+    }
+
+    private Image loadImage(String imagePath) {
+        if (imagePath == null || imagePath.isBlank()) {
+            return null;
         }
 
-        public Product getProduct() { return product; }
-        public int getQuantity() { return quantity; }
-        public void setQuantity(int quantity) { this.quantity = quantity; }
-
-        public boolean matchesVariant(Product other) {
-            if (other == null) return false;
-            // ID ở đây được coi là ID của biến thể (Product-Size).
-            // Dù vậy vẫn so thêm Size để bám sát yêu cầu nghiệp vụ.
-            String aId = product != null ? product.getProductCode() : null;
-            String bId = other.getProductCode();
-            String aSize = product != null ? product.getSize() : null;
-            String bSize = other.getSize();
-            return (aId != null && aId.equals(bId)) && (aSize != null && aSize.equals(bSize));
+        File file = new File(imagePath);
+        if (!file.isFile()) {
+            return null;
         }
+
+        Image image = new Image(file.toURI().toString(), 52, 44, true, true);
+        return image.isError() ? null : image;
+    }
+
+    private String statusOf(Product product) {
+        if (product.getStock() <= 0) return "Hết hàng";
+        if (product.getStock() <= 10) return "Sắp hết";
+        return "Còn hàng";
+    }
+
+    private String statusClass(String status) {
+        if ("Sắp hết".equals(status)) return "status-warning";
+        if ("Hết hàng".equals(status)) return "status-muted";
+        return "status-success";
+    }
+
+    private String thumbClass(Product product) {
+        String category = safe(product.getCategoryName()).toLowerCase(Locale.ROOT);
+        if (category.contains("running") || category.contains("chạy")) return "thumb-dark";
+        if (category.contains("basket") || category.contains("bóng")) return "thumb-black";
+        if (category.contains("da") || category.contains("converse")) return "thumb-gray";
+        return "thumb-light";
+    }
+
+    private String colorForProduct(Product product) {
+        String category = safe(product.getCategoryName()).toLowerCase(Locale.ROOT);
+        if (category.contains("running") || category.contains("chạy")) return "#D8DEE6,#F8FAFC";
+        if (category.contains("basket") || category.contains("bóng")) return "#C51F2C,#F8FAFC";
+        if (category.contains("da")) return "#4B5563";
+        return "#D12424,#16181D";
+    }
+
+    private String formatCurrency(double value) {
+        return NumberFormat.getNumberInstance(Locale.US).format(value).replace(",", ".") + "đ";
+    }
+
+    private String formatCompactCurrency(double value) {
+        if (value >= 1_000_000_000) {
+            return String.format(Locale.US, "%.1fB", value / 1_000_000_000);
+        }
+        if (value >= 1_000_000) {
+            return String.format(Locale.US, "%.1fM", value / 1_000_000);
+        }
+        return formatCurrency(value);
+    }
+
+    private String safe(String text) {
+        return text == null ? "" : text;
+    }
+
+    private void showError(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Lỗi");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
