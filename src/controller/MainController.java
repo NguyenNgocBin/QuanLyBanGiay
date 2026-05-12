@@ -39,8 +39,10 @@ public class MainController {
         loadPage("Customer");
     }
 
-    // them moi Customer
-    // Trong mainController.java
+    @FXML
+    private void hienThiBanHang(MouseEvent event) {
+        loadPage("Sale");
+    }
 
     @FXML
     private void hienThiDonHang(MouseEvent event) {

@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Pagination?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="900.0" prefWidth="1200.0" style="-fx-background-color: #f4f7f6;" stylesheets="@../resources/css/Style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ProductController">
+   <children>
+      <VBox spacing="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+         <children>
+            <!-- Top Header & Search (Match the image's top bar roughly) -->
+            <HBox alignment="CENTER_LEFT" prefHeight="40.0" spacing="15.0">
+               <children>
+                  <TextField fx:id="txtSearch" prefHeight="35.0" prefWidth="350.0" promptText="🔍 Tìm kiếm sản phẩm, mã SKU..." style="-fx-background-color: white; -fx-background-radius: 6px; -fx-border-color: #e5e7eb; -fx-border-radius: 6px;" />
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Label text="🔔" style="-fx-font-size: 18px;" />
+                  <VBox alignment="CENTER_RIGHT">
+                     <children>
+                        <Label style="-fx-font-weight: bold;" text="Quản lý Kho" />
+                        <Label style="-fx-font-size: 11px; -fx-text-fill: #6b7280;" text="Chi nhánh 01" />
+                     </children>
+                  </VBox>
+                  <Label text="👤" style="-fx-font-size: 24px;" />
+               </children>
+            </HBox>
+
+            <!-- Page Title Area -->
+            <HBox alignment="CENTER_LEFT">
+               <children>
+                  <VBox spacing="5.0">
+                     <children>
+                        <Label text="Quản lý Kho hàng" textFill="#111827">
+                           <font>
+                              <Font name="System Bold" size="24.0" />
+                           </font>
+                        </Label>
+                        <HBox spacing="5.0">
+                           <children>
+                              <Label text="Trang chủ" textFill="#6b7280" />
+                              <Label text="/" textFill="#6b7280" />
+                              <Label style="-fx-font-weight: bold;" text="Kho hàng" textFill="#111827" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Button fx:id="btnNewProduct" mnemonicParsing="false" onAction="#themMoiProduct" styleClass="button-primary" text="⊞ Thêm sản phẩm mới" />
+               </children>
+            </HBox>
+
+            <!-- Metrics Cards -->
+            <HBox spacing="20.0">
+               <children>
+                  <!-- Card 1 -->
+                  <VBox styleClass="card-container" HBox.hgrow="ALWAYS">
+                     <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </padding>
+                     <children>
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <Label style="-fx-background-color: #e0f2fe; -fx-text-fill: #0284c7; -fx-padding: 8 12; -fx-background-radius: 8;" text="📦" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <Label styleClass="status-success" text="+12%" />
+                           </children>
+                        </HBox>
+                        <Label style="-fx-text-fill: #6b7280; -fx-font-size: 12px;" text="Tổng sản phẩm">
+                           <VBox.margin><Insets top="15.0" /></VBox.margin>
+                        </Label>
+                        <Label style="-fx-font-weight: bold; -fx-font-size: 24px; -fx-text-fill: #111827;" text="1,284">
+                           <VBox.margin><Insets top="5.0" /></VBox.margin>
+                        </Label>
+                     </children>
+                  </VBox>
+
+                  <!-- Card 2 -->
+                  <VBox styleClass="card-container" HBox.hgrow="ALWAYS">
+                     <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </padding>
+                     <children>
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <Label style="-fx-background-color: #e0e7ff; -fx-text-fill: #4f46e5; -fx-padding: 8 12; -fx-background-radius: 8;" text="⚠️" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <Label styleClass="status-danger" text="-5" />
+                           </children>
+                        </HBox>
+                        <Label style="-fx-text-fill: #6b7280; -fx-font-size: 12px;" text="Sắp hết hàng">
+                           <VBox.margin><Insets top="15.0" /></VBox.margin>
+                        </Label>
+                        <Label style="-fx-font-weight: bold; -fx-font-size: 24px; -fx-text-fill: #111827;" text="18">
+                           <VBox.margin><Insets top="5.0" /></VBox.margin>
+                        </Label>
+                     </children>
+                  </VBox>
+
+                  <!-- Card 3 -->
+                  <VBox styleClass="card-container" HBox.hgrow="ALWAYS">
+                     <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </padding>
+                     <children>
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <Label style="-fx-background-color: #e0f2fe; -fx-text-fill: #0284c7; -fx-padding: 8 12; -fx-background-radius: 8;" text="💵" />
+                           </children>
+                        </HBox>
+                        <Label style="-fx-text-fill: #6b7280; -fx-font-size: 12px;" text="Giá trị tồn kho">
+                           <VBox.margin><Insets top="15.0" /></VBox.margin>
+                        </Label>
+                        <Label style="-fx-font-weight: bold; -fx-font-size: 24px; -fx-text-fill: #111827;" text="2.4B">
+                           <VBox.margin><Insets top="5.0" /></VBox.margin>
+                        </Label>
+                     </children>
+                  </VBox>
+
+                  <!-- Card 4 -->
+                  <VBox styleClass="card-container" HBox.hgrow="ALWAYS">
+                     <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </padding>
+                     <children>
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <Label style="-fx-background-color: #f3f4f6; -fx-text-fill: #4b5563; -fx-padding: 8 12; -fx-background-radius: 8;" text="🏢" />
+                           </children>
+                        </HBox>
+                        <Label style="-fx-text-fill: #6b7280; -fx-font-size: 12px;" text="Thương hiệu">
+                           <VBox.margin><Insets top="15.0" /></VBox.margin>
+                        </Label>
+                        <Label style="-fx-font-weight: bold; -fx-font-size: 24px; -fx-text-fill: #111827;" text="14">
+                           <VBox.margin><Insets top="5.0" /></VBox.margin>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+
+            <!-- Table Section -->
+            <VBox styleClass="card-container" VBox.vgrow="ALWAYS">
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+               <children>
+                  <!-- Filters -->
+                  <HBox alignment="CENTER_LEFT" spacing="15.0">
+                     <children>
+                        <Button mnemonicParsing="false" styleClass="button-outline" text="Tất cả thương hiệu" />
+                        <ComboBox prefWidth="150.0" promptText="Trạng thái" style="-fx-background-color: white; -fx-border-color: #e5e7eb; -fx-border-radius: 4px;" />
+                        <Label style="-fx-text-fill: #6b7280; -fx-cursor: hand;" text="≡ Bộ lọc nâng cao" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Label style="-fx-text-fill: #6b7280;" text="Hiển thị 1 - 10 trong 1,284 sản phẩm" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </HBox>
+
+                  <!-- Danh sách kho: chỉ TableView; cột được tạo trong ProductController -->
+                  <TableView fx:id="tableProducts" VBox.vgrow="ALWAYS" style="-fx-border-color: transparent;" />
+
+                  <!-- Pagination -->
+                  <HBox alignment="CENTER_RIGHT" spacing="10.0">
+                     <children>
+                        <Pagination pageCount="128" maxPageIndicatorCount="3" prefHeight="45.0" />
+                        <Label text="Hiển thị" style="-fx-text-fill: #6b7280;" />
+                        <TextField prefWidth="50.0" text="10" alignment="CENTER" style="-fx-background-color: white; -fx-border-color: #e5e7eb; -fx-border-radius: 4px;" />
+                        <Label text="dòng mỗi trang" style="-fx-text-fill: #6b7280;" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

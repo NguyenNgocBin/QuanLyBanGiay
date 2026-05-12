@@ -146,4 +146,20 @@ public class ProductDAO {
             return false;
         }
     }
+
+    public boolean decreaseStock(int productId, int quantity) {
+        String sql = "UPDATE products SET stock = stock - ? WHERE id = ? AND stock >= ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement pst = conn.prepareStatement(sql)) {
+            
+            pst.setInt(1, quantity);
+            pst.setInt(2, productId);
+            pst.setInt(3, quantity);
+            
+            return pst.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

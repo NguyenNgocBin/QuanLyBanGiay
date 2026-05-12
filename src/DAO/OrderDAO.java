@@ -82,4 +82,36 @@ public class OrderDAO {
             return false;
         }
     }
+
+    public int insertOrderReturnId(Order order) {
+        String sql = "INSERT INTO orders (customer_id, total_amount, order_date, status) VALUES (?, ?, ?, ?)";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement pst = conn.prepareStatement(sql, java.sql.Statement.RETURN_GENERATED_KEYS)) {
+            
+            if (order.getCustomerId() > 0) {
+                pst.setInt(1, order.getCustomerId());
+            } else {
+                pst.setNull(1, java.sql.Types.INTEGER);
+            }
+            pst.setDouble(2, order.getTotalAmount());
+            pst.setDate(3, order.getOrderDate());
+            pst.setString(4, order.getStatus());
+
+            int affectedRows = pst.executeUpdate();
+            if (affectedRows == 0) {
+                return -1;
+            }
+
+            try (ResultSet generatedKeys = pst.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    return generatedKeys.getInt(1);
+                } else {
+                    return -1;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
 }

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="900.0" prefWidth="1200.0" style="-fx-background-color: #f4f7f6;" stylesheets="@../resources/css/Style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SaleController">
+   <children>
+      <HBox spacing="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <!-- Left Side: Product Grid -->
+            <VBox spacing="20.0" style="-fx-background-color: #f8fafc;" HBox.hgrow="ALWAYS">
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+               <children>
+                  <!-- Header & Search -->
+                  <HBox alignment="CENTER_LEFT" spacing="15.0">
+                     <children>
+                        <TextField fx:id="txtSearch" prefHeight="40.0" prefWidth="400.0" promptText="🔍 Tìm kiếm sản phẩm, mã SKU hoặc tên giày..." style="-fx-background-color: #f1f5f9; -fx-background-radius: 8px; -fx-border-color: transparent;" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Button mnemonicParsing="false" onAction="#themMoiProduct" style="-fx-background-color: #2563eb; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6px; -fx-padding: 8 16; -fx-cursor: hand;" text="+ Thêm SP" />
+                        <Label style="-fx-font-size: 18px;" text="🔔" />
+                        <VBox alignment="CENTER_RIGHT">
+                           <children>
+                              <Label style="-fx-font-weight: bold; -fx-text-fill: #111827;" text="Nguyễn Văn A" />
+                              <Label style="-fx-font-size: 11px; -fx-text-fill: #6b7280;" text="Nhân viên bán hàng" />
+                           </children>
+                        </VBox>
+                        <Label style="-fx-font-size: 24px;" text="👤" />
+                     </children>
+                  </HBox>
+                  
+                  <!-- Filter Chips -->
+                  <HBox alignment="CENTER_LEFT" spacing="10.0">
+                     <children>
+                        <Button mnemonicParsing="false" styleClass="filter-chip, active-chip" text="Tất cả" />
+                        <Button mnemonicParsing="false" styleClass="filter-chip" text="Sneakers" />
+                        <Button mnemonicParsing="false" styleClass="filter-chip" text="Chạy bộ" />
+                        <Button mnemonicParsing="false" styleClass="filter-chip" text="Bóng rổ" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Label style="-fx-text-fill: #6b7280; -fx-font-size: 12px;" text="Hiển thị 24 sản phẩm" />
+                     </children>
+                  </HBox>
+                  
+                  <!-- Product Grid -->
+                  <ScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: transparent; -fx-background: transparent;" VBox.vgrow="ALWAYS">
+                     <content>
+                        <FlowPane fx:id="flowPaneProducts" hgap="20.0" vgap="20.0">
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                           <!-- Product Cards will be injected here dynamically -->
+                        </FlowPane>
+                     </content>
+                  </ScrollPane>
+               </children>
+            </VBox>
+            
+            <!-- Right Side: Cart -->
+            <VBox prefWidth="450.0" style="-fx-background-color: white; -fx-border-color: #e5e7eb; -fx-border-width: 0 0 0 1px;">
+               <children>
+                  <!-- Cart Header -->
+                  <HBox alignment="CENTER_LEFT" style="-fx-border-color: #e5e7eb; -fx-border-width: 0 0 1px 0; -fx-padding: 20px;">
+                     <children>
+                        <Label style="-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: #111827;" text="🛒 ĐƠN HÀNG HIỆN TẠI" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Button mnemonicParsing="false" onAction="#xoaHetCart" style="-fx-background-color: transparent; -fx-text-fill: #ef4444; -fx-cursor: hand;" text="🗑 Xóa hết" />
+                     </children>
+                  </HBox>
+                  
+                  <!-- Cart Items -->
+                  <ScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: transparent; -fx-background: transparent;" VBox.vgrow="ALWAYS">
+                     <content>
+                        <VBox fx:id="vboxCartItems" spacing="15.0">
+                           <padding>
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                           </padding>
+                           <!-- Cart items will be injected here dynamically -->
+                        </VBox>
+                     </content>
+                  </ScrollPane>
+                  
+                  <!-- Payment Section -->
+                  <VBox spacing="15.0" style="-fx-background-color: white; -fx-padding: 20px; -fx-border-color: #e5e7eb; -fx-border-width: 1px 0 0 0;">
+                     <children>
+                        <!-- Totals -->
+                        <HBox>
+                           <children>
+                              <Label style="-fx-text-fill: #6b7280;" text="Tạm tính" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <Label fx:id="lblTamTinh" style="-fx-font-weight: bold; -fx-text-fill: #6b7280;" text="0đ" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                           <children>
+                              <Label style="-fx-text-fill: #6b7280;" text="Chiết khấu (%)" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <TextField fx:id="txtDiscount" alignment="CENTER" prefWidth="60.0" style="-fx-background-color: white; -fx-border-color: #e5e7eb; -fx-border-radius: 4px;" text="10" />
+                              <Label fx:id="lblGiamGia" style="-fx-font-weight: bold; -fx-text-fill: #ef4444;" text="-0đ" />
+                           </children>
+                        </HBox>
+                        <HBox style="-fx-border-color: #e5e7eb; -fx-border-width: 1px 0 0 0; -fx-padding: 15px 0 0 0;">
+                           <children>
+                              <Label style="-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: #111827;" text="TỔNG CỘNG" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <Label fx:id="lblTotal" style="-fx-font-weight: bold; -fx-font-size: 24px; -fx-text-fill: #111827;" text="0đ" />
+                           </children>
+                        </HBox>
+                        
+                        <!-- Payment Methods -->
+                        <Label style="-fx-text-fill: #6b7280; -fx-font-size: 11px; -fx-font-weight: bold;" text="PHƯƠNG THỨC THANH TOÁN">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <HBox spacing="10.0">
+                           <children>
+                              <VBox fx:id="vboxCash" onMouseClicked="#selectPaymentCash" alignment="CENTER" styleClass="payment-method, payment-method-selected" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="💵" />
+                                    <Label style="-fx-font-size: 11px; -fx-font-weight: bold;" text="Tiền mặt" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="15.0" top="15.0" />
+                                 </padding>
+                              </VBox>
+                              <VBox fx:id="vboxTransfer" onMouseClicked="#selectPaymentTransfer" alignment="CENTER" styleClass="payment-method" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="🏦" />
+                                    <Label style="-fx-font-size: 11px;" text="Chuyển khoản" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="15.0" top="15.0" />
+                                 </padding>
+                              </VBox>
+                              <VBox fx:id="vboxCard" onMouseClicked="#selectPaymentCard" alignment="CENTER" styleClass="payment-method" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="💳" />
+                                    <Label style="-fx-font-size: 11px;" text="Thẻ (Visa/MC)" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="15.0" top="15.0" />
+                                 </padding>
+                              </VBox>
+                           </children>
+                        </HBox>
+                        
+                        <!-- Action -->
+                        <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#xuLyThanhToan" style="-fx-background-color: #0b1120; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-padding: 15px; -fx-background-radius: 8px; -fx-cursor: hand;" text="⎙ THANH TOÁN &amp; IN HÓA ĐƠN">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </Button>
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
