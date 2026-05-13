@@ -1,3 +1,5 @@
+// file nay dùng để sửa sản phẩm đã có, nên sẽ lấy dữ liệu cũ ra hiển thị, sau đó người dùng sửa và lưu lại
+
 package controller;
 
 import DAO.CategoryDAO;
@@ -36,6 +38,7 @@ public class EditProductController {
         cbCategory.getItems().setAll(categoryDAO.getAllCategories());
     }
 
+    // Hàm này sẽ được gọi từ bên ngoài sau khi tạo controller để truyền dữ liệu sản phẩm cần sửa vào
     public void setProductData(Product product) {
         this.product = product;
         txtName.setText(product.getName());
@@ -52,20 +55,23 @@ public class EditProductController {
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Chọn ảnh sản phẩm");
         chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
-        File file = chooser.showOpenDialog(currentStage());
+        File file = chooser.showOpenDialog(currentStage());// Mở hộp thoại chọn file và lấy file đã chọn
         if (file != null) {
             selectedImage = file;
-            imgPreview.setImage(new Image(file.toURI().toString()));
+            imgPreview.setImage(new Image(file.toURI().toString()));// Hiển thị ảnh đã chọn lên ImageView
         }
     }
 
+
+    // Hàm này sẽ được gọi khi người dùng bấm nút "Lưu" để cập nhật thông tin sản phẩm
     @FXML
-    private void save() {
+    private void save() { // Cập nhật thông tin sản phẩm dựa trên dữ liệu từ form
         if (product == null) {
             lblMessage.setText("Không tìm thấy sản phẩm cần sửa.");
             return;
         }
 
+        // Kiểm tra dữ liệu nhập vào
         Category category = cbCategory.getValue();
         if (txtName.getText().trim().isBlank() || category == null) {
             lblMessage.setText("Vui lòng nhập tên sản phẩm và danh mục.");

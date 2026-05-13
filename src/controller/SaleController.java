@@ -1,3 +1,5 @@
+// file nàydungf để tạo giao diện bán hàng đơn giản với JavaFX, bao gồm danh sách sản phẩm, giỏ hàng và tính năng thanh toán. Người dùng có thể lọc sản phẩm theo danh mục, thêm sản phẩm vào giỏ hàng, điều chỉnh số lượng và xem tổng tiền trước khi thanh toán. Giao diện cũng có các nút để chọn phương thức thanh toán và thực hiện thanh toán.
+
 package controller;
 
 import javafx.beans.property.SimpleIntegerProperty;
