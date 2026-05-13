@@ -503,7 +503,7 @@
 }
 
 .status-muted {
-    -fx-background-color: #f1f5f9;
+    -fx-background-color: red;
     -fx-text-fill: #64748b;
 }
 

@@ -373,7 +373,7 @@
     -fx-border-color: #d8dee8;
     -fx-border-radius: 4;
     -fx-background-radius: 4;
-    -fx-text-fill: #475569;
+    -fx-text-fill: #ffffff;
     -fx-font-size: 11px;
     -fx-padding: 7 10;
 }
@@ -503,8 +503,8 @@
 }
 
 .status-muted {
-    -fx-background-color: #f1f5f9;
-    -fx-text-fill: #64748b;
+    -fx-background-color: #fe4D4D;
+    -fx-text-fill: #530000;
 }
 
 .low-stock-text {
@@ -540,7 +540,7 @@
 }
 
 .sidebar-subtitle {
-    -fx-text-fill: #6f8193;
+    -fx-text-fill: #ffffff;
     -fx-font-size: 10px;
     -fx-padding: 0 16 22 16;
 }

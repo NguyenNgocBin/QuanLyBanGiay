@@ -143,26 +143,26 @@ public class ProductController {
         });
 
         colSize.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(safe(data.getValue().getSize())));
-        colColor.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(colorForProduct(data.getValue())));
-        colColor.setCellFactory(column -> new TableCell<>() {
-            @Override
-            protected void updateItem(String colors, boolean empty) {
-                super.updateItem(colors, empty);
-                if (empty || colors == null) {
-                    setGraphic(null);
-                    return;
-                }
-
-                HBox colorBox = new HBox(5);
-                colorBox.setAlignment(Pos.CENTER_LEFT);
-                for (String color : colors.split(",")) {
-                    Circle dot = new Circle(6);
-                    dot.setStyle("-fx-fill: " + color + "; -fx-stroke: #cbd5e1; -fx-stroke-width: 1;");
-                    colorBox.getChildren().add(dot);
-                }
-                setGraphic(colorBox);
-            }
-        });
+//        colColor.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(colorForProduct(data.getValue()))); //
+//        colColor.setCellFactory(column -> new TableCell<>() {
+//            @Override
+//            protected void updateItem(String colors, boolean empty) {//
+//                super.updateItem(colors, empty);
+//                if (empty || colors == null) {
+//                    setGraphic(null);
+//                    return;
+//                }
+//
+//                HBox colorBox = new HBox(5);
+//                colorBox.setAlignment(Pos.CENTER_LEFT);
+//                for (String color : colors.split(",")) {
+//                    Circle dot = new Circle(6);
+//                    dot.setStyle("-fx-fill: " + color + "; -fx-stroke: #cbd5e1; -fx-stroke-width: 1;");
+//                    colorBox.getChildren().add(dot);
+//                }
+//                setGraphic(colorBox);
+//            }
+//        });
 
         colPrice.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(formatCurrency(data.getValue().getPrice())));
         colStock.setCellValueFactory(data -> new javafx.beans.property.SimpleIntegerProperty(data.getValue().getStock()).asObject());
@@ -348,6 +348,7 @@ public class ProductController {
     private String statusOf(Product product) {
         if (product.getStock() <= 0) return "Hết hàng";
         if (product.getStock() <= 5) return "Sắp hết";
+
         return "Còn hàng";
     }
 
