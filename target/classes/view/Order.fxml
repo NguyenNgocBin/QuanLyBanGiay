@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane minHeight="560.0" minWidth="820.0" styleClass="order-page" stylesheets="@../resources/css/SoleManager.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.OrderController">
+
+   <center>
+      <ScrollPane fitToWidth="true" hbarPolicy="NEVER" styleClass="order-scroll" BorderPane.alignment="CENTER">
+         <content>
+            <VBox spacing="16.0" styleClass="order-content">
+
+               <!-- ── Tiêu đề trang ── -->
+               <HBox alignment="CENTER_LEFT" spacing="10.0">
+                  <Label styleClass="order-page-title" text="Quản lý đơn hàng" />
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Button mnemonicParsing="false" onAction="#refresh" styleClass="order-refresh-btn" text="↻  Làm mới" />
+               </HBox>
+
+               <!-- ── Thống kê nhanh ── -->
+               <HBox spacing="14.0" styleClass="order-stats-row">
+
+                  <VBox style="-fx-background-color: linear-gradient(to right, #6366F1, #A855F7);" styleClass="order-stat-card" HBox.hgrow="ALWAYS">
+                     <Label styleClass="order-stat-label" text="ĐƠN HÀNG HÔM NAY" />
+                     <Label fx:id="lblTodayCount" styleClass="order-stat-value" text="0" />
+                     <Label styleClass="order-stat-sub" text="Đơn đã thanh toán" />
+                  </VBox>
+
+                  <VBox style="-fx-background-color: linear-gradient(to right, #6366F1, #A855F7);" styleClass="order-stat-card" HBox.hgrow="ALWAYS">
+                     <Label styleClass="order-stat-label" text="DOANH THU HÔM NAY" />
+                     <Label fx:id="lblTodayRevenue" styleClass="order-stat-value" text="0đ" />
+                     <Label styleClass="order-stat-sub" text="Tổng tiền thu được" />
+                  </VBox>
+
+                  <VBox style="-fx-background-color: linear-gradient(to right, #6366F1, #A855F7);" styleClass="order-stat-card" HBox.hgrow="ALWAYS">
+                     <Label styleClass="order-stat-label" text="TỔNG DOANH THU" />
+                     <Label fx:id="lblTotalRevenue" styleClass="order-stat-value" text="0đ" />
+                     <Label styleClass="order-stat-sub" text="Toàn thời gian" />
+                  </VBox>
+
+               </HBox>
+
+               <!-- ── Bộ lọc ── -->
+               <HBox alignment="CENTER_LEFT" spacing="10.0" styleClass="order-filter-row">
+
+                  <TextField fx:id="tfSearch" promptText="🔍  Tìm mã đơn, tên khách, số điện thoại…" styleClass="order-search-field" HBox.hgrow="ALWAYS" />
+
+                  <ComboBox fx:id="cbPayment" prefWidth="150.0" promptText="Thanh toán" styleClass="order-combo" />
+
+               </HBox>
+
+               <!-- ── Bảng đơn hàng ── -->
+               <VBox styleClass="order-table-panel" VBox.vgrow="ALWAYS">
+
+                  <HBox alignment="CENTER_LEFT" styleClass="order-table-header">
+                     <Label styleClass="order-table-title" text="Danh sách đơn hàng" />
+                     <Region HBox.hgrow="ALWAYS" />
+                     <Label fx:id="lblResultCount" styleClass="order-result-count" text="0 đơn hàng" />
+                  </HBox>
+
+                  <TableView fx:id="tblOrders" styleClass="order-table" VBox.vgrow="ALWAYS">
+                     <columns>
+                        <TableColumn fx:id="colCode" minWidth="90.0" prefWidth="100.0" text="Mã đơn" />
+                        <TableColumn fx:id="colCustomer" minWidth="130.0" prefWidth="150.0" text="Khách hàng" />
+                        <TableColumn fx:id="colPhone" minWidth="110.0" prefWidth="120.0" text="Điện thoại" />
+                        <TableColumn fx:id="colDate" minWidth="90.0" prefWidth="105.0" text="Ngày đặt" />
+                        <TableColumn fx:id="colPayment" minWidth="110.0" prefWidth="125.0" text="Thanh toán" />
+                        <TableColumn fx:id="colItems" minWidth="50.0" prefWidth="60.0" text="SL SP" />
+                        <TableColumn fx:id="colTotal" minWidth="110.0" prefWidth="125.0" text="Tổng tiền" />
+                        <TableColumn fx:id="colStatus" minWidth="110.0" prefWidth="120.0" text="Trạng thái" />
+                        <TableColumn fx:id="colActions" minWidth="160.0" prefWidth="175.0" text="Thao tác" />
+                     </columns>
+                     <placeholder>
+                        <Label styleClass="order-empty-label" text="Chưa có đơn hàng nào" />
+                     </placeholder>
+                  </TableView>
+
+               </VBox>
+
+            </VBox>
+         </content>
+         <padding>
+            <Insets bottom="20.0" left="18.0" right="18.0" top="16.0" />
+         </padding>
+      </ScrollPane>
+   </center>
+
+</BorderPane>

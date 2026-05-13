@@ -36,19 +36,18 @@
                            </children>
                         </VBox>
                         <Region HBox.hgrow="ALWAYS" />
-                        <Button fx:id="btnNewProduct" mnemonicParsing="false" onAction="#handleAddProduct" styleClass="warehouse-primary" text="+ Thêm sản phẩm mới" />
                      </children>
                   </HBox>
 
                   <TilePane hgap="14.0" prefColumns="4" prefHeight="214.0" prefWidth="1098.0" styleClass="metric-grid" tileAlignment="TOP_LEFT" vgap="14.0">
                      <children>
-                        <VBox prefHeight="74.0" prefWidth="218.0" spacing="10.0" style="-fx-background-color: #ADC6FF;" styleClass="metric-card">
+                        <VBox prefHeight="74.0" prefWidth="218.0" spacing="10.0" style="-fx-background-color: linear-gradient(to right, #6366F1, #A855F7);" styleClass="metric-card">
                            <children>
                               <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="188.0">
                                  <children>
-                                    <Label prefHeight="29.0" prefWidth="96.0" styleClass="metric-label" text="TỔNG SẢN PHẨM">
+                                    <Label prefHeight="46.0" prefWidth="203.0" text="TỔNG SẢN PHẨM" textFill="WHITE">
                                        <font>
-                                          <Font name="System Bold" size="50.0" />
+                                          <Font name="System Bold" size="16.0" />
                                        </font>
                                     </Label>
                                     <Region HBox.hgrow="ALWAYS" />
@@ -61,13 +60,13 @@
                            </padding>
                         </VBox>
 
-                        <VBox prefHeight="128.0" prefWidth="218.0" spacing="10.0" style="-fx-background-color: #ADC6FF;" styleClass="metric-card">
+                        <VBox prefHeight="128.0" prefWidth="162.0" spacing="10.0" style="-fx-background-color: linear-gradient(to right, #6366F1, #A855F7);" styleClass="metric-card">
                            <children>
                               <HBox alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="188.0">
                                  <children>
-                                    <Label styleClass="metric-label" text="SẮP HẾT HÀNG">
+                                    <Label text="SẮP HẾT HÀNG" textFill="WHITE">
                                        <font>
-                                          <Font size="38.0" />
+                                          <Font name="System Bold" size="16.0" />
                                        </font>
                                     </Label>
                                     <Region HBox.hgrow="ALWAYS" />
@@ -77,25 +76,34 @@
                            </children>
                         </VBox>
 
-                        <VBox prefHeight="128.0" prefWidth="54.0" spacing="10.0" style="-fx-background-color: #ADC6FF;" styleClass="metric-card">
+                        <VBox prefHeight="128.0" prefWidth="54.0" spacing="10.0" style="-fx-background-color: linear-gradient(to right, #6366F1, #A855F7);" styleClass="metric-card">
                            <children>
-                              <Label prefHeight="40.0" prefWidth="76.0" styleClass="metric-label" text="Giá trị tồn kho" />
+                              <Label prefHeight="40.0" prefWidth="154.0" text="GIÁ TRỊ TỒN KHO" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="16.0" />
+                                 </font></Label>
                               <Label fx:id="lblInventoryValue" styleClass="metric-value" text="2.4B" />
                            </children>
                         </VBox>
 
-                        <VBox prefHeight="128.0" prefWidth="15.0" spacing="10.0" style="-fx-background-color: #ADC6FF;" styleClass="metric-card">
+                        <VBox prefHeight="128.0" prefWidth="15.0" spacing="10.0" style="-fx-background-color: linear-gradient(to right, #6366F1, #A855F7);" styleClass="metric-card">
                            <children>
-                              <Label prefHeight="40.0" prefWidth="54.0" styleClass="metric-label" text="Danh mục" />
+                              <Label prefHeight="40.0" prefWidth="98.0" text="DANG MỤC" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="16.0" />
+                                 </font></Label>
                               <Label fx:id="lblBrandCount" styleClass="metric-value" text="14" />
                            </children>
                            <padding>
                               <Insets right="30.0" />
                            </padding>
                         </VBox>
-                        <VBox prefHeight="62.0" prefWidth="218.0" spacing="10.0" style="-fx-background-color: #ADC6FF;" styleClass="metric-card">
+                        <VBox prefHeight="62.0" prefWidth="218.0" spacing="10.0" style="-fx-background-color: linear-gradient(to right, #6366F1, #A855F7);" styleClass="metric-card">
                            <children>
-                              <Label prefHeight="40.0" prefWidth="128.0" styleClass="metric-label" text="TỔNG SẢN PHẨM" />
+                              <Label prefHeight="40.0" prefWidth="147.0" text="TỔNG SẢN PHẨM" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="16.0" />
+                                 </font></Label>
                               <Label fx:id="lblsumproduct" styleClass="metric-value" text="14" />
                            </children>
                         </VBox>
@@ -106,9 +114,10 @@
                      <children>
                         <HBox alignment="CENTER_LEFT" spacing="12.0" styleClass="filter-row">
                            <children>
-                              <ComboBox fx:id="cbStatus" prefHeight="34.0" prefWidth="138.0" promptText="Trạng thái" style="-fx-background-color: #3B8AF6;" styleClass="filter-combo" />
+                              <ComboBox fx:id="cbStatus" prefHeight="34.0" prefWidth="138.0" promptText="Trạng thái" style="-fx-background-color: linear-gradient(to right, #6366F1, #A855F7);" styleClass="filter-combo" />
                               <TextField fx:id="txtSearch" maxWidth="360.0" prefHeight="38.0" prefWidth="320.0" promptText="Tìm kiếm sản phẩm, mã SKU..." styleClass="warehouse-search" HBox.hgrow="ALWAYS" />
                               <Region HBox.hgrow="ALWAYS" />
+                              <Button fx:id="btnNewProduct" mnemonicParsing="false" onAction="#handleAddProduct" style="-fx-background-color: linear-gradient(to right, #6366F1, #A855F7);" styleClass="warehouse-primary" text="+ Thêm sản phẩm mới" />
                               <Label fx:id="lblShowing" styleClass="result-count" text="Hiển thị 1 - 10 trong 1,284 sản phẩm" />
                            </children>
                         </HBox>

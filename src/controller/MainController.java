@@ -52,8 +52,9 @@ public class MainController {
             loadPane("/view/Product.fxml");
         } else if (clickedButton == btnSales) {
             loadPane("/view/Sale.fxml");
+        } else if (clickedButton == btnOrders) {
+            loadPane("/view/Order.fxml");
         } else {
-            // Placeholder for other tabs
             System.out.println("Tab not implemented yet: " + clickedButton.getText());
         }
     }
