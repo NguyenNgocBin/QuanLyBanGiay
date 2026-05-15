@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox prefHeight="640.0" prefWidth="860.0" spacing="20.0" styleClass="content-area" stylesheets="@../resources/css/SoleManager.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ImportController">
+   <children>
+      <!-- LEFT PANEL: Products Selection -->
+      <VBox spacing="15.0" styleClass="card" HBox.hgrow="ALWAYS">
+         <children>
+            <Label style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #1A202C;" text="Tìm kiếm sản phẩm" />
+            
+            <HBox spacing="10.0">
+               <children>
+                  <TextField fx:id="txtSearchProduct" promptText="Nhập tên hoặc mã giày..." styleClass="text-field" HBox.hgrow="ALWAYS" />
+                  <ComboBox fx:id="cmbCategory" prefWidth="150.0" promptText="Tất cả danh mục" />
+                  <Button mnemonicParsing="false" onAction="#handleSearchProduct" styleClass="btn-secondary" text="Tìm" />
+               </children>
+            </HBox>
+            
+            <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;" VBox.vgrow="ALWAYS">
+               <content>
+                  <GridPane fx:id="productGrid" hgap="15.0" vgap="15.0">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </GridPane>
+               </content>
+            </ScrollPane>
+         </children>
+      </VBox>
+
+      <!-- RIGHT PANEL: Import Details -->
+      <VBox prefWidth="350.0" spacing="15.0">
+         <children>
+            <!-- Supplier Info -->
+            <VBox spacing="10.0" styleClass="card">
+               <children>
+                  <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1A202C;" text="Thông tin nhập hàng" />
+                  <HBox alignment="CENTER_LEFT" spacing="10.0">
+                     <children>
+                        <ComboBox fx:id="cmbSupplier" maxWidth="1.7976931348623157E308" promptText="Chọn nhà cung cấp" HBox.hgrow="ALWAYS" />
+                        <Button mnemonicParsing="false" styleClass="btn-secondary" text="+" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            
+            <!-- Import Cart -->
+            <VBox spacing="10.0" styleClass="card" VBox.vgrow="ALWAYS">
+               <children>
+                  <HBox alignment="CENTER_LEFT">
+                     <children>
+                        <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1A202C;" text="Danh sách nhập" />
+                        <HBox HBox.hgrow="ALWAYS" />
+                        <Button mnemonicParsing="false" onAction="#handleClearList" style="-fx-background-color: transparent; -fx-text-fill: #E53E3E;" text="Xóa tất cả" />
+                     </children>
+                  </HBox>
+                  
+                  <TableView fx:id="importTable" VBox.vgrow="ALWAYS">
+                    <columns>
+                      <TableColumn fx:id="colProductName" prefWidth="150.0" text="Sản phẩm" />
+                      <TableColumn fx:id="colQuantity" prefWidth="60.0" text="SL" />
+                      <TableColumn fx:id="colImportPrice" prefWidth="90.0" text="Giá nhập" />
+                    </columns>
+                  </TableView>
+               </children>
+            </VBox>
+            
+            <!-- Total & Action -->
+            <VBox spacing="15.0" styleClass="card">
+               <children>
+                  <HBox>
+                     <children>
+                        <Label style="-fx-font-size: 14px; -fx-text-fill: #718096;" text="Tổng tiền:" />
+                        <HBox HBox.hgrow="ALWAYS" />
+                        <Label fx:id="lblTotalAmount" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #E53E3E;" text="0đ" />
+                     </children>
+                  </HBox>
+                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleImport" styleClass="btn-primary" style="-fx-font-size: 16px; -fx-padding: 12px;" text="Hoàn tất nhập kho" />
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
+</HBox>

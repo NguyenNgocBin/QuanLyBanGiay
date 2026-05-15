@@ -36,8 +36,8 @@
             <VBox styleClass="card, card-highlight" GridPane.columnIndex="0">
                <children>
                   <Label styleClass="card-title" text="DOANH THU HÔM NAY" />
-                  <Label styleClass="card-value" text="24.500.000đ" />
-                  <Label styleClass="card-subtext" text="+12.5% so với hôm qua" />
+                  <Label fx:id="lblTodayRevenue" styleClass="card-value" text="0đ" />
+                  <Label styleClass="card-subtext" text="Hôm nay" />
                </children>
             </VBox>
             
@@ -45,17 +45,17 @@
             <VBox styleClass="card" GridPane.columnIndex="1">
                <children>
                   <Label styleClass="card-title" text="ĐƠN HÀNG MỚI" />
-                  <Label styleClass="card-value" text="42" />
-                  <Label styleClass="card-subtext" text="+4 đơn mới" />
+                  <Label fx:id="lblNewOrders" styleClass="card-value" text="0" />
+                  <Label styleClass="card-subtext" text="Hôm nay" />
                </children>
             </VBox>
             
             <!-- Card 3 -->
             <VBox styleClass="card" GridPane.columnIndex="2">
                <children>
-                  <Label styleClass="card-title" text="KHÁCH HÀNG MỚI" />
-                  <Label styleClass="card-value" text="12" />
-                  <Label styleClass="card-subtext" text="0% so với tuần trước" />
+                  <Label styleClass="card-title" text="TỔNG KHÁCH HÀNG" />
+                  <Label fx:id="lblTotalCustomers" styleClass="card-value" text="0" />
+                  <Label styleClass="card-subtext" text="Tất cả" />
                </children>
             </VBox>
             
@@ -63,8 +63,8 @@
             <VBox styleClass="card" GridPane.columnIndex="3">
                <children>
                   <Label styleClass="card-title" text="SẢN PHẨM SẮP HẾT" />
-                  <Label styleClass="card-value" text="08" />
-                  <Label styleClass="card-subtext" text="-2 sp so với hôm qua" />
+                  <Label fx:id="lblLowStock" styleClass="card-value" text="0" />
+                  <Label styleClass="card-subtext" text="Tồn kho ≤ 10" />
                </children>
             </VBox>
          </children>
@@ -98,46 +98,13 @@
             <VBox prefWidth="250.0" styleClass="chart-container">
                <children>
                   <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1A202C;" text="Sản phẩm bán chạy" />
-                  <VBox spacing="10.0" VBox.vgrow="ALWAYS">
+                  <VBox fx:id="topProductsContainer" spacing="10.0" VBox.vgrow="ALWAYS">
                      <padding>
                         <Insets top="10.0" />
                      </padding>
-                     <children>
-                        <HBox alignment="CENTER_LEFT">
-                           <children>
-                              <Label text="👟" style="-fx-font-size: 20px;"/>
-                              <VBox>
-                                 <children>
-                                    <Label style="-fx-font-weight: bold;" text="Nike Air Max 270" />
-                                    <Label style="-fx-font-size: 11px; -fx-text-fill: #718096;" text="Đã bán 124 đôi" />
-                                 </children>
-                                 <padding>
-                                    <Insets left="10.0" />
-                                 </padding>
-                              </VBox>
-                              <HBox HBox.hgrow="ALWAYS" />
-                              <Label style="-fx-font-weight: bold; -fx-text-fill: #2D3748;" text="3.2M" />
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT">
-                           <children>
-                              <Label text="👟" style="-fx-font-size: 20px;"/>
-                              <VBox>
-                                 <children>
-                                    <Label style="-fx-font-weight: bold;" text="Adidas Superstar" />
-                                    <Label style="-fx-font-size: 11px; -fx-text-fill: #718096;" text="Đã bán 98 đôi" />
-                                 </children>
-                                 <padding>
-                                    <Insets left="10.0" />
-                                 </padding>
-                              </VBox>
-                              <HBox HBox.hgrow="ALWAYS" />
-                              <Label style="-fx-font-weight: bold; -fx-text-fill: #2D3748;" text="2.1M" />
-                           </children>
-                        </HBox>
-                     </children>
+                     <!-- Top products will be added dynamically -->
                   </VBox>
-                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="btn-primary" text="Xem tất cả sản phẩm" />
+                  <Button mnemonicParsing="false" styleClass="btn-primary" text="Xem kho hàng" onAction="#goToProducts" />
                </children>
             </VBox>
          </children>

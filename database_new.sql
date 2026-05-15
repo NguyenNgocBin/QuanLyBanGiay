@@ -117,3 +117,46 @@ INSERT INTO `orders` (`customer_id`, `total_amount`, `order_date`, `status`) VAL
 INSERT INTO `order_details` (`order_id`, `product_id`, `quantity`, `unit_price`) VALUES 
 (1, 1, 1, 2500000),
 (2, 2, 1, 4500000);
+
+-- =====================================================================
+-- 7. BẢNG SUPPLIERS (Nhà cung cấp)
+-- =====================================================================
+CREATE TABLE IF NOT EXISTS `suppliers` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `supplier_code` VARCHAR(50) NOT NULL UNIQUE,
+  `name` VARCHAR(255) NOT NULL,
+  `phone` VARCHAR(20),
+  `email` VARCHAR(100),
+  `address` VARCHAR(500)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- =====================================================================
+-- 8. BẢNG IMPORT_ORDERS (Phiếu nhập)
+-- =====================================================================
+CREATE TABLE IF NOT EXISTS `import_orders` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `supplier_id` INT,
+  `total_amount` DOUBLE NOT NULL DEFAULT 0,
+  `import_date` DATE DEFAULT (CURRENT_DATE),
+  `status` VARCHAR(50) DEFAULT 'Hoàn thành',
+  FOREIGN KEY (`supplier_id`) REFERENCES `suppliers`(`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- =====================================================================
+-- 9. BẢNG IMPORT_DETAILS (Chi tiết phiếu nhập)
+-- =====================================================================
+CREATE TABLE IF NOT EXISTS `import_details` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `import_id` INT NOT NULL,
+  `product_id` INT NOT NULL,
+  `quantity` INT NOT NULL DEFAULT 1,
+  `import_price` DOUBLE NOT NULL,
+  FOREIGN KEY (`import_id`) REFERENCES `import_orders`(`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Thêm nhà cung cấp mẫu
+INSERT IGNORE INTO `suppliers` (`supplier_code`, `name`, `phone`, `email`, `address`) VALUES 
+('NCC001', 'Công ty TNHH Giày Da Nike Việt Nam', '0283123456', 'contact@nike.vn', 'Quận 1, TP. Hồ Chí Minh'),
+('NCC002', 'Đại lý phân phối Adidas miền Bắc', '0243987654', 'sales@adidas.com.vn', 'Cầu Giấy, Hà Nội'),
+('NCC003', 'Xưởng sản xuất giày dép Bình Tân', '0909123999', 'xuonggiaybt@gmail.com', 'Bình Tân, TP. Hồ Chí Minh');

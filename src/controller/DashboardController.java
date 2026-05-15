@@ -1,50 +1,68 @@
 package controller;
 
+import DAO.DashboardDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+
+import java.text.NumberFormat;
+import java.util.List;
+import java.util.Locale;
 
 public class DashboardController {
 
-    @FXML
-    private AreaChart<String, Number> revenueChart;
+    @FXML private Label lblTodayRevenue;
+    @FXML private Label lblNewOrders;
+    @FXML private Label lblTotalCustomers;
+    @FXML private Label lblLowStock;
+    @FXML private VBox topProductsContainer;
 
-    @FXML
-    private TableView<Transaction> transactionTable;
-    
-    @FXML
-    private TableColumn<Transaction, String> colId;
-    @FXML
-    private TableColumn<Transaction, String> colCustomer;
-    @FXML
-    private TableColumn<Transaction, String> colProduct;
-    @FXML
-    private TableColumn<Transaction, String> colTotal;
-    @FXML
-    private TableColumn<Transaction, String> colStatus;
+    @FXML private AreaChart<String, Number> revenueChart;
+
+    @FXML private TableView<Transaction> transactionTable;
+    @FXML private TableColumn<Transaction, String> colId;
+    @FXML private TableColumn<Transaction, String> colCustomer;
+    @FXML private TableColumn<Transaction, String> colProduct;
+    @FXML private TableColumn<Transaction, String> colTotal;
+    @FXML private TableColumn<Transaction, String> colStatus;
+
+    private final DashboardDAO dashboardDAO = new DashboardDAO();
 
     @FXML
     public void initialize() {
+        loadMetrics();
         setupChart();
         setupTable();
+        loadTopProducts();
+    }
+
+    private void loadMetrics() {
+        lblTodayRevenue.setText(formatCurrency(dashboardDAO.getTodayRevenue()));
+        lblNewOrders.setText(String.valueOf(dashboardDAO.getNewOrdersCount()));
+        lblTotalCustomers.setText(String.valueOf(dashboardDAO.getTotalCustomersCount()));
+        lblLowStock.setText(String.valueOf(dashboardDAO.getLowStockCount()));
     }
 
     private void setupChart() {
+        revenueChart.getData().clear();
         XYChart.Series<String, Number> series = new XYChart.Series<>();
-        series.setName("Doanh thu thực tế");
+        series.setName("Doanh thu 7 ngày qua");
         
-        series.getData().add(new XYChart.Data<>("T2", 15000000));
-        series.getData().add(new XYChart.Data<>("T3", 20000000));
-        series.getData().add(new XYChart.Data<>("T4", 18000000));
-        series.getData().add(new XYChart.Data<>("T5", 25000000));
-        series.getData().add(new XYChart.Data<>("T6", 22000000));
-        series.getData().add(new XYChart.Data<>("T7", 30000000));
-        series.getData().add(new XYChart.Data<>("CN", 35000000));
+        List<DashboardDAO.RevenueByDay> data = dashboardDAO.getRevenueLast7Days();
+        for (DashboardDAO.RevenueByDay r : data) {
+            series.getData().add(new XYChart.Data<>(r.date(), r.revenue()));
+        }
         
         revenueChart.getData().add(series);
     }
@@ -56,16 +74,72 @@ public class DashboardController {
         colTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
 
-        ObservableList<Transaction> data = FXCollections.observableArrayList(
-            new Transaction("#DH-8492", "Nguyễn Văn Hùng", "Nike Air Force 1 (Trắng)", "2.850.000đ", "Đã giao"),
-            new Transaction("#DH-8493", "Lê Thị Mai", "Adidas Superstar", "2.100.000đ", "Chờ xử lý"),
-            new Transaction("#DH-8494", "Hoàng Văn Nam", "Puma RS-X", "2.500.000đ", "Đã hủy")
-        );
-
+        List<DashboardDAO.RecentTransaction> recent = dashboardDAO.getRecentTransactions(5);
+        ObservableList<Transaction> data = FXCollections.observableArrayList();
+        for (DashboardDAO.RecentTransaction rt : recent) {
+            data.add(new Transaction(rt.id(), rt.customer(), rt.product(), formatCurrency(rt.total()), rt.status()));
+        }
         transactionTable.setItems(data);
     }
 
-    // Inner class cho dữ liệu bảng
+    private void loadTopProducts() {
+        topProductsContainer.getChildren().clear();
+        List<DashboardDAO.TopProduct> topProducts = dashboardDAO.getTopProducts(5);
+
+        for (DashboardDAO.TopProduct tp : topProducts) {
+            HBox hbox = new HBox();
+            hbox.setAlignment(Pos.CENTER_LEFT);
+
+            Label icon = new Label("👟");
+            icon.setStyle("-fx-font-size: 20px;");
+
+            VBox infoBox = new VBox();
+            infoBox.setPadding(new Insets(0, 0, 0, 10));
+            Label nameLabel = new Label(tp.name());
+            nameLabel.setStyle("-fx-font-weight: bold;");
+            Label soldLabel = new Label("Đã bán " + tp.totalSold() + " đôi");
+            soldLabel.setStyle("-fx-font-size: 11px; -fx-text-fill: #718096;");
+            infoBox.getChildren().addAll(nameLabel, soldLabel);
+
+            HBox spacer = new HBox();
+            HBox.setHgrow(spacer, Priority.ALWAYS);
+
+            Label revenueLabel = new Label(formatCompactCurrency(tp.totalRevenue()));
+            revenueLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: #2D3748;");
+
+            hbox.getChildren().addAll(icon, infoBox, spacer, revenueLabel);
+            topProductsContainer.getChildren().add(hbox);
+        }
+        
+        if (topProducts.isEmpty()) {
+            Label emptyLbl = new Label("Chưa có dữ liệu bán hàng");
+            emptyLbl.setStyle("-fx-text-fill: #718096;");
+            topProductsContainer.getChildren().add(emptyLbl);
+        }
+    }
+
+    @FXML
+    private void goToProducts() {
+        System.out.println("Go to products requested. Currently handled by Main sidebar.");
+    }
+
+    private String formatCurrency(double value) {
+        return NumberFormat.getNumberInstance(Locale.US).format(value).replace(",", ".") + "đ";
+    }
+
+    private String formatCompactCurrency(double value) {
+        if (value >= 1_000_000_000) {
+            return String.format(Locale.US, "%.1fB", value / 1_000_000_000);
+        }
+        if (value >= 1_000_000) {
+            return String.format(Locale.US, "%.1fM", value / 1_000_000);
+        }
+        if (value >= 1_000) {
+            return String.format(Locale.US, "%.1fK", value / 1_000);
+        }
+        return formatCurrency(value);
+    }
+
     public static class Transaction {
         private final String id;
         private final String customer;

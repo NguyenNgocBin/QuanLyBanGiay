@@ -118,6 +118,7 @@
                               <TextField fx:id="txtSearch" maxWidth="360.0" prefHeight="38.0" prefWidth="320.0" promptText="Tìm kiếm sản phẩm, mã SKU..." styleClass="warehouse-search" HBox.hgrow="ALWAYS" />
                               <Region HBox.hgrow="ALWAYS" />
                               <Button fx:id="btnNewProduct" mnemonicParsing="false" onAction="#handleAddProduct" style="-fx-background-color: linear-gradient(to right, #6366F1, #A855F7);" styleClass="warehouse-primary" text="+ Thêm sản phẩm mới" />
+                              <Button mnemonicParsing="false" onAction="#handleOpenImport" style="-fx-background-color: linear-gradient(to right, #10B981, #34D399);" styleClass="warehouse-primary" text="📥 Nhập kho" />
                               <Label fx:id="lblShowing" styleClass="result-count" text="Hiển thị 1 - 10 trong 1,284 sản phẩm" />
                            </children>
                         </HBox>

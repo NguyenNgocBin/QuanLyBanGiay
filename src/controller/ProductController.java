@@ -272,6 +272,19 @@ public class ProductController {
         openAddProductForm();
     }
 
+    @FXML
+    private void handleOpenImport() {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/view/Import.fxml"));
+            Stage stage = createDialogStage("Nhập kho sản phẩm", root);
+            stage.showAndWait();
+            loadProducts(); // Tải lại sản phẩm sau khi nhập kho xong
+        } catch (IOException e) {
+            showError("Không thể mở màn hình nhập kho.");
+            e.printStackTrace();
+        }
+    }
+
 
     // MỞ FORM THÊM SẢN PHẨM VÀ FORM SỬA SẢN PHẨM
     private void openAddProductForm() {

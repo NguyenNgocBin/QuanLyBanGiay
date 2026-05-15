@@ -17,8 +17,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import models.Customer;
 import models.Product;
+import utils.PDFGenerator;
 
+import java.awt.Desktop;
 import java.io.File;
+import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -468,11 +471,51 @@ public class SaleController {
         String custInfo = (selectedCustomer != null)
                 ? "\nKhách: " + selectedCustomer.getFullName()
                 : "\nKhách lẻ";
-        showAlert(Alert.AlertType.INFORMATION, "Thanh toán thành công",
-                "Mã hóa đơn: #" + result.getOrderId() + custInfo);
+                
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Thanh toán thành công");
+        alert.setHeaderText("Mã hóa đơn: #" + result.getOrderId() + custInfo);
+        alert.setContentText("Bạn có muốn in hóa đơn không?");
+        
+        ButtonType btnYes = new ButtonType("In hóa đơn", ButtonBar.ButtonData.YES);
+        ButtonType btnNo = new ButtonType("Không", ButtonBar.ButtonData.NO);
+        alert.getButtonTypes().setAll(btnYes, btnNo);
+
+        alert.showAndWait().ifPresent(type -> {
+            if (type == btnYes) {
+                printInvoice(result.getOrderId(), selectedCustomer, cart, calculateTotal(), selectedPayment);
+            }
+        });
+
         clearCart();
         clearCustomer();
         loadProducts();
+    }
+
+    private void printInvoice(int orderId, Customer customer, ObservableList<CartItem> cartList, double total, String paymentMethod) {
+        List<PDFGenerator.InvoiceItem> invoiceItems = new ArrayList<>();
+        for (CartItem item : cartList) {
+            invoiceItems.add(new PDFGenerator.InvoiceItem(
+                item.product.getName(),
+                item.quantity.get(),
+                item.product.getPrice(),
+                item.getLineTotal()
+            ));
+        }
+        
+        File pdfFile = PDFGenerator.generateInvoice(orderId, customer, invoiceItems, total, paymentMethod);
+        if (pdfFile != null && pdfFile.exists()) {
+            try {
+                if (Desktop.isDesktopSupported()) {
+                    Desktop.getDesktop().open(pdfFile);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể mở file PDF: " + e.getMessage());
+            }
+        } else {
+            showAlert(Alert.AlertType.ERROR, "Lỗi", "Đã xảy ra lỗi khi tạo hóa đơn PDF.");
+        }
     }
 
     // ─── Helpers ────────────────────────────────────────────────────────────────
