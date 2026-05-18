@@ -108,6 +108,25 @@ public class SaleDAO {
                     }
                 }
 
+                // Ghi nhận thanh toán vào bảng payments
+                String insertPaymentSql = "INSERT INTO payments (order_id, payment_method, amount) VALUES (?, ?, ?)";
+                try (PreparedStatement paymentStatement = connection.prepareStatement(insertPaymentSql)) {
+                    paymentStatement.setInt(1, orderId);
+                    String dbPaymentMethod = "CASH";
+                    if (paymentMethod != null) {
+                        if (paymentMethod.contains("Chuyen khoan")) {
+                            dbPaymentMethod = "BANKING";
+                        } else if (paymentMethod.contains("The Visa")) {
+                            dbPaymentMethod = "BANKING";
+                        } else if (paymentMethod.contains("MOMO") || paymentMethod.contains("Momo")) {
+                            dbPaymentMethod = "MOMO";
+                        }
+                    }
+                    paymentStatement.setString(2, dbPaymentMethod);
+                    paymentStatement.setDouble(3, totalAmount);
+                    paymentStatement.executeUpdate();
+                }
+
                 connection.commit();
                 return CheckoutResult.success(orderId);
 

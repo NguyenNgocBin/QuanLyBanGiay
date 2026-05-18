@@ -52,7 +52,7 @@ public class OrderDAO {
                 END AS payment_method,
                 o.total_amount,
                 o.status,
-                (SELECT COUNT(*) FROM order_details od WHERE od.order_id = o.id) AS item_count
+                (SELECT COALESCE(SUM(od.quantity), 0) FROM order_details od WHERE od.order_id = o.id) AS item_count
             FROM orders o
             LEFT JOIN customers c ON o.customer_id = c.id
             """;

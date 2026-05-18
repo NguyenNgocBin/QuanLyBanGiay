@@ -18,6 +18,7 @@ import javafx.scene.layout.*;
 import models.Customer;
 import models.Product;
 import utils.PDFGenerator;
+import javafx.stage.Stage;
 
 import java.awt.Desktop;
 import java.io.File;
@@ -87,6 +88,69 @@ public class SaleController {
         setupSearchField();
         setupCustomerSearch();
         renderCart();
+
+        javafx.application.Platform.runLater(() -> {
+            if (tfProductSearch != null && tfProductSearch.getScene() != null) {
+                javafx.scene.Scene scene = tfProductSearch.getScene();
+                Stage stage = (Stage) scene.getWindow();
+
+                // F1, F2, ESC Shortcuts
+                scene.setOnKeyPressed(event -> {
+                    switch (event.getCode()) {
+                        case F1 -> {
+                            event.consume();
+                            checkout();
+                        }
+                        case F2 -> {
+                            event.consume();
+                            openAddCustomerDialog();
+                        }
+                        case ESCAPE -> {
+                            event.consume();
+                            clearCart();
+                            utils.Toast.show(stage, "Đã hủy giỏ hàng hiện tại");
+                        }
+                    }
+                });
+
+                // Simulated Barcode Scanner Reader
+                StringBuilder scannerBuffer = new StringBuilder();
+                final long[] lastCharTime = {0};
+
+                scene.addEventFilter(javafx.scene.input.KeyEvent.KEY_PRESSED, keyEvent -> {
+                    long now = System.currentTimeMillis();
+                    if (lastCharTime[0] > 0 && (now - lastCharTime[0] > 70)) {
+                        scannerBuffer.setLength(0); // Clear buffer if keys are typed slowly (user typing manually)
+                    }
+                    lastCharTime[0] = now;
+
+                    if (keyEvent.getCode() == javafx.scene.input.KeyCode.ENTER) {
+                        String scanSku = scannerBuffer.toString().trim();
+                        if (!scanSku.isEmpty()) {
+                            SaleProduct matched = null;
+                            for (SaleProduct p : products) {
+                                if (scanSku.equalsIgnoreCase(p.getSku())) {
+                                    matched = p;
+                                    break;
+                                }
+                            }
+                            if (matched != null) {
+                                addToCart(matched);
+                                utils.Toast.show(stage, "Quét thành công: " + matched.getName());
+                                scannerBuffer.setLength(0);
+                                keyEvent.consume();
+                            }
+                        }
+                        scannerBuffer.setLength(0);
+                    } else {
+                        String text = keyEvent.getText();
+                        if (text != null && text.matches("[a-zA-Z0-9\\-_]")) {
+                            scannerBuffer.append(text);
+                        }
+                    }
+                });
+            }
+        });
     }
 
     // ─── Tìm kiếm sản phẩm ─────────────────────────────────────────────────────
@@ -357,11 +421,13 @@ public class SaleController {
             if (item.product.getId() == product.getId()) {
                 item.quantity.set(item.quantity.get() + 1);
                 renderCart();
+                utils.Toast.show((Stage) tblProducts.getScene().getWindow(), "Đã tăng số lượng: " + product.getName());
                 return;
             }
         }
         cart.add(new CartItem(product, 1));
         renderCart();
+        utils.Toast.show((Stage) tblProducts.getScene().getWindow(), "Đã thêm vào giỏ: " + product.getName());
     }
 
     private void renderCart() {

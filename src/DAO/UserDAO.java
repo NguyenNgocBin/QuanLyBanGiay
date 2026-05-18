@@ -18,13 +18,14 @@ public class UserDAO {
      * @return true nếu thêm thành công, false nếu có lỗi (ví dụ: trùng username/email)
      */
     public boolean insertUser(User user) {
-        String query = "INSERT INTO users (name, username, email, password) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO users (name, username, email, password, role) VALUES (?, ?, ?, ?, ?)";
         try (Connection connection = DBConnection.getConnection();
                 PreparedStatement pst = connection.prepareStatement(query)) {
             pst.setString(1, user.getName());
             pst.setString(2, user.getUserName());
             pst.setString(3, user.getEmail());
             pst.setString(4, user.getPassword());
+            pst.setString(5, user.getRole() != null ? user.getRole() : "STAFF");
 
             return pst.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -56,7 +57,8 @@ public class UserDAO {
                             rs.getString("name"),
                             rs.getString("username"),
                             rs.getString("email"),
-                            rs.getString("password"));
+                            rs.getString("password"),
+                            rs.getString("role"));
                 }
             }
 

@@ -5,7 +5,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox prefHeight="498.0" prefWidth="373.0" spacing="18.0" styleClass="product-form" stylesheets="@../resources/css/SoleManager.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddProductController">
+<VBox prefHeight="640.0" prefWidth="373.0" spacing="18.0" styleClass="product-form" stylesheets="@../resources/css/SoleManager.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddProductController">
    <padding>
       <Insets bottom="22.0" left="24.0" right="24.0" top="22.0" />
    </padding>
@@ -56,7 +56,28 @@
                </children>
             </VBox>
 
-            <VBox spacing="8.0" GridPane.columnSpan="2" GridPane.rowIndex="3">
+            <VBox spacing="5.0" GridPane.rowIndex="3">
+               <children>
+                  <Label styleClass="form-label" text="Nhà cung cấp" />
+                  <ComboBox fx:id="cbSupplier" maxWidth="1.7976931348623157E308" promptText="Chọn nhà cung cấp" styleClass="form-input" />
+               </children>
+            </VBox>
+
+            <VBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <children>
+                  <Label styleClass="form-label" text="Giá nhập" />
+                  <TextField fx:id="txtImportPrice" promptText="0" styleClass="form-input" />
+               </children>
+            </VBox>
+
+            <VBox spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="4">
+               <children>
+                  <Label styleClass="form-label" text="Tổng tiền nhập hàng" />
+                  <Label fx:id="lblTotalAmount" style="-fx-text-fill: #10B981; -fx-font-weight: bold; -fx-font-size: 16px;" text="0đ" />
+               </children>
+            </VBox>
+
+            <VBox spacing="8.0" GridPane.columnSpan="2" GridPane.rowIndex="5">
                <children>
                   <Label styleClass="form-label" text="Hình ảnh sản phẩm" />
                   <HBox alignment="CENTER_LEFT" spacing="14.0" styleClass="image-picker">
@@ -83,6 +104,8 @@
             <ColumnConstraints />
          </columnConstraints>
          <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
             <RowConstraints />
             <RowConstraints />
             <RowConstraints />

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox minHeight="600.0" minWidth="800.0" spacing="16.0" styleClass="warehouse-page" stylesheets="@../resources/css/SoleManager.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReportsController">
+   <children>
+      <ScrollPane fitToWidth="true" hbarPolicy="NEVER" styleClass="warehouse-scroll" VBox.vgrow="ALWAYS">
+         <content>
+            <VBox spacing="16.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" spacing="16.0">
+                     <children>
+                        <VBox spacing="4.0">
+                           <children>
+                              <Label styleClass="page-title" text="Báo cáo Doanh thu &amp; Phân tích" />
+                              <HBox spacing="6.0">
+                                 <children>
+                                    <Label styleClass="breadcrumb-muted" text="Trang chủ" />
+                                    <Label styleClass="breadcrumb-muted" text="/" />
+                                    <Label styleClass="breadcrumb-active" text="Báo cáo thống kê" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <Region HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
+
+                  <!-- Filter Area -->
+                  <VBox style="-fx-background-color: #ffffff; -fx-border-color: #e5e7eb; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 10 14; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.03), 8, 0, 0, 2);">
+                     <children>
+                        <HBox alignment="CENTER_LEFT" spacing="12.0">
+                           <children>
+                              <Label text="Từ ngày:" textFill="#475569" style="-fx-font-weight: bold; -fx-font-size: 13px;" />
+                              <DatePicker fx:id="dpStart" prefHeight="38.0" prefWidth="150.0" />
+                              <Label text="Đến ngày:" textFill="#475569" style="-fx-font-weight: bold; -fx-font-size: 13px;" />
+                              <DatePicker fx:id="dpEnd" prefHeight="38.0" prefWidth="150.0" />
+                              <Button fx:id="btnFilter" mnemonicParsing="false" onAction="#handleFilter" style="-fx-background-color: linear-gradient(to right, #6366F1, #A855F7);" styleClass="warehouse-primary" text="Lọc dữ liệu" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <Button fx:id="btnExport" mnemonicParsing="false" onAction="#handleExportExcel" style="-fx-background-color: #10B981;" styleClass="warehouse-primary" text="📥 Xuất báo cáo Excel" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+
+                  <!-- KPI Section -->
+                  <TilePane hgap="14.0" prefColumns="3" prefHeight="130.0" styleClass="metric-grid" vgap="14.0">
+                     <children>
+                        <VBox prefHeight="100.0" prefWidth="240.0" spacing="10.0" style="-fx-background-color: linear-gradient(to right, #6366F1, #A855F7);" styleClass="metric-card">
+                           <children>
+                              <Label text="TỔNG DOANH THU" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblRevenue" styleClass="metric-value" text="0đ" />
+                           </children>
+                        </VBox>
+
+                        <VBox prefHeight="100.0" prefWidth="240.0" spacing="10.0" style="-fx-background-color: linear-gradient(to right, #10B981, #34D399);" styleClass="metric-card">
+                           <children>
+                              <Label text="ƯỚC TÍNH LỢI NHUẬN" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblProfit" styleClass="metric-value" text="0đ" />
+                           </children>
+                        </VBox>
+
+                        <VBox prefHeight="100.0" prefWidth="240.0" spacing="10.0" style="-fx-background-color: linear-gradient(to right, #F59E0B, #FBBF24);" styleClass="metric-card">
+                           <children>
+                              <Label text="SẢN PHẨM ĐÃ BÁN" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblItemsSold" styleClass="metric-value" text="0" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </TilePane>
+
+                  <!-- Chart Section 1: Revenue Line Chart -->
+                  <VBox prefHeight="350.0" styleClass="warehouse-panel">
+                     <children>
+                        <Label text="Biểu đồ doanh thu theo thời gian" textFill="#1E293B" styleClass="product-name">
+                           <VBox.margin>
+                              <Insets bottom="10.0" left="10.0" top="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <LineChart fx:id="chartRevenue" createSymbols="true" legendVisible="false" prefHeight="300.0" VBox.vgrow="ALWAYS">
+                           <xAxis>
+                              <CategoryAxis side="BOTTOM" tickLabelFill="#475569" />
+                           </xAxis>
+                           <yAxis>
+                              <NumberAxis side="LEFT" tickLabelFill="#475569" />
+                           </yAxis>
+                        </LineChart>
+                     </children>
+                  </VBox>
+
+                  <!-- Chart Section 2: Side-by-side Pie & Bar Charts -->
+                  <HBox spacing="16.0" prefHeight="350.0">
+                     <children>
+                        <VBox prefWidth="400.0" styleClass="warehouse-panel" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label text="Cơ cấu doanh thu theo Danh mục" textFill="#1E293B" styleClass="product-name">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="10.0" top="5.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <PieChart fx:id="chartCategories" legendVisible="true" prefHeight="300.0" VBox.vgrow="ALWAYS" />
+                           </children>
+                        </VBox>
+                        <VBox prefWidth="400.0" styleClass="warehouse-panel" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label text="Top 5 sản phẩm bán chạy nhất" textFill="#1E293B" styleClass="product-name">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="10.0" top="5.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <BarChart fx:id="chartTopProducts" legendVisible="false" prefHeight="300.0" VBox.vgrow="ALWAYS">
+                                 <xAxis>
+                                    <CategoryAxis side="BOTTOM" tickLabelFill="#475569" />
+                                 </xAxis>
+                                 <yAxis>
+                                    <NumberAxis side="LEFT" tickLabelFill="#475569" />
+                                 </yAxis>
+                              </BarChart>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </children>
+</VBox>

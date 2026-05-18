@@ -74,6 +74,77 @@ public class ProductDAO {
         }
     }
 
+    public boolean addProductWithImport(Product product, int supplierId, double importPrice) {
+        String sqlProduct = """
+                INSERT INTO products (product_code, name, category_id, price, stock, size, image_path)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+                """;
+        String sqlOrder = "INSERT INTO import_orders (supplier_id, total_amount, import_date, status) VALUES (?, ?, ?, ?)";
+        String sqlDetail = "INSERT INTO import_details (import_id, product_id, quantity, import_price) VALUES (?, ?, ?, ?)";
+
+        Connection con = null;
+        try {
+            con = DBConnection.getConnection();
+            con.setAutoCommit(false);
+
+            int productId = 0;
+            // 1. Insert product
+            try (PreparedStatement ps = con.prepareStatement(sqlProduct, java.sql.Statement.RETURN_GENERATED_KEYS)) {
+                fillInsertStatement(ps, product);
+                ps.executeUpdate();
+                try (ResultSet rs = ps.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        productId = rs.getInt(1);
+                    } else {
+                        throw new SQLException("Lỗi lấy ID sản phẩm mới.");
+                    }
+                }
+            }
+
+            // 2. Insert import order if stock > 0 and supplierId is provided
+            if (product.getStock() > 0 && supplierId > 0) {
+                double totalAmount = product.getStock() * importPrice;
+                int importId = 0;
+                try (PreparedStatement psOrder = con.prepareStatement(sqlOrder, java.sql.Statement.RETURN_GENERATED_KEYS)) {
+                    psOrder.setInt(1, supplierId);
+                    psOrder.setDouble(2, totalAmount);
+                    psOrder.setString(3, java.time.LocalDate.now().toString());
+                    psOrder.setString(4, "Hoàn thành");
+                    psOrder.executeUpdate();
+                    try (ResultSet rs = psOrder.getGeneratedKeys()) {
+                        if (rs.next()) {
+                            importId = rs.getInt(1);
+                        } else {
+                            throw new SQLException("Lỗi lấy ID phiếu nhập.");
+                        }
+                    }
+                }
+
+                // 3. Insert import detail
+                try (PreparedStatement psDetail = con.prepareStatement(sqlDetail)) {
+                    psDetail.setInt(1, importId);
+                    psDetail.setInt(2, productId);
+                    psDetail.setInt(3, product.getStock());
+                    psDetail.setDouble(4, importPrice);
+                    psDetail.executeUpdate();
+                }
+            }
+
+            con.commit();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            if (con != null) {
+                try { con.rollback(); } catch (SQLException ex) { ex.printStackTrace(); }
+            }
+            return false;
+        } finally {
+            if (con != null) {
+                try { con.setAutoCommit(true); } catch (SQLException ex) { ex.printStackTrace(); }
+            }
+        }
+    }
+
     public boolean insertProduct(String productCode, String name, int categoryId, double price, int stock, String size, String imagePath) {
         return addProduct(new Product(0, productCode, name, categoryId, price, stock, size, imagePath));
     }

@@ -34,6 +34,9 @@
                      </image>
                   </ImageView>
                </graphic></Button>
+            <Button fx:id="btnCategories" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchTab" styleClass="nav-button" text="▤  Danh mục" />
+            <Button fx:id="btnSuppliers" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchTab" styleClass="nav-button" text="▥  Nhà cung cấp" />
+            <Button fx:id="btnImportHistory" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchTab" styleClass="nav-button" text="📥  Lịch sử nhập" />
             <Button fx:id="btnSales" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchTab" styleClass="nav-button" text="Bán hàng">
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
@@ -62,8 +65,8 @@
                   <Label styleClass="topbar-bell" text="!" />
                   <VBox alignment="CENTER_RIGHT">
                      <children>
-                        <Label styleClass="topbar-user-name" text="Nguyễn Văn A" />
-                        <Label styleClass="topbar-user-role" text="Nhân viên bán hàng" />
+                        <Label fx:id="lblUsername" styleClass="topbar-user-name" text="Nguyễn Văn A" />
+                        <Label fx:id="lblRole" styleClass="topbar-user-role" text="Nhân viên bán hàng" />
                      </children>
                   </VBox>
                   <Label styleClass="topbar-avatar" text="◎" />

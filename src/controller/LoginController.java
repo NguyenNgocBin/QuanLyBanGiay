@@ -102,6 +102,7 @@ public class LoginController {
 
         // 2. Kiểm tra kết quả
         if (userDangNhap != null) {
+            utils.SessionManager.setCurrentUser(userDangNhap); // Lưu phiên làm việc
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Main.fxml"));
                 Parent root = loader.load();
