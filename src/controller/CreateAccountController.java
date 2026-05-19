@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
@@ -31,8 +32,16 @@ public class CreateAccountController {
     private TextField txtEmail;
     @FXML
     private PasswordField txtConfirmPass;
+    @FXML
+    private ComboBox<String> cbRole;
 
     private UserDAO userDAO = new UserDAO(); // Khởi tạo DAO
+
+    @FXML
+    public void initialize() {
+        cbRole.getItems().addAll("Quản lý (ADMIN)", "Nhân viên (STAFF)");
+        cbRole.setValue("Nhân viên (STAFF)"); // mặc định là STAFF
+    }
 
     /**
      * Hàm xử lý sự kiện khi người dùng bấm nút "ĐĂNG KÝ".
@@ -75,22 +84,27 @@ public class CreateAccountController {
         }
         // (HASHING) BĂM MẬT KHẨU
         String hashedPassword = hashPassword(password);
+        // Xác định vai trò từ ComboBox
+        String selectedRole = cbRole.getValue();
+        String role = "STAFF";
+        if ("Quản lý (ADMIN)".equals(selectedRole)) {
+            role = "ADMIN";
+        }
         // Tạo đối tượng User và gọi DAO để lưu
         // Lưu ý: dùng username cho trường name luôn vì đã bỏ trường name
-        User newUser = new User(0, username, username, email, hashedPassword);
+        User newUser = new User(0, username, username, email, hashedPassword, role);
         boolean success = userDAO.insertUser(newUser);
         if (success) {
             baoloi.setFill(Color.GREEN);
             baoloi.setText("Đăng ký thành công!");
             quayVeTrangLogin(event);
 
-
-
             // Clear form
             txtUserName.clear();
             txtEmail.clear();
             txtPassWord.clear();
-            txtConfirmPass.clear(); 
+            txtConfirmPass.clear();
+            cbRole.setValue("Nhân viên (STAFF)");
         } else {
             baoloi.setFill(Color.RED);
             baoloi.setText("Tên đăng nhập đã tồn tại. Vui lòng chọn tên khác!");
@@ -100,6 +114,7 @@ public class CreateAccountController {
             txtEmail.clear();
             txtPassWord.clear();
             txtConfirmPass.clear();
+            cbRole.setValue("Nhân viên (STAFF)");
         }
     }
 

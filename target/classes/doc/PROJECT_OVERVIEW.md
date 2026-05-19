@@ -177,19 +177,7 @@ Hệ thống sở hữu các tính năng nghiệp vụ hoàn chỉnh được th
 
 ---
 
-## 🎨 4. Đánh Giá Thiết Kế Giao Diện & Trải Nghiệm (UI/UX)
 
-Dự án sở hữu phong cách thiết kế giao diện cực kỳ ấn tượng, chuyên nghiệp và vượt trội hơn hẳn các ứng dụng JavaFX thông thường nhờ:
-1.  **Phối màu hài hòa hiện đại**: Sử dụng bảng màu tinh tế (Curated Palette) với tông màu sáng nền trắng kết hợp xám nhạt, các màu nhấn trạng thái nổi bật như xanh lục cho thành công/đã thanh toán, vàng cam cho cảnh báo/sắp hết hàng và đỏ cho hủy bỏ/hết hàng.
-2.  **Định hình phong cách qua CSS tùy biến sâu**:
-    *   Các thành phần nút bấm (Button), ô nhập liệu (TextField), hộp chọn (ComboBox) đều được thiết kế bo tròn góc mềm mại (`-fx-background-radius`), bổ sung hiệu ứng đổ bóng mờ (`dropshadow`) tạo chiều sâu lập thể.
-    *   Sử dụng hiệu ứng chuyển đổi trạng thái (hover effects) khi người dùng di chuột qua các nút, tạo cảm giác giao diện "sống động" và phản hồi mượt mà với người dùng.
-    *   Sử dụng các nhãn tag trạng thái (Pills) thay vì văn bản thô giúp tăng khả năng nhận diện thông tin nhanh.
-3.  **Tối ưu trải nghiệm sử dụng (UX)**:
-    *   Bảng biểu (`TableView`) có cơ chế tự động co giãn các cột (`CONSTRAINED_RESIZE_POLICY`) vừa vặn với kích thước màn hình, chiều cao hàng được cố định đồng đều tạo sự ngăn nắp.
-    *   Tránh các thao tác thừa: Cho phép tìm kiếm gõ phím tức thì (real-time filtering), thao tác trực tiếp trên các dòng bảng (inline editing), hỗ trợ ListView gợi ý thông minh giúp giảm tối đa thời gian nhập liệu cho nhân viên.
-
----
 
 ## 🚀 5. Các Đề Xuất Nâng Cấp & Hướng Phát Triển Mở Rộng
 
