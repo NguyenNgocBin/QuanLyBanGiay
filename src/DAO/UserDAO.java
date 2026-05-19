@@ -14,8 +14,10 @@ public class UserDAO {
      * Hàm thêm một người dùng mới vào cơ sở dữ liệu.
      * Hàm này được gọi khi người dùng thực hiện Đăng ký tài khoản.
      * 
-     * @param user Đối tượng User chứa thông tin (name, username, email, password đã được băm)
-     * @return true nếu thêm thành công, false nếu có lỗi (ví dụ: trùng username/email)
+     * @param user Đối tượng User chứa thông tin (name, username, email, password đã
+     *             được băm)
+     * @return true nếu thêm thành công, false nếu có lỗi (ví dụ: trùng
+     *         username/email)
      */
     public boolean insertUser(User user) {
         String query = "INSERT INTO users (name, username, email, password, role) VALUES (?, ?, ?, ?, ?)";
@@ -36,11 +38,13 @@ public class UserDAO {
 
     /**
      * Hàm kiểm tra thông tin Đăng nhập của người dùng.
-     * Hàm này đối chiếu email và mật khẩu (đã băm) xem có khớp trong Database hay không.
+     * Hàm này đối chiếu email và mật khẩu (đã băm) xem có khớp trong Database hay
+     * không.
      * 
-     * @param email Email người dùng nhập vào
+     * @param email    Email người dùng nhập vào
      * @param password Mật khẩu đã được băm bằng SHA-256
-     * @return Đối tượng User nếu thông tin chính xác, trả về null nếu sai email hoặc mật khẩu
+     * @return Đối tượng User nếu thông tin chính xác, trả về null nếu sai email
+     *         hoặc mật khẩu
      */
     public User login(String email, String password) {
         String Query = "SELECT * FROM users WHERE email = ? AND password = ?";
@@ -68,11 +72,12 @@ public class UserDAO {
         return null;
     }
 
-    // Hàm kiểm tra xem email đã tồn tại trong database chưa (dùng để tránh trùng lặp khi đăng ký)
-    public boolean checkEmailExists(String email){
+    // Hàm kiểm tra xem email đã tồn tại trong database chưa (dùng để tránh trùng
+    // lặp khi đăng ký)
+    public boolean checkEmailExists(String email) {
         String querty = "SELECT * FROM users WHERE email = ?";
         try (Connection connection = DBConnection.getConnection();
-             PreparedStatement pst = connection.prepareStatement(querty)) {
+                PreparedStatement pst = connection.prepareStatement(querty)) {
             pst.setString(1, email);
             // Nếu có kết quả trả về, nghĩa là email đã tồn tại
             try (ResultSet rs = pst.executeQuery()) {
@@ -82,13 +87,78 @@ public class UserDAO {
             throw new RuntimeException(e);
         }
     }
+
     // Hàm cập nhật mật khẩu mới khi quên mật khẩu
     public boolean updatePassword(String email, String newHashedPassword) {
         String query = "UPDATE users SET password = ? WHERE email = ?";
         try (Connection connection = DBConnection.getConnection();
-             PreparedStatement pst = connection.prepareStatement(query)) {
+                PreparedStatement pst = connection.prepareStatement(query)) {
             pst.setString(1, newHashedPassword);
             pst.setString(2, email);
+            return pst.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    // Hàm lấy danh sách tất cả các nhân viên (role = 'STAFF')
+    public java.util.List<User> getAllStaff() {
+        java.util.List<User> list = new java.util.ArrayList<>();
+        String query = "SELECT *, DATE_FORMAT(last_login, '%d/%m/%Y %H:%i') AS format_last_login FROM users WHERE role = 'STAFF' ORDER BY id DESC";
+        try (Connection connection = DBConnection.getConnection();
+                PreparedStatement pst = connection.prepareStatement(query);
+                ResultSet rs = pst.executeQuery()) {
+            while (rs.next()) {
+                User user = new User(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("username"),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getString("role"));
+                user.setLastLogin(rs.getString("format_last_login"));
+                user.setSessionRevenue(rs.getDouble("session_revenue"));
+                list.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public boolean updateLoginSession(int userId, java.time.LocalDateTime loginTime) {
+        String query = "UPDATE users SET last_login = ?, session_revenue = 0.0 WHERE id = ?";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement pst = con.prepareStatement(query)) {
+            pst.setTimestamp(1, java.sql.Timestamp.valueOf(loginTime));
+            pst.setInt(2, userId);
+            return pst.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean addSessionRevenue(int userId, double amount) {
+        String query = "UPDATE users SET session_revenue = session_revenue + ? WHERE id = ?";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement pst = con.prepareStatement(query)) {
+            pst.setDouble(1, amount);
+            pst.setInt(2, userId);
+            return pst.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    // Hàm xóa tài khoản nhân viên
+    public boolean deleteUser(int id) {
+        String query = "DELETE FROM users WHERE id = ? AND role = 'STAFF'";
+        try (Connection con = DBConnection.getConnection();
+                PreparedStatement pst = con.prepareStatement(query)) {
+            pst.setInt(1, id);
             return pst.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();

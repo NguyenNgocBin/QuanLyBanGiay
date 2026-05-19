@@ -35,7 +35,8 @@ public class LoginController {
 
     /**
      * Hàm xử lý sự kiện khi người dùng bấm vào nút/văn bản "Đăng ký ngay".
-     * Chức năng: Chuyển đổi giao diện từ màn hình Đăng nhập sang màn hình Đăng ký tài khoản.
+     * Chức năng: Chuyển đổi giao diện từ màn hình Đăng nhập sang màn hình Đăng ký
+     * tài khoản.
      * 
      * @param event Sự kiện click chuột từ JavaFX
      */
@@ -69,11 +70,12 @@ public class LoginController {
 
     /**
      * Hàm xử lý sự kiện khi người dùng bấm nút "Đăng nhập".
-     * Chức năng: 
+     * Chức năng:
      * 1. Thu thập email và mật khẩu từ form.
      * 2. Kiểm tra tính hợp lệ (bỏ trống, định dạng email).
      * 3. Băm mật khẩu và đối chiếu với cơ sở dữ liệu qua UserDAO.
-     * 4. Nếu thành công, chuyển sang màn hình chính (Main.fxml). Nếu thất bại, hiển thị thông báo lỗi.
+     * 4. Nếu thành công, chuyển sang màn hình chính (Main.fxml). Nếu thất bại, hiển
+     * thị thông báo lỗi.
      * 
      * @param event Sự kiện click chuột từ JavaFX
      */
@@ -95,7 +97,6 @@ public class LoginController {
 
         String hashedPass = hashPassword(pass);
 
-
         // 1. Gọi hàm login từ DAO
         UserDAO userDAO = new UserDAO();
         User userDangNhap = userDAO.login(email, hashedPass);
@@ -103,6 +104,12 @@ public class LoginController {
         // 2. Kiểm tra kết quả
         if (userDangNhap != null) {
             utils.SessionManager.setCurrentUser(userDangNhap); // Lưu phiên làm việc
+            java.time.LocalDateTime now = java.time.LocalDateTime.now();
+            utils.SessionManager.setLoginTime(now); // Lưu thời gian đăng nhập
+            utils.SessionManager.setSessionRevenue(0.0); // Reset doanh thu phiên
+            
+            // Cập nhật Database
+            userDAO.updateLoginSession(userDangNhap.getId(), now);
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Main.fxml"));
                 Parent root = loader.load();

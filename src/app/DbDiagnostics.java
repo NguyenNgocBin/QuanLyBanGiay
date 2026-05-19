@@ -39,6 +39,14 @@ public class DbDiagnostics {
                     }
                 }
 
+                System.out.println("\n--- USERS ---");
+                try (ResultSet rs = stmt.executeQuery("SELECT id, name, username, role, last_login, session_revenue FROM users")) {
+                    while (rs.next()) {
+                        System.out.printf("User: %s | Role: %s | Last Login: %s | Session Rev: %.2f%n",
+                                rs.getString("username"), rs.getString("role"), rs.getString("last_login"), rs.getDouble("session_revenue"));
+                    }
+                }
+
                 System.out.println("\n--- PRODUCTS ---");
                 try (ResultSet rs = stmt.executeQuery("SELECT id, name, price, stock FROM products")) {
                     while (rs.next()) {

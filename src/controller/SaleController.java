@@ -31,54 +31,81 @@ import java.util.Locale;
 public class SaleController {
 
     // ─── Bộ lọc sản phẩm ───────────────────────────────────────────────────────
-    @FXML private TextField tfProductSearch;
-    @FXML private Button btnAll;
-    @FXML private Button btnRunning;
-    @FXML private Button btnBasketball;
-    @FXML private Label lblProductCount;
+    @FXML
+    private TextField tfProductSearch;
+    @FXML
+    private Button btnAll;
+    @FXML
+    private Button btnRunning;
+    @FXML
+    private Button btnBasketball;
+    @FXML
+    private Label lblProductCount;
 
     // ─── Bảng sản phẩm ─────────────────────────────────────────────────────────
-    @FXML private TableView<SaleProduct> tblProducts;
-    @FXML private TableColumn<SaleProduct, SaleProduct> colImage;
-    @FXML private TableColumn<SaleProduct, SaleProduct> colProduct;
-    @FXML private TableColumn<SaleProduct, String>      colSku;
-    @FXML private TableColumn<SaleProduct, String>      colBrand;
-    @FXML private TableColumn<SaleProduct, String>      colSize;
-    @FXML private TableColumn<SaleProduct, Integer>     colStock;
-    @FXML private TableColumn<SaleProduct, String>      colPrice;
-    @FXML private TableColumn<SaleProduct, SaleProduct> colAction;
+    @FXML
+    private TableView<SaleProduct> tblProducts;
+    @FXML
+    private TableColumn<SaleProduct, SaleProduct> colImage;
+    @FXML
+    private TableColumn<SaleProduct, SaleProduct> colProduct;
+    @FXML
+    private TableColumn<SaleProduct, String> colSku;
+    @FXML
+    private TableColumn<SaleProduct, String> colBrand;
+    @FXML
+    private TableColumn<SaleProduct, String> colSize;
+    @FXML
+    private TableColumn<SaleProduct, Integer> colStock;
+    @FXML
+    private TableColumn<SaleProduct, String> colPrice;
+    @FXML
+    private TableColumn<SaleProduct, SaleProduct> colAction;
 
     // ─── Khách hàng ─────────────────────────────────────────────────────────────
-    @FXML private TextField          tfCustomerSearch;
-    @FXML private ListView<Customer> lvCustomerSuggestions;
-    @FXML private HBox               hbCustomerSelected;
-    @FXML private Label              lblCustomerName;
-    @FXML private Label              lblCustomerPhone;
-    @FXML private Label              lblCustomerCode;
+    @FXML
+    private TextField tfCustomerSearch;
+    @FXML
+    private ListView<Customer> lvCustomerSuggestions;
+    @FXML
+    private HBox hbCustomerSelected;
+    @FXML
+    private Label lblCustomerName;
+    @FXML
+    private Label lblCustomerPhone;
+    @FXML
+    private Label lblCustomerCode;
 
     // ─── Giỏ hàng & thanh toán ──────────────────────────────────────────────────
-    @FXML private Label lblCartCount;
-    @FXML private Label lblSubtotal;
-    @FXML private Label lblTotal;
-    @FXML private VBox  cartItemsBox;
-    @FXML private Button btnCash;
-    @FXML private Button btnBank;
-    @FXML private Button btnCard;
+    @FXML
+    private Label lblCartCount;
+    @FXML
+    private Label lblSubtotal;
+    @FXML
+    private Label lblTotal;
+    @FXML
+    private VBox cartItemsBox;
+    @FXML
+    private Button btnCash;
+    @FXML
+    private Button btnBank;
+    @FXML
+    private Button btnCard;
 
     // ─── State ──────────────────────────────────────────────────────────────────
-    private final ProductDAO  productDAO  = new ProductDAO();
-    private final SaleDAO     saleDAO     = new SaleDAO();
+    private final ProductDAO productDAO = new ProductDAO();
+    private final SaleDAO saleDAO = new SaleDAO();
     private final CustomerDAO customerDAO = new CustomerDAO();
 
     private final ObservableList<SaleProduct> products = FXCollections.observableArrayList();
-    private final ObservableList<CartItem>    cart     = FXCollections.observableArrayList();
+    private final ObservableList<CartItem> cart = FXCollections.observableArrayList();
 
-    private String   selectedCategory = "";
-    private String   selectedPayment  = "Tien mat";
+    private String selectedCategory = "";
+    private String selectedPayment = "Tien mat";
     private Customer selectedCustomer = null;
 
     // ═══════════════════════════════════════════════════════════════════════════
-    //  INITIALIZE
+    // INITIALIZE
     // ═══════════════════════════════════════════════════════════════════════════
 
     @FXML
@@ -115,7 +142,7 @@ public class SaleController {
 
                 // Simulated Barcode Scanner Reader
                 StringBuilder scannerBuffer = new StringBuilder();
-                final long[] lastCharTime = {0};
+                final long[] lastCharTime = { 0 };
 
                 scene.addEventFilter(javafx.scene.input.KeyEvent.KEY_PRESSED, keyEvent -> {
                     long now = System.currentTimeMillis();
@@ -169,14 +196,25 @@ public class SaleController {
         colImage.setCellValueFactory(d -> new SimpleObjectProperty<>(d.getValue()));
         colImage.setCellFactory(col -> new TableCell<>() {
             private final ImageView iv = new ImageView();
-            { iv.setFitWidth(42); iv.setFitHeight(34); iv.setPreserveRatio(true); iv.setSmooth(true); }
+            {
+                iv.setFitWidth(42);
+                iv.setFitHeight(34);
+                iv.setPreserveRatio(true);
+                iv.setSmooth(true);
+            }
 
-            @Override protected void updateItem(SaleProduct p, boolean empty) {
+            @Override
+            protected void updateItem(SaleProduct p, boolean empty) {
                 super.updateItem(p, empty);
-                if (empty || p == null) { setGraphic(null); return; }
+                if (empty || p == null) {
+                    setGraphic(null);
+                    return;
+                }
                 Image img = loadImage(p.getImagePath());
-                if (img != null) { iv.setImage(img); setGraphic(iv); }
-                else {
+                if (img != null) {
+                    iv.setImage(img);
+                    setGraphic(iv);
+                } else {
                     Label lbl = new Label("👟");
                     lbl.getStyleClass().setAll("sale-thumb", p.getThumbClass());
                     setGraphic(lbl);
@@ -187,11 +225,17 @@ public class SaleController {
         // Cột tên + loại
         colProduct.setCellValueFactory(d -> new SimpleObjectProperty<>(d.getValue()));
         colProduct.setCellFactory(col -> new TableCell<>() {
-            @Override protected void updateItem(SaleProduct p, boolean empty) {
+            @Override
+            protected void updateItem(SaleProduct p, boolean empty) {
                 super.updateItem(p, empty);
-                if (empty || p == null) { setGraphic(null); return; }
-                Label name = new Label(p.getName()); name.getStyleClass().add("sale-product-name");
-                Label type = new Label(p.getCategory()); type.getStyleClass().add("sale-product-type");
+                if (empty || p == null) {
+                    setGraphic(null);
+                    return;
+                }
+                Label name = new Label(p.getName());
+                name.getStyleClass().add("sale-product-name");
+                Label type = new Label(p.getCategory());
+                type.getStyleClass().add("sale-product-type");
                 setGraphic(new VBox(2, name, type));
             }
         });
@@ -201,10 +245,15 @@ public class SaleController {
         // Cột brand
         colBrand.setCellValueFactory(d -> d.getValue().brandProperty());
         colBrand.setCellFactory(col -> new TableCell<>() {
-            @Override protected void updateItem(String brand, boolean empty) {
+            @Override
+            protected void updateItem(String brand, boolean empty) {
                 super.updateItem(brand, empty);
-                if (empty || brand == null || brand.isBlank()) { setGraphic(null); return; }
-                Label lbl = new Label(brand); lbl.getStyleClass().add("sale-brand-tag");
+                if (empty || brand == null || brand.isBlank()) {
+                    setGraphic(null);
+                    return;
+                }
+                Label lbl = new Label(brand);
+                lbl.getStyleClass().add("sale-brand-tag");
                 setGraphic(lbl);
             }
         });
@@ -214,9 +263,14 @@ public class SaleController {
         // Cột tồn kho — đỏ khi sắp hết
         colStock.setCellValueFactory(d -> d.getValue().stockProperty().asObject());
         colStock.setCellFactory(col -> new TableCell<>() {
-            @Override protected void updateItem(Integer stock, boolean empty) {
+            @Override
+            protected void updateItem(Integer stock, boolean empty) {
                 super.updateItem(stock, empty);
-                if (empty || stock == null) { setText(null); setStyle(""); return; }
+                if (empty || stock == null) {
+                    setText(null);
+                    setStyle("");
+                    return;
+                }
                 setText(String.valueOf(stock));
                 setStyle(stock <= 5 ? "-fx-text-fill: #ef4444; -fx-font-weight: 900;" : "");
             }
@@ -227,9 +281,13 @@ public class SaleController {
         // Cột thêm vào giỏ
         colAction.setCellValueFactory(d -> new SimpleObjectProperty<>(d.getValue()));
         colAction.setCellFactory(col -> new TableCell<>() {
-            @Override protected void updateItem(SaleProduct p, boolean empty) {
+            @Override
+            protected void updateItem(SaleProduct p, boolean empty) {
                 super.updateItem(p, empty);
-                if (empty || p == null) { setGraphic(null); return; }
+                if (empty || p == null) {
+                    setGraphic(null);
+                    return;
+                }
                 Button btn = new Button("+");
                 btn.getStyleClass().add("sale-add-button");
                 btn.setDisable(p.getStock() <= cartQuantity(p));
@@ -281,7 +339,7 @@ public class SaleController {
         ObservableList<SaleProduct> filtered = products.filtered(p -> {
             boolean catMatch = selectedCategory.isBlank()
                     || normalizeCategory(p.getCategory()).equals(selectedCategory);
-            boolean kwMatch  = keyword.isBlank()
+            boolean kwMatch = keyword.isBlank()
                     || p.getName().toLowerCase(Locale.ROOT).contains(keyword)
                     || p.getSku().toLowerCase(Locale.ROOT).contains(keyword);
             return catMatch && kwMatch;
@@ -296,8 +354,9 @@ public class SaleController {
         Button clicked = (Button) event.getSource();
         selectedCategory = (clicked == btnAll) ? "" : normalizeCategory(clicked.getText());
 
-        for (Button b : new Button[]{btnAll, btnRunning, btnBasketball}) {
-            if (b != null) b.getStyleClass().remove("sale-chip-active");
+        for (Button b : new Button[] { btnAll, btnRunning, btnBasketball }) {
+            if (b != null)
+                b.getStyleClass().remove("sale-chip-active");
         }
         clicked.getStyleClass().add("sale-chip-active");
         applyFilter();
@@ -313,9 +372,13 @@ public class SaleController {
 
         // Custom cell cho danh sách gợi ý
         lvCustomerSuggestions.setCellFactory(lv -> new ListCell<>() {
-            @Override protected void updateItem(Customer c, boolean empty) {
+            @Override
+            protected void updateItem(Customer c, boolean empty) {
                 super.updateItem(c, empty);
-                if (empty || c == null) { setText(null); return; }
+                if (empty || c == null) {
+                    setText(null);
+                    return;
+                }
                 setText(c.getFullName() + "  •  " + c.getPhone());
             }
         });
@@ -337,7 +400,8 @@ public class SaleController {
         // Khi chọn khách hàng từ danh sách
         lvCustomerSuggestions.setOnMouseClicked(e -> {
             Customer chosen = lvCustomerSuggestions.getSelectionModel().getSelectedItem();
-            if (chosen != null) selectCustomer(chosen);
+            if (chosen != null)
+                selectCustomer(chosen);
         });
     }
 
@@ -375,18 +439,24 @@ public class SaleController {
         grid.setVgap(10);
         grid.setPadding(new Insets(16));
 
-        TextField tfName  = new TextField(); tfName.setPromptText("Họ và tên *");
-        TextField tfPhone = new TextField(); tfPhone.setPromptText("Số điện thoại");
-        TextField tfEmail = new TextField(); tfEmail.setPromptText("Email");
+        TextField tfName = new TextField();
+        tfName.setPromptText("Họ và tên *");
+        TextField tfPhone = new TextField();
+        tfPhone.setPromptText("Số điện thoại");
+        TextField tfEmail = new TextField();
+        tfEmail.setPromptText("Email");
 
         tfName.getStyleClass().add("form-input");
         tfPhone.getStyleClass().add("form-input");
         tfEmail.getStyleClass().add("form-input");
         tfName.setPrefWidth(260);
 
-        grid.add(new Label("Họ và tên *"), 0, 0); grid.add(tfName,  1, 0);
-        grid.add(new Label("Điện thoại"), 0, 1);  grid.add(tfPhone, 1, 1);
-        grid.add(new Label("Email"),       0, 2);  grid.add(tfEmail, 1, 2);
+        grid.add(new Label("Họ và tên *"), 0, 0);
+        grid.add(tfName, 1, 0);
+        grid.add(new Label("Điện thoại"), 0, 1);
+        grid.add(tfPhone, 1, 1);
+        grid.add(new Label("Email"), 0, 2);
+        grid.add(tfEmail, 1, 2);
 
         dialog.getDialogPane().setContent(grid);
         dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
@@ -448,15 +518,17 @@ public class SaleController {
         meta.getStyleClass().add("cart-product-meta");
 
         Button minus = new Button("−");
-        Button plus  = new Button("+");
-        Label qty    = new Label(String.valueOf(item.quantity.get()));
+        Button plus = new Button("+");
+        Label qty = new Label(String.valueOf(item.quantity.get()));
         minus.getStyleClass().add("qty-small");
         plus.getStyleClass().add("qty-small");
         qty.getStyleClass().add("qty-number");
 
         minus.setOnAction(e -> {
-            if (item.quantity.get() <= 1) cart.remove(item);
-            else item.quantity.set(item.quantity.get() - 1);
+            if (item.quantity.get() <= 1)
+                cart.remove(item);
+            else
+                item.quantity.set(item.quantity.get() - 1);
             renderCart();
         });
         plus.setDisable(item.quantity.get() >= item.product.getStock());
@@ -472,9 +544,10 @@ public class SaleController {
         HBox qtyBox = new HBox(0, minus, qty, plus);
         qtyBox.setAlignment(Pos.CENTER_LEFT);
 
-        VBox info    = new VBox(3, name, meta, qtyBox);
-        Region spacer = new Region(); HBox.setHgrow(spacer, Priority.ALWAYS);
-        Label price  = new Label(formatCurrency(item.getLineTotal()));
+        VBox info = new VBox(3, name, meta, qtyBox);
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+        Label price = new Label(formatCurrency(item.getLineTotal()));
         price.getStyleClass().add("cart-line-price");
 
         HBox row = new HBox(10, info, spacer, price);
@@ -485,24 +558,31 @@ public class SaleController {
 
     private void updateTotals() {
         double subtotal = cart.stream().mapToDouble(CartItem::getLineTotal).sum();
-        if (lblSubtotal != null) lblSubtotal.setText(formatCurrency(subtotal));
-        if (lblTotal    != null) lblTotal.setText(formatCurrency(subtotal));
+        if (lblSubtotal != null)
+            lblSubtotal.setText(formatCurrency(subtotal));
+        if (lblTotal != null)
+            lblTotal.setText(formatCurrency(subtotal));
         if (lblCartCount != null) {
             int n = cart.stream().mapToInt(i -> i.quantity.get()).sum();
             lblCartCount.setText(n + " sản phẩm");
         }
     }
 
-    @FXML private void clearCart() { cart.clear(); renderCart(); }
+    @FXML
+    private void clearCart() {
+        cart.clear();
+        renderCart();
+    }
 
     @FXML
     private void selectPayment(javafx.event.ActionEvent event) {
-        for (Button b : new Button[]{btnCash, btnBank, btnCard})
-            if (b != null) b.getStyleClass().remove("payment-card-active");
+        for (Button b : new Button[] { btnCash, btnBank, btnCard })
+            if (b != null)
+                b.getStyleClass().remove("payment-card-active");
         Button sel = (Button) event.getSource();
         sel.getStyleClass().add("payment-card-active");
-        selectedPayment = sel == btnBank  ? "Chuyen khoan"
-                        : sel == btnCard  ? "The Visa/MC"
+        selectedPayment = sel == btnBank ? "Chuyen khoan"
+                : sel == btnCard ? "The Visa/MC"
                         : "Tien mat";
     }
 
@@ -519,8 +599,7 @@ public class SaleController {
                     item.product.getId(),
                     item.product.getName(),
                     item.quantity.get(),
-                    item.product.getPrice()
-            ));
+                    item.product.getPrice()));
         }
 
         int custId = (selectedCustomer != null) ? selectedCustomer.getId() : 0;
@@ -534,15 +613,27 @@ public class SaleController {
             return;
         }
 
+        if (utils.SessionManager.isLoggedIn()) {
+            double totalVal = calculateTotal();
+            utils.SessionManager.addSessionRevenue(totalVal);
+            
+            // Cập nhật Database
+            new DAO.UserDAO().addSessionRevenue(utils.SessionManager.getCurrentUser().getId(), totalVal);
+            
+            if (controller.MainController.getInstance() != null) {
+                controller.MainController.getInstance().updateSessionInfo();
+            }
+        }
+
         String custInfo = (selectedCustomer != null)
                 ? "\nKhách: " + selectedCustomer.getFullName()
                 : "\nKhách lẻ";
-                
+
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Thanh toán thành công");
         alert.setHeaderText("Mã hóa đơn: #" + result.getOrderId() + custInfo);
         alert.setContentText("Bạn có muốn in hóa đơn không?");
-        
+
         ButtonType btnYes = new ButtonType("In hóa đơn", ButtonBar.ButtonData.YES);
         ButtonType btnNo = new ButtonType("Không", ButtonBar.ButtonData.NO);
         alert.getButtonTypes().setAll(btnYes, btnNo);
@@ -558,17 +649,17 @@ public class SaleController {
         loadProducts();
     }
 
-    private void printInvoice(int orderId, Customer customer, ObservableList<CartItem> cartList, double total, String paymentMethod) {
+    private void printInvoice(int orderId, Customer customer, ObservableList<CartItem> cartList, double total,
+            String paymentMethod) {
         List<PDFGenerator.InvoiceItem> invoiceItems = new ArrayList<>();
         for (CartItem item : cartList) {
             invoiceItems.add(new PDFGenerator.InvoiceItem(
-                item.product.getName(),
-                item.quantity.get(),
-                item.product.getPrice(),
-                item.getLineTotal()
-            ));
+                    item.product.getName(),
+                    item.quantity.get(),
+                    item.product.getPrice(),
+                    item.getLineTotal()));
         }
-        
+
         File pdfFile = PDFGenerator.generateInvoice(orderId, customer, invoiceItems, total, paymentMethod);
         if (pdfFile != null && pdfFile.exists()) {
             try {
@@ -598,7 +689,8 @@ public class SaleController {
                     .findFirst()
                     .ifPresent(fresh -> {
                         item.product.setStock(fresh.getStock());
-                        if (fresh.getStock() <= 0) dead.add(item);
+                        if (fresh.getStock() <= 0)
+                            dead.add(item);
                         else if (item.quantity.get() > fresh.getStock())
                             item.quantity.set(fresh.getStock());
                     });
@@ -614,7 +706,8 @@ public class SaleController {
     }
 
     private String firstSize(String sizes) {
-        if (sizes == null || sizes.isBlank()) return "-";
+        if (sizes == null || sizes.isBlank())
+            return "-";
         return sizes.split("[,\\-]")[0].trim();
     }
 
@@ -623,85 +716,146 @@ public class SaleController {
     }
 
     private Image loadImage(String path) {
-        if (path == null || path.isBlank()) return null;
+        if (path == null || path.isBlank())
+            return null;
         File f = new File(path);
-        if (!f.isFile()) return null;
+        if (!f.isFile())
+            return null;
         Image img = new Image(f.toURI().toString(), 42, 34, true, true);
         return img.isError() ? null : img;
     }
 
     private String normalizeCategory(String value) {
-        if (value == null) return "";
+        if (value == null)
+            return "";
         return value.trim().toLowerCase(Locale.ROOT);
     }
 
     private void showAlert(Alert.AlertType type, String title, String msg) {
         Alert a = new Alert(type);
-        a.setTitle(title); a.setHeaderText(null); a.setContentText(msg);
+        a.setTitle(title);
+        a.setHeaderText(null);
+        a.setContentText(msg);
         a.showAndWait();
     }
 
     // ═══════════════════════════════════════════════════════════════════════════
-    //  INNER CLASSES
+    // INNER CLASSES
     // ═══════════════════════════════════════════════════════════════════════════
 
     public static class SaleProduct {
         private final int id;
-        private final SimpleStringProperty  name, category, sku, brand, size,
-                                             colorHex, colorName, priceText;
+        private final SimpleStringProperty name, category, sku, brand, size,
+                colorHex, colorName, priceText;
         private final SimpleIntegerProperty stock;
-        private final double   price;
-        private final String   thumbClass, imagePath;
+        private final double price;
+        private final String thumbClass, imagePath;
 
         public SaleProduct(Product p) {
-            this.id         = p.getId();
-            this.name       = new SimpleStringProperty(safe(p.getName()));
-            this.category   = new SimpleStringProperty(safe(p.getCategoryName()));
-            this.sku        = new SimpleStringProperty(safe(p.getProductCode()));
-            this.brand      = new SimpleStringProperty(safe(p.getCategoryName()));
-            this.size       = new SimpleStringProperty(safe(p.getSize()));
-            this.colorHex   = new SimpleStringProperty(colorHexFor(p));
-            this.colorName  = new SimpleStringProperty(safe(p.getCategoryName()));
-            this.stock      = new SimpleIntegerProperty(p.getStock());
-            this.price      = p.getPrice();
-            this.priceText  = new SimpleStringProperty(fmt(p.getPrice()));
+            this.id = p.getId();
+            this.name = new SimpleStringProperty(safe(p.getName()));
+            this.category = new SimpleStringProperty(safe(p.getCategoryName()));
+            this.sku = new SimpleStringProperty(safe(p.getProductCode()));
+            this.brand = new SimpleStringProperty(safe(p.getCategoryName()));
+            this.size = new SimpleStringProperty(safe(p.getSize()));
+            this.colorHex = new SimpleStringProperty(colorHexFor(p));
+            this.colorName = new SimpleStringProperty(safe(p.getCategoryName()));
+            this.stock = new SimpleIntegerProperty(p.getStock());
+            this.price = p.getPrice();
+            this.priceText = new SimpleStringProperty(fmt(p.getPrice()));
             this.thumbClass = thumbClassFor(p);
-            this.imagePath  = p.getImagePath();
+            this.imagePath = p.getImagePath();
         }
 
-        public int    getId()        { return id; }
-        public String getName()      { return name.get(); }
-        public String getCategory()  { return category.get(); }
-        public String getSku()       { return sku.get(); }
-        public String getSize()      { return size.get(); }
-        public String getColorHex()  { return colorHex.get(); }
-        public int    getStock()     { return stock.get(); }
-        public void   setStock(int s){ stock.set(s); }
-        public double getPrice()     { return price; }
-        public String getThumbClass(){ return thumbClass; }
-        public String getImagePath() { return imagePath; }
+        public int getId() {
+            return id;
+        }
 
-        public SimpleStringProperty  skuProperty()       { return sku; }
-        public SimpleStringProperty  brandProperty()     { return brand; }
-        public SimpleStringProperty  sizeProperty()      { return size; }
-        public SimpleStringProperty  colorNameProperty() { return colorName; }
-        public SimpleIntegerProperty stockProperty()     { return stock; }
-        public SimpleStringProperty  priceTextProperty() { return priceText; }
+        public String getName() {
+            return name.get();
+        }
+
+        public String getCategory() {
+            return category.get();
+        }
+
+        public String getSku() {
+            return sku.get();
+        }
+
+        public String getSize() {
+            return size.get();
+        }
+
+        public String getColorHex() {
+            return colorHex.get();
+        }
+
+        public int getStock() {
+            return stock.get();
+        }
+
+        public void setStock(int s) {
+            stock.set(s);
+        }
+
+        public double getPrice() {
+            return price;
+        }
+
+        public String getThumbClass() {
+            return thumbClass;
+        }
+
+        public String getImagePath() {
+            return imagePath;
+        }
+
+        public SimpleStringProperty skuProperty() {
+            return sku;
+        }
+
+        public SimpleStringProperty brandProperty() {
+            return brand;
+        }
+
+        public SimpleStringProperty sizeProperty() {
+            return size;
+        }
+
+        public SimpleStringProperty colorNameProperty() {
+            return colorName;
+        }
+
+        public SimpleIntegerProperty stockProperty() {
+            return stock;
+        }
+
+        public SimpleStringProperty priceTextProperty() {
+            return priceText;
+        }
 
         private static String colorHexFor(Product p) {
             String c = safe(p.getCategoryName()).toLowerCase(Locale.ROOT);
-            if (c.contains("sport") || c.contains("thao")) return "#1d4ed8";
-            if (c.contains("classic") || c.contains("tay")) return "#7c2d12";
-            if (c.contains("sandal")) return "#059669";
-            if (c.contains("tre"))    return "#eab308";
+            if (c.contains("sport") || c.contains("thao"))
+                return "#1d4ed8";
+            if (c.contains("classic") || c.contains("tay"))
+                return "#7c2d12";
+            if (c.contains("sandal"))
+                return "#059669";
+            if (c.contains("tre"))
+                return "#eab308";
             return "#b91c1c";
         }
 
         private static String thumbClassFor(Product p) {
             String c = safe(p.getCategoryName()).toLowerCase(Locale.ROOT);
-            if (c.contains("sport") || c.contains("thao")) return "thumb-sale-blue";
-            if (c.contains("classic") || c.contains("tay")) return "thumb-sale-dark";
-            if (c.contains("sandal")) return "thumb-sale-light";
+            if (c.contains("sport") || c.contains("thao"))
+                return "thumb-sale-blue";
+            if (c.contains("classic") || c.contains("tay"))
+                return "thumb-sale-dark";
+            if (c.contains("sandal"))
+                return "thumb-sale-light";
             return "thumb-sale-red";
         }
 
@@ -709,15 +863,22 @@ public class SaleController {
             return NumberFormat.getNumberInstance(Locale.US).format(v).replace(",", ".") + "đ";
         }
 
-        private static String safe(String s) { return s == null ? "" : s; }
+        private static String safe(String s) {
+            return s == null ? "" : s;
+        }
     }
 
     private static class CartItem {
-        final SaleProduct               product;
-        final SimpleIntegerProperty     quantity = new SimpleIntegerProperty(1);
+        final SaleProduct product;
+        final SimpleIntegerProperty quantity = new SimpleIntegerProperty(1);
 
-        CartItem(SaleProduct p, int qty) { this.product = p; this.quantity.set(qty); }
+        CartItem(SaleProduct p, int qty) {
+            this.product = p;
+            this.quantity.set(qty);
+        }
 
-        double getLineTotal() { return product.getPrice() * quantity.get(); }
+        double getLineTotal() {
+            return product.getPrice() * quantity.get();
+        }
     }
 }

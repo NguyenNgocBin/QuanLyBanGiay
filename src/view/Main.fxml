@@ -20,6 +20,7 @@
             <Button fx:id="btnProducts" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchTab" styleClass="nav-button" text=" Kho hàng" />
             <Button fx:id="btnCategories" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchTab" styleClass="nav-button" text="Danh mục" />
             <Button fx:id="btnSuppliers" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchTab" styleClass="nav-button" text="Nhà cung cấp" />
+            <Button fx:id="btnStaff" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchTab" styleClass="nav-button" text="Nhân viên" />
             <Button fx:id="btnImportHistory" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchTab" styleClass="nav-button" text="Lịch sử nhập" />
             <Button fx:id="btnSales" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchTab" styleClass="nav-button" text="Bán hàng" />
             <Button fx:id="btnOrders" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchTab" styleClass="nav-button" text="Đơn hàng" />
@@ -28,7 +29,7 @@
             <VBox VBox.vgrow="ALWAYS" />
 
             <Button alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="nav-button" text="⚙  Cài đặt" />
-            <Button alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="nav-button" text="↩  Đăng xuất" />
+            <Button fx:id="btnLogout" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleLogout" styleClass="nav-button" text="↩  Đăng xuất" />
          </children>
       </VBox>
    </left>

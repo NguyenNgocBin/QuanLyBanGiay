@@ -11,6 +11,8 @@ public class User {
     private String email;
     private String password;
     private String role;
+    private String lastLogin;
+    private double sessionRevenue;
 
     public User(int id, String name, String username, String email, String password) {
         this(id, name, username, email, password, "STAFF");
@@ -71,5 +73,21 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getLastLogin() {
+        return lastLogin;
+    }
+
+    public void setLastLogin(String lastLogin) {
+        this.lastLogin = lastLogin;
+    }
+
+    public double getSessionRevenue() {
+        return sessionRevenue;
+    }
+
+    public void setSessionRevenue(double sessionRevenue) {
+        this.sessionRevenue = sessionRevenue;
     }
 }

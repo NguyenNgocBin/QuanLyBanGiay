@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox minHeight="560.0" minWidth="720.0" spacing="16.0" styleClass="warehouse-page" stylesheets="@../resources/css/SoleManager.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.StaffController">
+   <children>
+      <ScrollPane fitToWidth="true" hbarPolicy="NEVER" styleClass="warehouse-scroll" VBox.vgrow="ALWAYS">
+         <content>
+            <VBox spacing="16.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" spacing="16.0">
+                     <children>
+                        <VBox spacing="4.0">
+                           <children>
+                              <Label styleClass="page-title" text="Quản lý Nhân viên" />
+                              <HBox spacing="6.0">
+                                 <children>
+                                    <Label styleClass="breadcrumb-muted" text="Trang chủ" />
+                                    <Label styleClass="breadcrumb-muted" text="/" />
+                                    <Label styleClass="breadcrumb-active" text="Nhân viên" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <Region HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
+
+                  <VBox spacing="0.0" styleClass="warehouse-panel" VBox.vgrow="ALWAYS">
+                     <children>
+                        <HBox alignment="CENTER_LEFT" spacing="12.0" styleClass="filter-row">
+                           <children>
+                              <TextField fx:id="txtSearch" maxWidth="360.0" prefHeight="38.0" prefWidth="320.0" promptText="Tìm theo tên, email hoặc tên đăng nhập..." styleClass="warehouse-search" HBox.hgrow="ALWAYS" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <Label fx:id="lblShowing" styleClass="result-count" text="Hiển thị 0 nhân viên" />
+                           </children>
+                        </HBox>
+
+                        <TableView fx:id="staffTable" prefHeight="500.0" prefWidth="1085.0" styleClass="warehouse-table" VBox.vgrow="ALWAYS">
+                           <columns>
+                              <TableColumn fx:id="colId" minWidth="60.0" prefWidth="80.0" text="ID" />
+                              <TableColumn fx:id="colName" minWidth="180.0" prefWidth="240.0" text="HỌ VÀ TÊN" />
+                              <TableColumn fx:id="colUsername" minWidth="150.0" prefWidth="200.0" text="TÊN ĐĂNG NHẬP" />
+                              <TableColumn fx:id="colEmail" minWidth="200.0" prefWidth="260.0" text="EMAIL" />
+                              <TableColumn fx:id="colRole" minWidth="110.0" prefWidth="140.0" text="VAI TRÒ" />
+                              <TableColumn fx:id="colAction" minWidth="100.0" prefWidth="120.0" text="HÀNH ĐỘNG" />
+                           </columns>
+                        </TableView>
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </children>
+</VBox>
