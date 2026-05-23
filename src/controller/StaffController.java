@@ -60,8 +60,86 @@ public class StaffController {
         colName.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getName()));
         colUsername.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getUserName()));
         colEmail.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getEmail()));
-        colRole.setCellValueFactory(data -> new SimpleStringProperty(
-                "STAFF".equalsIgnoreCase(data.getValue().getRole()) ? "Nhân viên" : "Quản trị"));
+        
+        // Cấu hình hiển thị cột Vai trò bằng ComboBox để thay đổi trực tiếp
+        colRole.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getRole()));
+        colRole.setCellFactory(column -> new TableCell<>() {
+            private final ComboBox<String> comboBox = new ComboBox<>(FXCollections.observableArrayList("Nhân viên", "Quản trị"));
+            private boolean isUpdating = false;
+
+            {
+                comboBox.setOnAction(event -> {
+                    if (isUpdating) return;
+
+                    User user = getTableView().getItems().get(getIndex());
+                    if (user == null) return;
+
+                    String selected = comboBox.getValue();
+                    String newRole = "Nhân viên".equals(selected) ? "STAFF" : "ADMIN";
+
+                    if (!newRole.equalsIgnoreCase(user.getRole())) {
+                        // Chặn tự thay đổi quyền của chính mình
+                        if (utils.SessionManager.getCurrentUser() != null &&
+                            user.getId() == utils.SessionManager.getCurrentUser().getId()) {
+                            showError("Bạn không thể tự thay đổi quyền của chính mình!");
+                            isUpdating = true;
+                            comboBox.setValue("ADMIN".equalsIgnoreCase(user.getRole()) ? "Quản trị" : "Nhân viên");
+                            isUpdating = false;
+                            return;
+                        }
+
+                        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+                        confirm.setTitle("Thay đổi quyền hạn");
+                        confirm.setHeaderText(null);
+                        confirm.setContentText("Bạn có chắc chắn muốn thay đổi vai trò của \"" + user.getName() + "\" thành \"" + selected + "\"?");
+
+                        confirm.showAndWait().ifPresent(result -> {
+                            if (result == ButtonType.OK) {
+                                if (userDAO.updateUserRole(user.getId(), newRole)) {
+                                    user.setRole(newRole);
+                                    showInfo("Thay đổi quyền hạn thành công!");
+                                    loadStaff();
+                                } else {
+                                    showError("Thay đổi quyền hạn thất bại!");
+                                    isUpdating = true;
+                                    comboBox.setValue("ADMIN".equalsIgnoreCase(user.getRole()) ? "Quản trị" : "Nhân viên");
+                                    isUpdating = false;
+                                }
+                            } else {
+                                isUpdating = true;
+                                comboBox.setValue("ADMIN".equalsIgnoreCase(user.getRole()) ? "Quản trị" : "Nhân viên");
+                                isUpdating = false;
+                            }
+                        });
+                    }
+                });
+            }
+
+            @Override
+            protected void updateItem(String role, boolean empty) {
+                super.updateItem(role, empty);
+                if (empty || role == null) {
+                    setGraphic(null);
+                    return;
+                }
+
+                isUpdating = true;
+                comboBox.setValue("ADMIN".equalsIgnoreCase(role) ? "Quản trị" : "Nhân viên");
+
+                User user = getTableView().getItems().get(getIndex());
+                if (user != null && utils.SessionManager.getCurrentUser() != null &&
+                    user.getId() == utils.SessionManager.getCurrentUser().getId()) {
+                    comboBox.setDisable(true);
+                } else {
+                    comboBox.setDisable(false);
+                }
+                isUpdating = false;
+
+                setGraphic(comboBox);
+                setAlignment(Pos.CENTER);
+            }
+        });
+
         colLastLogin.setCellValueFactory(data -> new SimpleStringProperty(
             data.getValue().getLastLogin() != null ? data.getValue().getLastLogin() : "—"
         ));
@@ -120,18 +198,25 @@ public class StaffController {
     }
 
     private void handleDeleteStaff(User user) {
+        // Chặn tự xóa chính mình
+        if (utils.SessionManager.getCurrentUser() != null &&
+            user.getId() == utils.SessionManager.getCurrentUser().getId()) {
+            showError("Bạn không thể tự xóa tài khoản của chính mình!");
+            return;
+        }
+
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
-        confirm.setTitle("Xóa nhân viên");
+        confirm.setTitle("Xóa tài khoản");
         confirm.setHeaderText(null);
-        confirm.setContentText("Bạn có chắc chắn muốn xóa nhân viên \"" + user.getName() + "\" không?");
+        confirm.setContentText("Bạn có chắc chắn muốn xóa tài khoản \"" + user.getName() + "\" không?");
 
         confirm.showAndWait().ifPresent(result -> {
             if (result == ButtonType.OK) {
                 if (userDAO.deleteUser(user.getId())) {
                     loadStaff();
-                    showInfo("Xóa tài khoản nhân viên thành công!");
+                    showInfo("Xóa tài khoản thành công!");
                 } else {
-                    showError("Xóa tài khoản nhân viên thất bại!");
+                    showError("Xóa tài khoản thất bại!");
                 }
             }
         });

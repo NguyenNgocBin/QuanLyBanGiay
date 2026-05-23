@@ -603,7 +603,8 @@ public class SaleController {
         }
 
         int custId = (selectedCustomer != null) ? selectedCustomer.getId() : 0;
-        SaleDAO.CheckoutResult result = saleDAO.checkout(lines, calculateTotal(), selectedPayment, custId);
+        int userId = utils.SessionManager.isLoggedIn() ? utils.SessionManager.getCurrentUser().getId() : 0;
+        SaleDAO.CheckoutResult result = saleDAO.checkout(lines, calculateTotal(), selectedPayment, custId, userId);
 
         if (!result.isSuccess()) {
             showAlert(Alert.AlertType.ERROR, "Thanh toán", result.getMessage());

@@ -29,7 +29,7 @@
             <VBox VBox.vgrow="ALWAYS" />
 
             <Button alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="nav-button" text="⚙  Cài đặt" />
-            <Button fx:id="btnLogout" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleLogout" styleClass="nav-button" text="↩  Đăng xuất" />
+            <Button alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="nav-button" text="↩  Đăng xuất" />
          </children>
       </VBox>
    </left>

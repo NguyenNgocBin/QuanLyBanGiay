@@ -366,3 +366,8 @@ BEGIN
 END //
 DELIMITER ;
 
+-- cap nhat bang users để lưu thông tin đang nhập của nhân viên 
+use  testlogin;
+ALTER TABLE users
+ADD last_login DATETIME NULL,
+ADD session_revenue DECIMAL(15,2) DEFAULT 0;

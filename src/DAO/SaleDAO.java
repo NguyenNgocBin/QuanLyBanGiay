@@ -18,14 +18,14 @@ public class SaleDAO {
      * @param customerId    ID khách hàng (0 = khách lẻ / không có KH)
      */
     public CheckoutResult checkout(List<CheckoutLine> lines, double totalAmount,
-                                   String paymentMethod, int customerId) {
+                                   String paymentMethod, int customerId, int userId) {
         if (lines == null || lines.isEmpty()) {
             return CheckoutResult.failed("Gio hang dang trong.");
         }
 
         String insertOrderSql = """
-                INSERT INTO orders (customer_id, total_amount, order_date, status)
-                VALUES (?, ?, ?, ?)
+                INSERT INTO orders (customer_id, total_amount, order_date, status, user_id)
+                VALUES (?, ?, ?, ?, ?)
                 """;
         String insertDetailSql = """
                 INSERT INTO order_details (order_id, product_id, quantity, unit_price)
@@ -70,6 +70,11 @@ public class SaleDAO {
                     statement.setDouble(2, totalAmount);
                     statement.setDate(3, Date.valueOf(LocalDate.now()));
                     statement.setString(4, "Da thanh toan - " + paymentMethod);
+                    if (userId > 0) {
+                        statement.setInt(5, userId);
+                    } else {
+                        statement.setNull(5, Types.INTEGER);
+                    }
                     statement.executeUpdate();
 
                     try (ResultSet keys = statement.getGeneratedKeys()) {

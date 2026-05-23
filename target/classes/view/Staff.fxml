@@ -47,14 +47,14 @@
 
                         <TableView fx:id="staffTable" prefHeight="500.0" prefWidth="1085.0" styleClass="warehouse-table" VBox.vgrow="ALWAYS">
                            <columns>
-                              <TableColumn fx:id="colId" minWidth="50.0" prefWidth="60.0" text="ID" />
-                              <TableColumn fx:id="colName" minWidth="150.0" prefWidth="180.0" text="HỌ VÀ TÊN" />
-                              <TableColumn fx:id="colUsername" minWidth="120.0" prefWidth="140.0" text="TÊN ĐĂNG NHẬP" />
-                              <TableColumn fx:id="colEmail" minWidth="160.0" prefWidth="200.0" text="EMAIL" />
-                              <TableColumn fx:id="colRole" minWidth="90.0" prefWidth="110.0" text="VAI TRÒ" />
-                              <TableColumn fx:id="colLastLogin" minWidth="140.0" prefWidth="170.0" text="ĐĂNG NHẬP CUỐI" />
-                              <TableColumn fx:id="colSessionRevenue" minWidth="120.0" prefWidth="140.0" text="DOANH THU PHIÊN" />
-                              <TableColumn fx:id="colAction" minWidth="70.0" prefWidth="85.0" text="HÀNH ĐỘNG" />
+                              <TableColumn fx:id="colId" minWidth="60.0" prefWidth="80.0" text="ID" />
+                              <TableColumn fx:id="colName" minWidth="180.0" prefWidth="240.0" text="HỌ VÀ TÊN" />
+                              <TableColumn fx:id="colUsername" minWidth="150.0" prefWidth="200.0" text="TÊN ĐĂNG NHẬP" />
+                              <TableColumn fx:id="colEmail" minWidth="200.0" prefWidth="260.0" text="EMAIL" />
+                              <TableColumn fx:id="colRole" minWidth="110.0" prefWidth="140.0" text="VAI TRÒ" />
+                              <TableColumn fx:id="colLastLogin" minWidth="160.0" prefWidth="180.0" text="ĐĂNG NHẬP CUỐI" />
+                              <TableColumn fx:id="colSessionRevenue" minWidth="120.0" prefWidth="140.0" text="DOANH THU CA" />
+                              <TableColumn fx:id="colAction" minWidth="100.0" prefWidth="120.0" text="HÀNH ĐỘNG" />
                            </columns>
                         </TableView>
                      </children>

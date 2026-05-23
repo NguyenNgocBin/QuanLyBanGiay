@@ -7,9 +7,12 @@
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
@@ -46,6 +49,8 @@
                      <children>
                         <HBox alignment="CENTER_LEFT" spacing="12.0">
                            <children>
+                              <Label text="Chọn nhanh:" textFill="#475569" style="-fx-font-weight: bold; -fx-font-size: 13px;" />
+                              <ComboBox fx:id="cbQuickFilter" prefHeight="38.0" prefWidth="140.0" promptText="Chọn mốc..." />
                               <Label text="Từ ngày:" textFill="#475569" style="-fx-font-weight: bold; -fx-font-size: 13px;" />
                               <DatePicker fx:id="dpStart" prefHeight="38.0" prefWidth="150.0" />
                               <Label text="Đến ngày:" textFill="#475569" style="-fx-font-weight: bold; -fx-font-size: 13px;" />
@@ -59,9 +64,9 @@
                   </VBox>
 
                   <!-- KPI Section -->
-                  <TilePane hgap="14.0" prefColumns="3" prefHeight="130.0" styleClass="metric-grid" vgap="14.0">
+                  <TilePane hgap="14.0" prefColumns="5" prefHeight="130.0" styleClass="metric-grid" vgap="14.0">
                      <children>
-                        <VBox prefHeight="100.0" prefWidth="240.0" spacing="10.0" style="-fx-background-color: linear-gradient(to right, #6366F1, #A855F7);" styleClass="metric-card">
+                        <VBox prefHeight="100.0" prefWidth="180.0" spacing="10.0" style="-fx-background-color: linear-gradient(to right, #6366F1, #A855F7);" styleClass="metric-card">
                            <children>
                               <Label text="TỔNG DOANH THU" textFill="WHITE">
                                  <font>
@@ -72,7 +77,7 @@
                            </children>
                         </VBox>
 
-                        <VBox prefHeight="100.0" prefWidth="240.0" spacing="10.0" style="-fx-background-color: linear-gradient(to right, #10B981, #34D399);" styleClass="metric-card">
+                        <VBox prefHeight="100.0" prefWidth="180.0" spacing="10.0" style="-fx-background-color: linear-gradient(to right, #10B981, #34D399);" styleClass="metric-card">
                            <children>
                               <Label text="ƯỚC TÍNH LỢI NHUẬN" textFill="WHITE">
                                  <font>
@@ -83,7 +88,7 @@
                            </children>
                         </VBox>
 
-                        <VBox prefHeight="100.0" prefWidth="240.0" spacing="10.0" style="-fx-background-color: linear-gradient(to right, #F59E0B, #FBBF24);" styleClass="metric-card">
+                        <VBox prefHeight="100.0" prefWidth="180.0" spacing="10.0" style="-fx-background-color: linear-gradient(to right, #F59E0B, #FBBF24);" styleClass="metric-card">
                            <children>
                               <Label text="SẢN PHẨM ĐÃ BÁN" textFill="WHITE">
                                  <font>
@@ -93,25 +98,47 @@
                               <Label fx:id="lblItemsSold" styleClass="metric-value" text="0" />
                            </children>
                         </VBox>
+
+                        <VBox prefHeight="100.0" prefWidth="180.0" spacing="10.0" style="-fx-background-color: linear-gradient(to right, #EC4899, #F43F5E);" styleClass="metric-card">
+                           <children>
+                              <Label text="TỔNG ĐƠN HÀNG" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblOrdersCount" styleClass="metric-value" text="0 đơn" />
+                           </children>
+                        </VBox>
+
+                        <VBox prefHeight="100.0" prefWidth="180.0" spacing="10.0" style="-fx-background-color: linear-gradient(to right, #3B82F6, #60A5FA);" styleClass="metric-card">
+                           <children>
+                              <Label text="ĐƠN TRUNG BÌNH (AOV)" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblAOV" styleClass="metric-value" text="0đ" />
+                           </children>
+                        </VBox>
                      </children>
                   </TilePane>
 
-                  <!-- Chart Section 1: Revenue Line Chart -->
+                  <!-- Section 1: Revenue Trend Table -->
                   <VBox prefHeight="350.0" styleClass="warehouse-panel">
                      <children>
-                        <Label text="Biểu đồ doanh thu theo thời gian" textFill="#1E293B" styleClass="product-name">
+                        <Label text="Bảng doanh thu theo thời gian" textFill="#1E293B" styleClass="product-name">
                            <VBox.margin>
                               <Insets bottom="10.0" left="10.0" top="5.0" />
                            </VBox.margin>
                         </Label>
-                        <LineChart fx:id="chartRevenue" createSymbols="true" legendVisible="false" prefHeight="300.0" VBox.vgrow="ALWAYS">
-                           <xAxis>
-                              <CategoryAxis side="BOTTOM" tickLabelFill="#475569" />
-                           </xAxis>
-                           <yAxis>
-                              <NumberAxis side="LEFT" tickLabelFill="#475569" />
-                           </yAxis>
-                        </LineChart>
+                        <TableView fx:id="tblRevenueTrend" prefHeight="300.0" VBox.vgrow="ALWAYS" styleClass="warehouse-table">
+                           <columns>
+                              <TableColumn fx:id="colRevDate" text="Thời gian" minWidth="120.0" prefWidth="150.0" />
+                              <TableColumn fx:id="colRevOrdersCount" text="Số lượng đơn hàng" minWidth="150.0" prefWidth="180.0" />
+                              <TableColumn fx:id="colRevAmount" text="Doanh thu" minWidth="150.0" prefWidth="180.0" />
+                              <TableColumn fx:id="colRevStaffName" text="Nhân viên bán trong ca" minWidth="200.0" prefWidth="250.0" />
+                           </columns>
+                        </TableView>
                      </children>
                   </VBox>
 
@@ -143,6 +170,54 @@
                                     <NumberAxis side="LEFT" tickLabelFill="#475569" />
                                  </yAxis>
                               </BarChart>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+
+                  <!-- Chart Section 3: Payment Method Pie Chart -->
+                  <VBox prefHeight="350.0" styleClass="warehouse-panel">
+                     <children>
+                        <Label text="Cơ cấu doanh thu theo Phương thức thanh toán" textFill="#1E293B" styleClass="product-name">
+                           <VBox.margin>
+                              <Insets bottom="10.0" left="10.0" top="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <PieChart fx:id="chartPayments" legendVisible="true" prefHeight="300.0" VBox.vgrow="ALWAYS" />
+                     </children>
+                  </VBox>
+
+                  <!-- Section 4: Detailed Data Tables (Best Sellers & Top Staff) -->
+                  <HBox spacing="16.0" prefHeight="350.0">
+                     <children>
+                        <VBox prefWidth="400.0" styleClass="warehouse-panel" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label text="Danh sách Sản phẩm bán chạy" textFill="#1E293B" styleClass="product-name">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="10.0" top="5.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <TableView fx:id="tblTopProducts" VBox.vgrow="ALWAYS" styleClass="warehouse-table">
+                                 <columns>
+                                    <TableColumn fx:id="colProdName" text="Sản phẩm" minWidth="200.0" prefWidth="250.0" />
+                                    <TableColumn fx:id="colProdQty" text="Số lượng đã bán (đôi)" minWidth="100.0" prefWidth="120.0" />
+                                 </columns>
+                              </TableView>
+                           </children>
+                        </VBox>
+                        <VBox prefWidth="400.0" styleClass="warehouse-panel" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label text="Danh sách Nhân viên có doanh thu cao (Ca hiện tại)" textFill="#1E293B" styleClass="product-name">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="10.0" top="5.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <TableView fx:id="tblTopStaff" VBox.vgrow="ALWAYS" styleClass="warehouse-table">
+                                 <columns>
+                                    <TableColumn fx:id="colStaffName" text="Tên nhân viên" minWidth="200.0" prefWidth="250.0" />
+                                    <TableColumn fx:id="colStaffRev" text="Doanh thu ca" minWidth="100.0" prefWidth="120.0" />
+                                 </columns>
+                              </TableView>
                            </children>
                         </VBox>
                      </children>

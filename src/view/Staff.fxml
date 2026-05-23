@@ -52,6 +52,8 @@
                               <TableColumn fx:id="colUsername" minWidth="150.0" prefWidth="200.0" text="TÊN ĐĂNG NHẬP" />
                               <TableColumn fx:id="colEmail" minWidth="200.0" prefWidth="260.0" text="EMAIL" />
                               <TableColumn fx:id="colRole" minWidth="110.0" prefWidth="140.0" text="VAI TRÒ" />
+                              <TableColumn fx:id="colLastLogin" minWidth="160.0" prefWidth="180.0" text="ĐĂNG NHẬP CUỐI" />
+                              <TableColumn fx:id="colSessionRevenue" minWidth="120.0" prefWidth="140.0" text="DOANH THU CA" />
                               <TableColumn fx:id="colAction" minWidth="100.0" prefWidth="120.0" text="HÀNH ĐỘNG" />
                            </columns>
                         </TableView>

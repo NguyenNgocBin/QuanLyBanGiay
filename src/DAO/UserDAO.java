@@ -102,10 +102,10 @@ public class UserDAO {
         }
     }
 
-    // Hàm lấy danh sách tất cả các nhân viên (role = 'STAFF')
+    // Hàm lấy danh sách tất cả các nhân viên (cả ADMIN và STAFF)
     public java.util.List<User> getAllStaff() {
         java.util.List<User> list = new java.util.ArrayList<>();
-        String query = "SELECT *, DATE_FORMAT(last_login, '%d/%m/%Y %H:%i') AS format_last_login FROM users WHERE role = 'STAFF' ORDER BY id DESC";
+        String query = "SELECT *, DATE_FORMAT(last_login, '%d/%m/%Y %H:%i') AS format_last_login FROM users ORDER BY id DESC";
         try (Connection connection = DBConnection.getConnection();
                 PreparedStatement pst = connection.prepareStatement(query);
                 ResultSet rs = pst.executeQuery()) {
@@ -153,9 +153,23 @@ public class UserDAO {
         }
     }
 
-    // Hàm xóa tài khoản nhân viên
+    // Hàm cập nhật quyền (role) của người dùng
+    public boolean updateUserRole(int id, String newRole) {
+        String query = "UPDATE users SET role = ? WHERE id = ?";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement pst = con.prepareStatement(query)) {
+            pst.setString(1, newRole);
+            pst.setInt(2, id);
+            return pst.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    // Hàm xóa tài khoản nhân viên/quản lý
     public boolean deleteUser(int id) {
-        String query = "DELETE FROM users WHERE id = ? AND role = 'STAFF'";
+        String query = "DELETE FROM users WHERE id = ?";
         try (Connection con = DBConnection.getConnection();
                 PreparedStatement pst = con.prepareStatement(query)) {
             pst.setInt(1, id);
@@ -167,3 +181,4 @@ public class UserDAO {
     }
 
 }
+
