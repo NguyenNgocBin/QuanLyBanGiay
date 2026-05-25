@@ -18,7 +18,7 @@
       <!-- LEFT PANEL: Products Selection -->
       <VBox spacing="15.0" styleClass="card" HBox.hgrow="ALWAYS">
          <children>
-            <Label style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #1A202C;" text="Tìm kiếm sản phẩm" />
+            <Label styleClass="section-title" style="-fx-font-size: 18px;" text="Tìm kiếm sản phẩm" />
             
             <HBox spacing="10.0">
                <children>
@@ -46,7 +46,7 @@
             <!-- Supplier Info -->
             <VBox spacing="10.0" styleClass="card">
                <children>
-                  <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1A202C;" text="Thông tin nhập hàng" />
+                  <Label styleClass="section-title" text="Thông tin nhập hàng" />
                   <HBox alignment="CENTER_LEFT" spacing="10.0">
                      <children>
                         <ComboBox fx:id="cmbSupplier" maxWidth="1.7976931348623157E308" promptText="Chọn nhà cung cấp" HBox.hgrow="ALWAYS" />
@@ -61,7 +61,7 @@
                <children>
                   <HBox alignment="CENTER_LEFT">
                      <children>
-                        <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1A202C;" text="Danh sách nhập" />
+                        <Label styleClass="section-title" text="Danh sách nhập" />
                         <HBox HBox.hgrow="ALWAYS" />
                         <Button mnemonicParsing="false" onAction="#handleClearList" style="-fx-background-color: transparent; -fx-text-fill: #E53E3E;" text="Xóa tất cả" />
                      </children>
@@ -82,7 +82,7 @@
                <children>
                   <HBox>
                      <children>
-                        <Label style="-fx-font-size: 14px; -fx-text-fill: #718096;" text="Tổng tiền:" />
+                        <Label styleClass="settings-description" style="-fx-font-size: 14px;" text="Tổng tiền:" />
                         <HBox HBox.hgrow="ALWAYS" />
                         <Label fx:id="lblTotalAmount" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #E53E3E;" text="0đ" />
                      </children>

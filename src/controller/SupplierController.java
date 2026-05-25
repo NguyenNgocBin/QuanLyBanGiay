@@ -228,6 +228,7 @@ public class SupplierController {
         btnCancel.setOnAction(e -> dialog.close());
 
         Scene scene = new Scene(grid, 420, 320);
+        utils.ThemeManager.applyTheme(scene);
         dialog.setScene(scene);
         dialog.showAndWait();
     }

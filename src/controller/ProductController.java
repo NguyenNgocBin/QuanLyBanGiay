@@ -319,8 +319,10 @@ public class ProductController {
     private Stage createDialogStage(String title, Parent root) {
         Stage stage = new Stage();
         stage.setTitle(title);
-        stage.initModality(Modality.APPLICATION_MODAL);// Đảm bảo người dùng phải tương tác với cửa sổ này trước khi quay lại cửa sổ chính
-        stage.setScene(new Scene(root));
+        stage.initModality(Modality.APPLICATION_MODAL);
+        Scene scene = new Scene(root);
+        utils.ThemeManager.applyTheme(scene);
+        stage.setScene(scene);
         return stage;
     }
 

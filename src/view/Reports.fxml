@@ -45,15 +45,15 @@
                   </HBox>
 
                   <!-- Filter Area -->
-                  <VBox style="-fx-background-color: #ffffff; -fx-border-color: #e5e7eb; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 10 14; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.03), 8, 0, 0, 2);">
+                  <VBox styleClass="card" style="-fx-padding: 10 14;">
                      <children>
                         <HBox alignment="CENTER_LEFT" spacing="12.0">
                            <children>
-                              <Label text="Chọn nhanh:" textFill="#475569" style="-fx-font-weight: bold; -fx-font-size: 13px;" />
+                              <Label styleClass="settings-label" text="Chọn nhanh:" style="-fx-font-size: 13px;" />
                               <ComboBox fx:id="cbQuickFilter" prefHeight="38.0" prefWidth="140.0" promptText="Chọn mốc..." />
-                              <Label text="Từ ngày:" textFill="#475569" style="-fx-font-weight: bold; -fx-font-size: 13px;" />
+                              <Label styleClass="settings-label" text="Từ ngày:" style="-fx-font-size: 13px;" />
                               <DatePicker fx:id="dpStart" prefHeight="38.0" prefWidth="150.0" />
-                              <Label text="Đến ngày:" textFill="#475569" style="-fx-font-weight: bold; -fx-font-size: 13px;" />
+                              <Label styleClass="settings-label" text="Đến ngày:" style="-fx-font-size: 13px;" />
                               <DatePicker fx:id="dpEnd" prefHeight="38.0" prefWidth="150.0" />
                               <Button fx:id="btnFilter" mnemonicParsing="false" onAction="#handleFilter" style="-fx-background-color: linear-gradient(to right, #6366F1, #A855F7);" styleClass="warehouse-primary" text="Lọc dữ liệu" />
                               <Region HBox.hgrow="ALWAYS" />
@@ -126,7 +126,7 @@
                   <!-- Section 1: Revenue Trend Table -->
                   <VBox prefHeight="350.0" styleClass="warehouse-panel">
                      <children>
-                        <Label text="Bảng doanh thu theo thời gian" textFill="#1E293B" styleClass="product-name">
+                        <Label text="Bảng doanh thu theo thời gian" styleClass="section-title">
                            <VBox.margin>
                               <Insets bottom="10.0" left="10.0" top="5.0" />
                            </VBox.margin>
@@ -147,7 +147,7 @@
                      <children>
                         <VBox prefWidth="400.0" styleClass="warehouse-panel" HBox.hgrow="ALWAYS">
                            <children>
-                              <Label text="Cơ cấu doanh thu theo Danh mục" textFill="#1E293B" styleClass="product-name">
+                              <Label text="Cơ cấu doanh thu theo Danh mục" styleClass="section-title">
                                  <VBox.margin>
                                     <Insets bottom="10.0" left="10.0" top="5.0" />
                                  </VBox.margin>
@@ -157,17 +157,17 @@
                         </VBox>
                         <VBox prefWidth="400.0" styleClass="warehouse-panel" HBox.hgrow="ALWAYS">
                            <children>
-                              <Label text="Top 5 sản phẩm bán chạy nhất" textFill="#1E293B" styleClass="product-name">
+                              <Label text="Top 5 sản phẩm bán chạy nhất" styleClass="section-title">
                                  <VBox.margin>
                                     <Insets bottom="10.0" left="10.0" top="5.0" />
                                  </VBox.margin>
                               </Label>
                               <BarChart fx:id="chartTopProducts" legendVisible="false" prefHeight="300.0" VBox.vgrow="ALWAYS">
                                  <xAxis>
-                                    <CategoryAxis side="BOTTOM" tickLabelFill="#475569" />
+                                    <CategoryAxis side="BOTTOM" />
                                  </xAxis>
                                  <yAxis>
-                                    <NumberAxis side="LEFT" tickLabelFill="#475569" />
+                                    <NumberAxis side="LEFT" />
                                  </yAxis>
                               </BarChart>
                            </children>
@@ -178,7 +178,7 @@
                   <!-- Chart Section 3: Payment Method Pie Chart -->
                   <VBox prefHeight="350.0" styleClass="warehouse-panel">
                      <children>
-                        <Label text="Cơ cấu doanh thu theo Phương thức thanh toán" textFill="#1E293B" styleClass="product-name">
+                        <Label text="Cơ cấu doanh thu theo Phương thức thanh toán" styleClass="section-title">
                            <VBox.margin>
                               <Insets bottom="10.0" left="10.0" top="5.0" />
                            </VBox.margin>
@@ -192,7 +192,7 @@
                      <children>
                         <VBox prefWidth="400.0" styleClass="warehouse-panel" HBox.hgrow="ALWAYS">
                            <children>
-                              <Label text="Danh sách Sản phẩm bán chạy" textFill="#1E293B" styleClass="product-name">
+                              <Label text="Danh sách Sản phẩm bán chạy" styleClass="section-title">
                                  <VBox.margin>
                                     <Insets bottom="10.0" left="10.0" top="5.0" />
                                  </VBox.margin>
@@ -207,7 +207,7 @@
                         </VBox>
                         <VBox prefWidth="400.0" styleClass="warehouse-panel" HBox.hgrow="ALWAYS">
                            <children>
-                              <Label text="Danh sách Nhân viên có doanh thu cao (Ca hiện tại)" textFill="#1E293B" styleClass="product-name">
+                              <Label text="Danh sách Nhân viên có doanh thu cao (Ca hiện tại)" styleClass="section-title">
                                  <VBox.margin>
                                     <Insets bottom="10.0" left="10.0" top="5.0" />
                                  </VBox.margin>

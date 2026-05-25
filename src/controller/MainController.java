@@ -47,6 +47,9 @@ public class MainController {
     private Button btnLogout;
 
     @FXML
+    private Button btnSettings;
+
+    @FXML
     private StackPane contentPane;
 
     @FXML
@@ -94,6 +97,13 @@ public class MainController {
         } else {
             loadPane("/view/Dashboard.fxml");
         }
+
+        // Áp dụng Theme (Sáng/Tối) khi khởi chạy
+        javafx.application.Platform.runLater(() -> {
+            if (btnDashboard.getScene() != null) {
+                utils.ThemeManager.applyTheme(btnDashboard.getScene());
+            }
+        });
     }
 
     public void updateSessionInfo() {
@@ -145,6 +155,7 @@ public class MainController {
         btnSales.getStyleClass().remove("nav-button-active");
         btnOrders.getStyleClass().remove("nav-button-active");
         btnReports.getStyleClass().remove("nav-button-active");
+        if (btnSettings != null) btnSettings.getStyleClass().remove("nav-button-active");
 
         clickedButton.getStyleClass().add("nav-button-active");
 
@@ -166,8 +177,18 @@ public class MainController {
             loadPane("/view/Order.fxml");
         } else if (clickedButton == btnReports) {
             loadPane("/view/Reports.fxml");
+        } else if (clickedButton == btnSettings) {
+            loadPane("/view/Settings.fxml");
         } else {
             System.out.println("Tab not implemented yet: " + clickedButton.getText());
+        }
+    }
+
+    public void selectTab(String tabName) {
+        if ("products".equalsIgnoreCase(tabName)) {
+            switchTab(new ActionEvent(btnProducts, null));
+        } else if ("dashboard".equalsIgnoreCase(tabName)) {
+            switchTab(new ActionEvent(btnDashboard, null));
         }
     }
 

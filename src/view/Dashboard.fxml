@@ -21,12 +21,11 @@
          <children>
             <VBox>
                <children>
-                  <Label style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #1A202C;" text="Tổng quan cửa hàng" />
-                  <Label style="-fx-text-fill: #718096;" text="Chào mừng trở lại! Đây là tình hình kinh doanh hôm nay." />
+                  <Label style="-fx-font-size: 22px;" styleClass="page-title" text="Tổng quan cửa hàng" />
+                  <Label styleClass="settings-description" text="Chào mừng trở lại! Đây là tình hình kinh doanh hôm nay." />
                </children>
             </VBox>
             <HBox HBox.hgrow="ALWAYS" />
-            <Button mnemonicParsing="false" styleClass="btn-primary" text="📥 Xuất báo cáo" />
          </children>
       </HBox>
       
@@ -86,7 +85,7 @@
             <!-- Chart -->
             <VBox styleClass="chart-container" HBox.hgrow="ALWAYS">
                <children>
-                  <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1A202C;" text="Doanh thu theo tuần" />
+                  <Label styleClass="section-title" text="Doanh thu theo tuần" />
                   <AreaChart fx:id="revenueChart" legendSide="TOP" prefHeight="200.0">
                     <xAxis>
                       <CategoryAxis side="BOTTOM" />
@@ -101,7 +100,7 @@
             <!-- Top Products -->
             <VBox prefWidth="250.0" styleClass="chart-container">
                <children>
-                  <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1A202C;" text="Sản phẩm bán chạy" />
+                  <Label styleClass="section-title" text="Sản phẩm bán chạy" />
                   <VBox fx:id="topProductsContainer" spacing="10.0" VBox.vgrow="ALWAYS">
                      <padding>
                         <Insets top="10.0" />
@@ -119,7 +118,7 @@
          <children>
             <HBox alignment="CENTER_LEFT">
                <children>
-                  <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1A202C;" text="Giao dịch gần đây nhất" />
+                  <Label styleClass="section-title" text="Giao dịch gần đây nhất" />
                   <HBox HBox.hgrow="ALWAYS" />
                   <Button mnemonicParsing="false" style="-fx-background-color: transparent; -fx-text-fill: #3182CE;" text="Xem tất cả" />
                </children>

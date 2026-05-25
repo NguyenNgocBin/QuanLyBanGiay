@@ -102,6 +102,52 @@ public class UserDAO {
         }
     }
 
+    // Hàm cập nhật thông tin cá nhân (Họ tên, Email)
+    public boolean updateProfile(int userId, String name, String email) {
+        String query = "UPDATE users SET name = ?, email = ? WHERE id = ?";
+        try (Connection connection = DBConnection.getConnection();
+                PreparedStatement pst = connection.prepareStatement(query)) {
+            pst.setString(1, name);
+            pst.setString(2, email);
+            pst.setInt(3, userId);
+            return pst.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    // Hàm cập nhật mật khẩu mới theo userId
+    public boolean updatePasswordById(int userId, String newHashedPassword) {
+        String query = "UPDATE users SET password = ? WHERE id = ?";
+        try (Connection connection = DBConnection.getConnection();
+                PreparedStatement pst = connection.prepareStatement(query)) {
+            pst.setString(1, newHashedPassword);
+            pst.setInt(2, userId);
+            return pst.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    // Kiểm tra xem email có bị trùng với người dùng khác hay không
+    public boolean checkEmailExistsForOther(String email, int userId) {
+        String query = "SELECT * FROM users WHERE email = ? AND id != ?";
+        try (Connection connection = DBConnection.getConnection();
+                PreparedStatement pst = connection.prepareStatement(query)) {
+            pst.setString(1, email);
+            pst.setInt(2, userId);
+            try (ResultSet rs = pst.executeQuery()) {
+                return rs.next();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
     // Hàm lấy danh sách tất cả các nhân viên (cả ADMIN và STAFF)
     public java.util.List<User> getAllStaff() {
         java.util.List<User> list = new java.util.ArrayList<>();

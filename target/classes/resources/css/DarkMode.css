@@ -1,0 +1,372 @@
+/* DarkMode.css */
+
+/* Overrides for JavaFX Dark Mode */
+
+.root {
+    -fx-background-color: #0F172A;
+    /* Slate 900 */
+}
+
+/* Background pages */
+.main-content-shell,
+.warehouse-page,
+.sale-page,
+.content-area {
+    -fx-background-color: #0F172A !important;
+}
+
+/* Topbar */
+.app-topbar,
+.warehouse-topbar {
+    -fx-background-color: #1E293B !important;
+    /* Slate 800 */
+    -fx-border-color: transparent transparent #334155 transparent !important;
+}
+
+.topbar-user-name,
+.user-title {
+    -fx-text-fill: #F8FAFC !important;
+}
+
+.topbar-user-role,
+.user-subtitle {
+    -fx-text-fill: #94A3B8 !important;
+}
+
+.topbar-avatar {
+    -fx-text-fill: #6366F1 !important;
+    /* Accent color */
+}
+
+/* ScrollPanes */
+.warehouse-scroll,
+.scroll-pane {
+    -fx-background: #0F172A !important;
+    -fx-background-color: #0F172A !important;
+}
+
+.scroll-pane>.viewport {
+    -fx-background-color: #0F172A !important;
+}
+
+/* Cards & Panels */
+.card,
+.metric-card,
+.warehouse-panel,
+.cart-panel,
+.chart-container {
+    -fx-background-color: #1E293B !important;
+    /* Slate 800 */
+    -fx-border-color: #334155 !important;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 15, 0, 0, 6) !important;
+}
+
+/* Metric values & titles */
+.metric-value,
+.card-value {
+    -fx-text-fill: #F8FAFC !important;
+}
+
+.metric-label,
+.card-subtext {
+    -fx-text-fill: #94A3B8 !important;
+}
+
+.page-title {
+    -fx-text-fill: #F8FAFC !important;
+}
+
+.breadcrumb-active {
+    -fx-text-fill: #F8FAFC !important;
+}
+
+.breadcrumb-muted {
+    -fx-text-fill: #64748B !important;
+}
+
+/* Text inputs */
+.warehouse-search,
+.search-field,
+.text-field,
+.password-field,
+.combo-box,
+.text-area {
+    -fx-background-color: #1E293B !important;
+    -fx-border-color: #475569 !important;
+    -fx-text-fill: #F8FAFC !important;
+    -fx-prompt-text-fill: #64748B !important;
+}
+
+.warehouse-search:focused,
+.search-field:focused,
+.text-field:focused,
+.password-field:focused,
+.combo-box:focused {
+    -fx-border-color: #6366F1 !important;
+    /* Indigo Accent */
+}
+
+.combo-box .list-cell {
+    -fx-text-fill: #F8FAFC !important;
+    -fx-background-color: #1E293B !important;
+}
+
+/* Table views */
+.table-view,
+.warehouse-table,
+.sale-table {
+    -fx-background-color: #1E293B !important;
+    -fx-border-color: transparent !important;
+    -fx-table-cell-border-color: transparent !important;
+}
+
+.table-view .column-header-background,
+.warehouse-table .column-header-background,
+.sale-table .column-header-background {
+    -fx-background-color: #0F172A !important;
+    -fx-border-color: transparent transparent #334155 transparent !important;
+}
+
+.table-view .column-header,
+.warehouse-table .column-header,
+.sale-table .column-header {
+    -fx-background-color: transparent !important;
+}
+
+.table-view .column-header .label,
+.warehouse-table .column-header .label,
+.sale-table .column-header .label {
+    -fx-text-fill: #94A3B8 !important;
+}
+
+.table-view .table-row-cell,
+.warehouse-table .table-row-cell,
+.sale-table .table-row-cell {
+    -fx-background-color: #1E293B !important;
+    -fx-border-color: transparent transparent #334155 transparent !important;
+}
+
+.table-view .table-row-cell:hover,
+.warehouse-table .table-row-cell:hover,
+.sale-table .table-row-cell:hover {
+    -fx-background-color: #334155 !important;
+    /* Light up on hover */
+}
+
+.table-view .table-row-cell:selected,
+.warehouse-table .table-row-cell:selected,
+.sale-table .table-row-cell:selected {
+    -fx-background-color: #4F46E5 !important;
+    /* Selection Indigo */
+}
+
+.table-view .table-cell,
+.warehouse-table .table-cell,
+.sale-table .table-cell {
+    -fx-text-fill: #E2E8F0 !important;
+}
+
+/* Product list specifics */
+.product-name,
+.sale-product-name {
+    -fx-text-fill: #F8FAFC !important;
+}
+
+.product-sku,
+.sale-product-type {
+    -fx-text-fill: #94A3B8 !important;
+}
+
+.result-count,
+.sale-count {
+    -fx-text-fill: #64748b !important;
+}
+
+.cart-title,
+.cart-title-icon {
+    -fx-text-fill: #F8FAFC !important;
+}
+
+.cart-header,
+.filter-row {
+    -fx-border-color: transparent transparent #334155 transparent !important;
+}
+
+/* Action button items */
+.icon-action {
+    -fx-text-fill: #94A3B8 !important;
+}
+
+.icon-action:hover {
+    -fx-background-color: #334155 !important;
+    -fx-text-fill: #F8FAFC !important;
+}
+
+/* Settings-specific premium cards and labels */
+.settings-header-label {
+    -fx-text-fill: #F8FAFC !important;
+    -fx-font-weight: bold;
+}
+
+.settings-card {
+    -fx-background-color: #1E293B !important;
+    -fx-border-color: #334155 !important;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+}
+
+.settings-label {
+    -fx-text-fill: #F8FAFC !important;
+    /* Slate 50 */
+    -fx-font-weight: bold;
+}
+
+.settings-description {
+    -fx-text-fill: #94A3B8 !important;
+    /* Slate 400 */
+    -fx-font-size: 11px;
+}
+
+.settings-section-title {
+    -fx-text-fill: #F8FAFC !important;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-border-color: transparent transparent #334155 transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 0 0 8 0;
+}
+
+
+/* Dialog and Alert styling for Dark Mode */
+.dialog-pane {
+    -fx-background-color: #1E293B !important;
+    /* để sửa lỗi nền trắng */
+}
+
+.dialog-pane .label {
+    -fx-text-fill: #F8FAFC !important;
+    /* để sửa lỗi chữ trắng */
+}
+
+.dialog-pane .button {
+    -fx-background-color: #334155 !important;
+    -fx-text-fill: #F8FAFC !important;
+}
+
+.dialog-pane .button:hover {
+    -fx-background-color: #475569 !important;
+}
+
+/* General JavaFX Labels in Page Content */
+.label {
+    -fx-text-fill: #E2E8F0;
+}
+
+/* Sidebar fixes (remain dark slate always, but ensure highlight matches) */
+.sidebar {
+    -fx-background-color: #0F172A !important;
+}
+
+.nav-button {
+    -fx-text-fill: #94A3B8 !important;
+}
+
+.nav-button:hover {
+    -fx-background-color: #1E293B !important;
+    -fx-text-fill: #F8FAFC !important;
+}
+
+.nav-button-active {
+    -fx-background-color: #1E293B !important;
+    -fx-text-fill: #6366F1 !important;
+}
+
+/* DatePicker Dark Mode Overrides */
+.date-picker {
+    -fx-background-color: #1E293B !important;
+    -fx-border-color: #475569 !important;
+}
+
+.date-picker>.text-field {
+    -fx-text-fill: #F8FAFC !important;
+    -fx-prompt-text-fill: #64748B !important;
+}
+
+.date-picker-popup {
+    -fx-background-color: #1E293B !important;
+    -fx-border-color: #334155 !important;
+}
+
+.date-picker-popup>.month-year-pane {
+    -fx-background-color: #0F172A !important;
+}
+
+.date-picker-popup>.month-year-pane>.label {
+    -fx-text-fill: #F8FAFC !important;
+}
+
+.date-picker-popup>.calendar-grid {
+    -fx-background-color: #1E293B !important;
+}
+
+.date-picker-popup .calendar-grid .day-cell {
+    -fx-text-fill: #E2E8F0 !important;
+}
+
+.date-picker-popup .calendar-grid .day-cell:hover {
+    -fx-background-color: #334155 !important;
+}
+
+.date-picker-popup .calendar-grid .today {
+    -fx-text-fill: #818CF8 !important;
+}
+
+.date-picker-popup .calendar-grid .selected {
+    -fx-background-color: #4F46E5 !important;
+    -fx-text-fill: #F8FAFC !important;
+}
+
+.date-picker-popup .calendar-grid .week-number-cell {
+    -fx-text-fill: #64748B !important;
+}
+
+.section-title {
+    -fx-text-fill: #F8FAFC !important;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+/* Chart styling in Dark Mode */
+.chart-title {
+    -fx-text-fill: #F8FAFC !important;
+}
+.axis {
+    -fx-tick-label-fill: #94A3B8 !important;
+}
+.axis-label {
+    -fx-text-fill: #F8FAFC !important;
+}
+.chart-legend {
+    -fx-background-color: transparent !important;
+}
+.chart-legend-item {
+    -fx-text-fill: #F8FAFC !important;
+}
+.chart-legend-item-label {
+    -fx-text-fill: #F8FAFC !important;
+}
+.chart-pie-label {
+    -fx-fill: #F8FAFC !important;
+}
+.chart-pie-label-line {
+    -fx-stroke: #475569 !important;
+}
+.chart-plot-background {
+    -fx-background-color: #0F172A !important;
+}
+.chart-vertical-grid-lines {
+    -fx-stroke: #334155 !important;
+}
+.chart-horizontal-grid-lines {
+    -fx-stroke: #334155 !important;
+}

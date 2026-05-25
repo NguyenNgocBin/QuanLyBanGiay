@@ -169,6 +169,7 @@ public class ImportHistoryController {
         layout.getChildren().addAll(title, metaBox, detailsTable, bottomBox, actionBox);
 
         Scene scene = new Scene(layout, 600, 450);
+        utils.ThemeManager.applyTheme(scene);
         dialog.setScene(scene);
         dialog.showAndWait();
     }

@@ -17,6 +17,7 @@ public class        App {
         public void start(Stage stage) throws IOException {
             Parent root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
             Scene scene = new Scene(root);
+            utils.ThemeManager.applyTheme(scene);
             stage.setScene(scene);
             stage.show();
         }

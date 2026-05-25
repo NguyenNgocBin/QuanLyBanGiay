@@ -160,6 +160,7 @@ public class CategoryController {
         btnCancel.setOnAction(e -> dialog.close());
 
         Scene scene = new Scene(layout, 350, 180);
+        utils.ThemeManager.applyTheme(scene);
         dialog.setScene(scene);
         dialog.showAndWait();
     }

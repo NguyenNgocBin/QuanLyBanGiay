@@ -4,6 +4,9 @@ import DAO.DashboardDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
@@ -15,7 +18,8 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-
+import javafx.stage.Stage;
+import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
@@ -120,7 +124,9 @@ public class DashboardController {
 
     @FXML
     private void goToProducts() {
-        System.out.println("Go to products requested. Currently handled by Main sidebar.");
+        if (MainController.getInstance() != null) {
+            MainController.getInstance().selectTab("products");
+        }
     }
 
     private String formatCurrency(double value) {

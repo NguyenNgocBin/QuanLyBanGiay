@@ -11,7 +11,7 @@
 
 <BorderPane minHeight="640.0" minWidth="980.0" prefHeight="720.0" prefWidth="1080.0" stylesheets="@../resources/css/SoleManager.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
    <left>
-      <VBox prefHeight="720.0" prefWidth="170.0" style="-fx-background-color: #004395;" styleClass="sidebar" BorderPane.alignment="CENTER">
+      <VBox prefHeight="720.0" prefWidth="170.0" style="-fx-background-color: #023468;" styleClass="sidebar" BorderPane.alignment="CENTER">
          <children>
             <Label styleClass="sidebar-title" text="DUCBINZ" />
             <Label styleClass="sidebar-subtitle" text="Hệ thống quản lý giày" textFill="WHITE" />
@@ -28,8 +28,8 @@
 
             <VBox VBox.vgrow="ALWAYS" />
 
-            <Button alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="nav-button" text="⚙  Cài đặt" />
-            <Button alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="nav-button" text="↩  Đăng xuất" />
+            <Button fx:id="btnSettings" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchTab" styleClass="nav-button" text="⚙  Cài đặt" />
+            <Button fx:id="btnLogout" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleLogout" styleClass="nav-button" text="↩  Đăng xuất" />
          </children>
       </VBox>
    </left>

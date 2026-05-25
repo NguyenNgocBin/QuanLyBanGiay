@@ -343,12 +343,12 @@
 }
 
 .metric-label {
-    -fx-text-fill: #64748b;
+    -fx-text-fill: #e2e8f0;
     -fx-font-size: 12px;
 }
 
 .metric-value {
-    -fx-text-fill: #0f172a;
+    -fx-text-fill: #ffffff;
     -fx-font-size: 24px;
     -fx-font-weight: 900;
 }
@@ -373,7 +373,7 @@
     -fx-border-color: #d8dee8;
     -fx-border-radius: 4;
     -fx-background-radius: 4;
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: #1e293b;
     -fx-font-size: 11px;
     -fx-padding: 7 10;
 }
@@ -716,7 +716,7 @@
 
 .thumb-sale-light {
     -fx-background-color: linear-gradient(to right, #dcecc9, #f8fafc);
-    -fx-text-fill: #e5e7eb;
+    -fx-text-fill: #1e293b;
 }
 
 .thumb-sale-dark {
@@ -1267,7 +1267,7 @@
 }
 
 .order-stat-sub {
-    -fx-text-fill: #94a3b8;
+    -fx-text-fill: #f1f5f9;
     -fx-font-size: 10px;
 }
 
@@ -1541,4 +1541,122 @@
     -fx-font-size: 16px;
     -fx-font-weight: 900;
     -fx-padding: 8 0 0 0;
+}
+
+/* ── General ComboBox Dropdown Fixes in Light Mode ── */
+.combo-box .list-cell {
+    -fx-text-fill: #1e293b;
+    -fx-background-color: #ffffff;
+}
+.combo-box .list-cell:hover {
+    -fx-background-color: #f1f5f9;
+}
+.combo-box .list-cell:selected {
+    -fx-background-color: #6366f1;
+    -fx-text-fill: #ffffff;
+}
+
+/* ── DatePicker Custom Styling in Light Mode ── */
+.date-picker {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #dce3eb;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+}
+.date-picker > .text-field {
+    -fx-text-fill: #1e293b;
+    -fx-prompt-text-fill: #94a3b8;
+    -fx-background-color: transparent;
+}
+.date-picker-popup {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e2e8f0;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 4);
+}
+.date-picker-popup > .month-year-pane {
+    -fx-background-color: #f8fafc;
+}
+.date-picker-popup > .month-year-pane > .label {
+    -fx-text-fill: #1e293b;
+}
+.date-picker-popup > .calendar-grid {
+    -fx-background-color: #ffffff;
+}
+.date-picker-popup .calendar-grid .day-cell {
+    -fx-text-fill: #1e293b;
+}
+.date-picker-popup .calendar-grid .day-cell:hover {
+    -fx-background-color: #f1f5f9;
+}
+.date-picker-popup .calendar-grid .today {
+    -fx-text-fill: #6366f1;
+    -fx-font-weight: bold;
+}
+.date-picker-popup .calendar-grid .selected {
+    -fx-background-color: #6366f1;
+    -fx-text-fill: #ffffff;
+}
+.date-picker-popup .calendar-grid .week-number-cell {
+    -fx-text-fill: #94a3b8;
+}
+
+/* Settings page styles in Light Mode */
+.settings-section-title {
+    -fx-text-fill: #0F172A;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-border-color: transparent transparent #E2E8F0 transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 0 0 8 0;
+}
+
+.settings-label {
+    -fx-text-fill: #0F172A;
+    -fx-font-weight: bold;
+}
+
+.settings-description {
+    -fx-text-fill: #64748B;
+    -fx-font-size: 11px;
+}
+
+.section-title {
+    -fx-text-fill: #1E293B;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+/* Chart styling in Light Mode */
+.chart-title {
+    -fx-text-fill: #1E293B;
+}
+.axis {
+    -fx-tick-label-fill: #475569;
+}
+.axis-label {
+    -fx-text-fill: #475569;
+}
+.chart-legend {
+    -fx-background-color: transparent;
+}
+.chart-legend-item {
+    -fx-text-fill: #475569;
+}
+.chart-legend-item-label {
+    -fx-text-fill: #475569;
+}
+.chart-pie-label {
+    -fx-fill: #475569;
+}
+.chart-pie-label-line {
+    -fx-stroke: #E2E8F0;
+}
+.chart-plot-background {
+    -fx-background-color: #F8FAFC;
+}
+.chart-vertical-grid-lines {
+    -fx-stroke: #F1F5F9;
+}
+.chart-horizontal-grid-lines {
+    -fx-stroke: #F1F5F9;
 }
