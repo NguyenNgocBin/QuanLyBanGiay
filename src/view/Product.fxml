@@ -41,7 +41,7 @@
 
                   <TilePane hgap="14.0" prefColumns="4" prefHeight="214.0" prefWidth="1098.0" styleClass="metric-grid" tileAlignment="TOP_LEFT" vgap="14.0">
                      <children>
-                        <VBox prefHeight="74.0" prefWidth="218.0" spacing="10.0" style="-fx-background-color: linear-gradient(to right, #6366F1, #A855F7);" styleClass="metric-card">
+                        <VBox prefHeight="74.0" prefWidth="218.0" spacing="10.0" style="-fx-background-color: #6366F1;" styleClass="metric-card">
                            <children>
                               <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="188.0">
                                  <children>
@@ -60,7 +60,7 @@
                            </padding>
                         </VBox>
 
-                        <VBox prefHeight="128.0" prefWidth="162.0" spacing="10.0" style="-fx-background-color: linear-gradient(to right, #6366F1, #A855F7);" styleClass="metric-card">
+                        <VBox prefHeight="128.0" prefWidth="162.0" spacing="10.0" style="-fx-background-color: #6366F1;" styleClass="metric-card">
                            <children>
                               <HBox alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="188.0">
                                  <children>
@@ -76,7 +76,7 @@
                            </children>
                         </VBox>
 
-                        <VBox prefHeight="128.0" prefWidth="54.0" spacing="10.0" style="-fx-background-color: linear-gradient(to right, #6366F1, #A855F7);" styleClass="metric-card">
+                        <VBox prefHeight="128.0" prefWidth="54.0" spacing="10.0" style="-fx-background-color: #6366F1;" styleClass="metric-card">
                            <children>
                               <Label prefHeight="40.0" prefWidth="154.0" text="GIÁ TRỊ TỒN KHO" textFill="WHITE">
                                  <font>
@@ -86,7 +86,7 @@
                            </children>
                         </VBox>
 
-                        <VBox prefHeight="128.0" prefWidth="15.0" spacing="10.0" style="-fx-background-color: linear-gradient(to right, #6366F1, #A855F7);" styleClass="metric-card">
+                        <VBox prefHeight="128.0" prefWidth="15.0" spacing="10.0" style="-fx-background-color: #6366F1;" styleClass="metric-card">
                            <children>
                               <Label prefHeight="40.0" prefWidth="98.0" text="DANG MỤC" textFill="WHITE">
                                  <font>
@@ -98,7 +98,7 @@
                               <Insets right="30.0" />
                            </padding>
                         </VBox>
-                        <VBox prefHeight="62.0" prefWidth="218.0" spacing="10.0" style="-fx-background-color: linear-gradient(to right, #6366F1, #A855F7);" styleClass="metric-card">
+                        <VBox prefHeight="62.0" prefWidth="218.0" spacing="10.0" style="-fx-background-color: #6366F1;" styleClass="metric-card">
                            <children>
                               <Label prefHeight="40.0" prefWidth="147.0" text="TỔNG SẢN PHẨM" textFill="WHITE">
                                  <font>
@@ -118,7 +118,7 @@
                               <TextField fx:id="txtSearch" maxWidth="360.0" prefHeight="38.0" prefWidth="320.0" promptText="Tìm kiếm sản phẩm, mã SKU..." styleClass="warehouse-search" HBox.hgrow="ALWAYS" />
                               <Region HBox.hgrow="ALWAYS" />
                               <Button fx:id="btnNewProduct" mnemonicParsing="false" onAction="#handleAddProduct" style="-fx-background-color: linear-gradient(to right, #6366F1, #A855F7);" styleClass="warehouse-primary" text="+ Thêm sản phẩm mới" />
-                              <Label fx:id="lblShowing" styleClass="result-count" text="Hiển thị 1 - 10 trong 1,284 sản phẩm" />
+                              <Label fx:id="lblShowing" styleClass="result-count" />
                            </children>
                         </HBox>
 

@@ -34,20 +34,12 @@ public class DashboardController {
 
     @FXML private AreaChart<String, Number> revenueChart;
 
-    @FXML private TableView<Transaction> transactionTable;
-    @FXML private TableColumn<Transaction, String> colId;
-    @FXML private TableColumn<Transaction, String> colCustomer;
-    @FXML private TableColumn<Transaction, String> colProduct;
-    @FXML private TableColumn<Transaction, String> colTotal;
-    @FXML private TableColumn<Transaction, String> colStatus;
-
     private final DashboardDAO dashboardDAO = new DashboardDAO();
 
     @FXML
     public void initialize() {
         loadMetrics();
         setupChart();
-        setupTable();
         loadTopProducts();
     }
 
@@ -69,21 +61,6 @@ public class DashboardController {
         }
         
         revenueChart.getData().add(series);
-    }
-
-    private void setupTable() {
-        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        colCustomer.setCellValueFactory(new PropertyValueFactory<>("customer"));
-        colProduct.setCellValueFactory(new PropertyValueFactory<>("product"));
-        colTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
-        colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
-
-        List<DashboardDAO.RecentTransaction> recent = dashboardDAO.getRecentTransactions(5);
-        ObservableList<Transaction> data = FXCollections.observableArrayList();
-        for (DashboardDAO.RecentTransaction rt : recent) {
-            data.add(new Transaction(rt.id(), rt.customer(), rt.product(), formatCurrency(rt.total()), rt.status()));
-        }
-        transactionTable.setItems(data);
     }
 
     private void loadTopProducts() {
@@ -144,27 +121,5 @@ public class DashboardController {
             return String.format(Locale.US, "%.1fK", value / 1_000);
         }
         return formatCurrency(value);
-    }
-
-    public static class Transaction {
-        private final String id;
-        private final String customer;
-        private final String product;
-        private final String total;
-        private final String status;
-
-        public Transaction(String id, String customer, String product, String total, String status) {
-            this.id = id;
-            this.customer = customer;
-            this.product = product;
-            this.total = total;
-            this.status = status;
-        }
-
-        public String getId() { return id; }
-        public String getCustomer() { return customer; }
-        public String getProduct() { return product; }
-        public String getTotal() { return total; }
-        public String getStatus() { return status; }
     }
 }

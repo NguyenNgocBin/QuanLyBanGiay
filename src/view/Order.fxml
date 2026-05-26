@@ -30,19 +30,19 @@
                <!-- ── Thống kê nhanh ── -->
                <HBox spacing="14.0" styleClass="order-stats-row">
 
-                  <VBox style="-fx-background-color: linear-gradient(to right, #6366F1, #A855F7);" styleClass="order-stat-card" HBox.hgrow="ALWAYS">
+                  <VBox style="-fx-background-color: #6366F1;" styleClass="order-stat-card" HBox.hgrow="ALWAYS">
                      <Label styleClass="order-stat-label" text="ĐƠN HÀNG HÔM NAY" />
                      <Label fx:id="lblTodayCount" styleClass="order-stat-value" text="0" />
                      <Label styleClass="order-stat-sub" text="Đơn đã thanh toán" />
                   </VBox>
 
-                  <VBox style="-fx-background-color: linear-gradient(to right, #6366F1, #A855F7);" styleClass="order-stat-card" HBox.hgrow="ALWAYS">
+                  <VBox style="-fx-background-color: #6366F1;" styleClass="order-stat-card" HBox.hgrow="ALWAYS">
                      <Label styleClass="order-stat-label" text="DOANH THU HÔM NAY" />
                      <Label fx:id="lblTodayRevenue" styleClass="order-stat-value" text="0đ" />
                      <Label styleClass="order-stat-sub" text="Tổng tiền thu được" />
                   </VBox>
 
-                  <VBox style="-fx-background-color: linear-gradient(to right, #6366F1, #A855F7);" styleClass="order-stat-card" HBox.hgrow="ALWAYS">
+                  <VBox style="-fx-background-color: #6366F1;" styleClass="order-stat-card" HBox.hgrow="ALWAYS">
                      <Label styleClass="order-stat-label" text="TỔNG DOANH THU" />
                      <Label fx:id="lblTotalRevenue" styleClass="order-stat-value" text="0đ" />
                      <Label styleClass="order-stat-sub" text="Toàn thời gian" />

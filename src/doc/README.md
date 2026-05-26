@@ -18,7 +18,7 @@
 3. **Thống Kê Trực Quan (Dashboard) ([Dashboard.fxml](file:///d:/VKU/doancoso1/QuanLyBanGiay/src/view/Dashboard.fxml))**:
    * 4 Thẻ KPI: Doanh thu ngày, Đơn hàng mới, Khách hàng, Sản phẩm sắp hết.
    * Biểu đồ miền (`AreaChart`) trực quan hóa doanh thu 7 ngày qua.
-   * Danh sách Top 5 sản phẩm bán chạy nhất cùng Top giao dịch gần đây.
+   * Danh sách Top 5 sản phẩm bán chạy nhất.
 4. **Quản Lý Sản Phẩm CRUD ([Product.fxml](file:///d:/VKU/doancoso1/QuanLyBanGiay/src/view/Product.fxml))**:
    * Quản lý danh sách giày, size, giá, ảnh đại diện, tình trạng tồn kho.
    * Báo đỏ cảnh báo tồn kho thấp. Tự động tính toán tổng giá trị tiền tồn kho của cửa hàng.
@@ -47,6 +47,8 @@
 Để có cái nhìn sâu sắc và chi tiết nhất về cấu trúc mã nguồn, sơ đồ cơ sở dữ liệu MySQL, các logic nghiệp vụ và lộ trình phát triển nâng cấp hệ thống, vui lòng tham khảo:
 
 👉 **[TÀI LIỆU TỔNG QUAN DỰ ÁN CHI TIẾT (PROJECT_OVERVIEW.md)](PROJECT_OVERVIEW.md)**
+👉 **[BÁO CÁO PHÂN TÍCH VÀ THIẾT KẾ HỆ THỐNG CHI TIẾT (SYSTEM_ANALYSIS_AND_DESIGN.md)](SYSTEM_ANALYSIS_AND_DESIGN.md)**
+👉 **[HƯỚNG DẪN CHI TIẾT CHỨC NĂNG TỪNG TRANG (PAGE_DESCRIPTION.md)](PAGE_DESCRIPTION.md)**
 
 ---
 

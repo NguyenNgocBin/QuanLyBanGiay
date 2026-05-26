@@ -32,7 +32,7 @@
     -fx-padding: 14 25 14 25;
     -fx-cursor: hand;
     -fx-background-radius: 0;
-    -fx-transition: all 0.3s ease;
+    -fx-transition: all 0f.3s ease;
 }
 
 .nav-button:hover {
@@ -133,11 +133,14 @@
 
 .table-view .column-header {
     -fx-background-color: #F8FAFC;
-    -fx-text-fill: #64748B;
     -fx-font-size: 11px;
     -fx-font-weight: 800;
     -fx-padding: 12;
     -fx-border-color: transparent transparent #E2E8F0 transparent;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #64748B;
 }
 
 .table-view .table-cell {

@@ -129,7 +129,7 @@ Hệ thống sở hữu các tính năng nghiệp vụ hoàn chỉnh được th
         3.  *Bước 3 (Đổi mật khẩu)*: Khi xác thực thành công, hệ thống cho phép nhập mật khẩu mới, tiến hành băm SHA-256 và cập nhật trực tiếp vào cơ sở dữ liệu.
 
 ### 3.2. Màn Hình Tổng Quan (Dashboard)
-*   **Giao diện**: Bố cục Dashboard hiện đại gồm hệ thống các thẻ số liệu lớn (KPI Cards), biểu đồ miền trực quan và bảng danh sách giao dịch.
+*   **Giao diện**: Bố cục Dashboard hiện đại gồm hệ thống các thẻ số liệu lớn (KPI Cards), biểu đồ miền trực quan và danh sách sản phẩm bán chạy nhất.
 *   **Logic xử lý**:
     *   **Thống kê thời gian thực**:
         *   *Doanh thu hôm nay*: Tổng số tiền của các đơn hàng có ngày hiện tại (`CURDATE()`) và trạng thái khác `'Da huy'`.
@@ -138,7 +138,6 @@ Hệ thống sở hữu các tính năng nghiệp vụ hoàn chỉnh được th
         *   *Sản phẩm sắp hết hàng*: Đếm số lượng sản phẩm có tồn kho thấp ($0 < stock \le 10$).
     *   **Biểu đồ doanh thu 7 ngày (`AreaChart`)**: Truy vấn tính tổng tiền bán hàng được nhóm theo từng ngày trong 6 ngày vừa qua và hôm nay, tự động cập nhật biểu đồ miền dạng sóng mượt mà.
     *   **Sản phẩm bán chạy nhất (`Top 5 Products`)**: Thống kê danh sách 5 mẫu giày được bán nhiều nhất dựa trên tổng số lượng đặt hàng (`quantity`) từ bảng `order_details`, hiển thị tên sản phẩm, số lượng đôi đã bán và doanh thu thu về (được định dạng rút gọn tiện lợi như `15.5M` hay `800K`).
-    *   **Giao dịch gần đây nhất (`Recent Transactions`)**: Hiển thị bảng 5 hóa đơn mới nhất với Mã đơn hiển thị định dạng đẹp (VD: `HD00005`), tên khách hàng (hoặc hiển thị mặc định `Khách lẻ` nếu không chọn khách), chuỗi gộp các sản phẩm đã mua, tổng số tiền và trạng thái đơn hàng.
 
 ### 3.3. Quản Lý Sản Phẩm & Tồn Kho (`Product.fxml`)
 *   **Giao diện**: Danh sách sản phẩm dạng bảng biểu chuyên nghiệp. Tự động hiển thị hình ảnh thu nhỏ (`ImageView`) từ đường dẫn ảnh sản phẩm đã chọn hoặc hiển thị ký hiệu mặc định (`👟`) với màu sắc nền thẻ linh động theo nhóm danh mục của giày.
